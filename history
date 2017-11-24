@@ -1,0 +1,30 @@
+miner.start()
+miner.stop()
+miner.start()
+miner.setEtherbase(eth.accounts[0])
+miner.start()
+miner.start(8)
+miner.start(2)
+web3.eth.accounts
+var primaryAccount = web3.eth.accounts[0]
+web3.eth.getBalance(primaryAccount)
+function checkAllBalances() {
+  web3.eth.getAccounts(function(err, accounts) {
+   accounts.forEach(function(id) {
+    web3.eth.getBalance(id, function(err, balance) {
+     console.log("" + id + ":\tbalance: " + web3.fromWei(balance, "ether") + " ether");
+   });
+  });
+ });
+};
+checkAllBalances()
+web3.eth.getCompilers();
+eth.compile
+eth.accounts
+miner.setEtherbase(eth.accounts[0])
+eth.getBalance(eth.accounts[0]);
+checkAllBalances()
+miner.start()
+miner.stop()
+miner.start()
+miner.stop()

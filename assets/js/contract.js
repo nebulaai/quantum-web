@@ -17,12 +17,11 @@ function EventLog(result) {
     this.removed = result.removed;
 }
 
-
 if (typeof web3 !== 'undefined') {
     web3 = new Web3(web3.currentProvider);
 } else {
     // set the provider you want from Web3.providers
-    web3 = new Web3(new Web3.providers.HttpProvider("http://192.168.88.192:8545"));
+    web3 = new Web3(new Web3.providers.HttpProvider("http://192.168.88.192:8042"));
 }
 const abi = (function () {
     let json = null;
@@ -61,6 +60,18 @@ const login = function () {
     alert(result ? "Login successful" : "Login failed");
 
 };
+
+/**
+ * Temporary solution, this must move to backend
+ * @return {*|XML|string|void}
+ */
+function uuidv4() {
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    )
+}
+
+let currentTransactionHash;
 /**
  * TODO 1. the gas here should be a constant value, since it is the same process every time
  * TODO 2. Some of the fee calculation can be done in frontend to save gas fee (safety???)
@@ -69,16 +80,33 @@ const login = function () {
  * This is scratch version of the submit function
  */
 const submitOrder = function() {
-    // let addr = $("#dataAddress").val();
-    // let scpt = $("#scriptAddress").val();
-    // let outp = $("#outputAddress").val();
-    // let modr = $("#feeModifier").val();
+    let addr = $("#dataUri").val();
+    let scpt = $("#script").val();
+    let outp = $("#output").val();
+    let name = $("#taskName").val();
+    let uuid = uuidv4();//This should be moved to backend
+    let fee = web3.toWei(parseInt($("#fee").val()), "ether"); // a default value 2.06 is provided
 
+    //TODO get uuid from backend after submitting the following data, for now just keep like this
 
-    let result = nebulaAi.submitTask(addr,scpt,outp, modr, {from: userHash, value: web3.toWei(modr*1.03, "ether") ,gas : submitTaskGas});
+    //post
+    //url: 192.168.88.187:8080/nebula-task/task
+    //data :
+    // {
+    //     "uuid": uuid,
+    //     "datasetURI": addr,
+    //     "name": name,
+    //     "script": scpt,
+    //     "outputURI": outp,
+    //     "fee": fee
+    // }
+
+    //when this is completed
+
+    currentTransactionHash = nebulaAi.submitTask(uuid, {from: userHash, value: fee ,gas : submitTaskGas});
 
     //This gives the hash of the task
-    console.log(result);
+    console.log(currentTransactionHash);
 };
 
 
@@ -88,5 +116,7 @@ const submitOrder = function() {
  */
 nebulaAi.taskSubmitted().watch(function (error, result) {
     let log = new EventLog(result);
-    console.log(log);
+    if(result.transactionHash == currentTransactionHash){
+        console.log(log);
+    }
 });

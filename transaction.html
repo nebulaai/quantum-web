@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Trasaction</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        body {
+            background: #fff;
+            color: #2F3238;
+            font-weight: 300;
+            font-size: 18px;
+            font-family: 'Titillium Web', sans-serif;
+            /*line-height: 28px;*/
+        }
+
+        .page {
+            height: 100%;
+            display: grid;
+            grid-template-columns: .5fr 1.5fr 1fr 1fr 1fr .5fr;
+            grid-template-rows: 10% 80% 10%;
+            /*grid-template-areas: 
+                "header header header header"
+                "main main . sidebar"
+                "footer footer footer footer";*/
+        }
+
+        .mainContent {
+            grid-column: 3 /span 3;
+            padding: 20px;
+        }
+
+
+        div.left {
+            grid-column: 2;
+            /* grid-column: 1/3;*/
+            grid-row: 1/span 3;
+            background: #2F3238;
+            padding: 20px;
+            color: #fff;
+        }
+
+        div.left>img {
+            width: 60%;
+        }
+        div.leftMid{
+            grid-column: 2; 
+            grid-row: 2;
+            z-index: 2;
+            align-self: center;
+            color: #fff;
+            padding: 20px;
+        }
+        div.header {
+            grid-column: 5;
+            grid-row: 1;
+            justify-self: end;
+            align-self: center;
+        }
+
+        button {
+            font-size: 16px;
+            color: #fff;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .header button {
+            background: #fff;
+            border: 3px solid #2F3238;
+            color: #2F3238;
+        }
+
+        div.footer {
+            grid-column: 2/6;
+            grid-row: 3;
+            justify-self: end;
+            align-self: end;
+            font-size: 12px;
+        }
+
+        table {
+            width: 100%; 
+        }
+
+        table tr td {
+            text-align: center;
+        }table td button{
+            
+            background: orange;
+            padding: 10px 25px;
+            border: none;
+        }
+        #chart{width: 100%; height: 400px; margin-top: 30px;}
+    </style>
+</head>
+
+<body>
+    <div id="login" class="page">
+
+        <div class="left"><img src="assets/images/Nebula_Logo.png" alt="Nebula Logo" />
+        </div>
+        <div class="leftMid"><span style="font-size: 36px;">Account1</span><br />
+            <span style="font-size: 12px;">0x86eeE231op112vni</span><br /><br />
+            <table class="task">
+                <tbody>
+                    <tr>
+                        <td>3 BTC</td>
+                        <td>2 ETH</td>
+                    </tr>
+                    <tr>
+                        <td>0.00 USD</td>
+                        <td>5 TOKEN</td>
+                    </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><button type="button">Buy</button></td>
+                        <td> <button type="button">Send</button></td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+        <div class="header"><button type="button"><span>Back to Main</span></button></div>
+        <div class="mainContent">
+            <h2>Transaction History</h2>
+            <table class="task">
+                <thead>
+                    <tr>
+                        <th><span class="title" translate>Data</span></th>
+                        <th><span class="title" translate>Type</span></th>
+                        <th><span class="title" translate>Amount</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2017-08-10</td>
+                        <td>001script</td>
+                        <td>Complete</td>
+                    </tr>
+                    <tr>
+                        <td>2017-08-10</td>
+                        <td>001script</td>
+                        <td>Complete</td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <div id="chart"></div>
+
+        </div>
+        <div class="footer">copyright reseved by NEBULA AI &copy;2017 - 2022</div>
+    </div>
+</body>
+</html>

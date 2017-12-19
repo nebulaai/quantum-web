@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Nebula Create task</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+    />
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0 auto;
+            padding: 0;
+        }
+        body {
+            background: #fff;
+            color:  #2F3238;
+            font-weight: 300;
+            font-size: 18px;
+            font-family: 'Titillium Web', sans-serif;
+            line-height: 28px;
+            
+        }
+
+        .page {
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            /*grid-template-areas: 
+                "header header header header"
+                "main main . sidebar"
+                "footer footer footer footer";*/
+        }
+
+        button {
+            font-size: 16px;
+            color: #fff;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        div.logo {
+            grid-column: 2/span 2;
+            justify-self: start;
+        }
+
+        div.logo img {
+            width: 150px;
+        }
+
+        div.time {
+            grid-column: 5/span 7;
+            justify-self: center;
+            align-self: center;
+        }
+
+        div.chart {
+            grid-column: 2/span 10;
+            grid-row: 2/span 6;
+        }
+
+        div.footer {
+            grid-column: 2/span 10;
+            grid-row: 8;
+            justify-self: end;
+            align-self: end;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="output" class="page">
+
+        <div class="logo"><img src="assets/images/Nebula_Logo2.png" alt="Nebula Logo" /></div>
+        <div class="time"><i class="fa fa-clock-o" aria-hidden="true"></i> Dec 3. 14:20</div>
+        <div class="chart" id="chart">
+
+        </div>
+        <div class="footer">copyright resered by NNEBULA AI &copy;2017 - 2022</div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<script>
+    var seriesOptions = [],
+        seriesCounter = 0,
+        names = ['MSFT', 'AAPL', 'GOOG'];
+
+    /**
+     * Create the chart when all data is loaded
+     * @returns {undefined}
+     */
+    function createChart() {
+
+        Highcharts.stockChart('chart', {
+
+            rangeSelector: {
+                selected: 4
+            },
+
+            yAxis: {
+                    title: {
+                        text: 'Temperature'
+                    },
+                labels: {
+                    formatter: function () {
+                        return (this.value > 0 ? ' + ' : '') + this.value + '%';
+                    }
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 2,
+                    color: 'silver'
+                }]
+               
+            },
+
+            plotOptions: {
+                series: {
+                    compare: 'percent',
+                    showInNavigator: true
+                }
+            },
+
+            tooltip: {
+                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+                valueDecimals: 2,
+                split: true
+            },
+
+            series: seriesOptions
+        });
+    }
+
+    $.each(names, function (i, name) {
+
+        $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=' + name.toLowerCase() + '-c.json&callback=?', function (data) {
+
+            seriesOptions[i] = {
+                name: name,
+                data: data
+            };
+
+            // As we're loading the data asynchronously, we don't know what order it will arrive. So
+            // we keep a counter and create the chart when all the data is loaded.
+            seriesCounter += 1;
+
+            if (seriesCounter === names.length) {
+                createChart();
+            }
+        });
+    });
+
+</script>
+
+</html>

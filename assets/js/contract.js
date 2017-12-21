@@ -1,5 +1,3 @@
-
-
 /**
  * Event log class, for all events listening
  * @param result
@@ -21,14 +19,14 @@ if (typeof web3 !== 'undefined') {
     web3 = new Web3(web3.currentProvider);
 } else {
     // set the provider you want from Web3.providers
-    web3 = new Web3(new Web3.providers.HttpProvider("http://192.168.88.192:8042"));
+    web3 = new Web3(new Web3.providers.HttpProvider( "http://192.168.88.192:8042"));
 }
 const abi = (function () {
     let json = null;
     $.ajax({
         'async': false,
         'global': false,
-        'url': "../ABI/NebulaAi1.json",
+        'url': "assets/ABI/NebulaAi1.json",
         'dataType': "json",
         'success': function (data) {
             json = data;
@@ -54,11 +52,16 @@ const timeoutLimit = 60000; //1 min
  * Account is unlock for 10 min
  */
 const login = function () {
-    userHash = $("#walletHash").val();
-    let result = web3.personal.unlockAccount(userHash, $("#password").val(), timeoutLimit);
-
-    alert(result ? "Login successful" : "Login failed");
-
+    userHash = $("#input-name").val(); console.log(userHash);
+    let result = web3.personal.unlockAccount(userHash, $("#input-pass").val(), timeoutLimit);
+    if (result) {
+        var date = new Date();
+        document.cookie = "userHash=" + encodeURIComponent(userHash) + "; expires=" + date.setTime(date.getTime() + timeoutLimit);
+        window.open("index.html", "_self");
+    } else {
+        alert("incorrect wallet or password");
+    }
+    //console.log(result ? "Login successful" : "Login failed");  
 };
 
 /**
@@ -66,7 +69,7 @@ const login = function () {
  * @return {*|XML|string|void}
  */
 function uuidv4() {
-    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     )
 }
@@ -79,34 +82,59 @@ let currentTransactionHash;
  *
  * This is scratch version of the submit function
  */
-const submitOrder = function() {
+const submitOrder = function () {
     let addr = $("#dataUri").val();
     let scpt = $("#script").val();
     let outp = $("#output").val();
     let name = $("#taskName").val();
-    let uuid = uuidv4();//This should be moved to backend
-    let fee = web3.toWei(parseInt($("#fee").val()), "ether"); // a default value 2.06 is provided
+    let uuid = uuidv4(); uuid = uuid.replace(/-/g, "");  //This should be moved to backend
+    let fee = web3.toWei(parseInt(/*$("#fee").val()*/ 10), "ether"); // a default value 2.06 is provided
 
-    //TODO get uuid from backend after submitting the following data, for now just keep like this
+    let url = "http://192.168.88.187:8080/nebula-task/task/"; //debugger;
+    let postData = {
+        "uuid": uuid,
+        "datasetURI": addr,
+        "name": name,
+        "script": scpt,
+        "outputURI": outp,
+        "fee": fee
+    };                //console.log(postData)
 
-    //post
-    //url: 192.168.88.187:8080/nebula-task/task
-    //data :
-    // {
-    //     "uuid": uuid,
-    //     "datasetURI": addr,
-    //     "name": name,
-    //     "script": scpt,
-    //     "outputURI": outp,
-    //     "fee": fee
-    // }
-
-    //when this is completed
-
-    currentTransactionHash = nebulaAi.submitTask(uuid, {from: userHash, value: fee ,gas : submitTaskGas});
-
-    //This gives the hash of the task
-    console.log(currentTransactionHash);
+    /*$.get("http://192.168.88.187:8080/nebula-task/task/56", function(data){
+        console.log(data);
+    })*/
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: JSON.stringify({
+            "uuid": uuid,
+            "datasetURI": addr,
+            "name": name,
+            "script": scpt,
+            "outputURI": outp,
+            "fee": fee
+        }),
+        dataType: "json",
+        contentType: "application/json",
+        error: function (e) {
+            console.log(e);
+        },
+        success: function(data){                    console.log("Post result: ", data);
+            userHash = document.cookie.match('(^|;) ?userHash=([^;]*)(;|$)')[2];
+            userHash = userHash || "0x28ffd5cd3981f19e6b4256711cb0aa74d5ad3aaf"; console.log("userHash", userHash);
+            currentTransactionHash = nebulaAi.submitTask(uuid, { from: userHash, value: fee, gas: submitTaskGas }); console.log(currentTransactionHash, "uuid: " + uuid);
+            return currentTransactionHash;
+        }
+    })
+    
+    /*.done(function (data) {                                           
+        userHash = document.cookie.match('(^|;) ?userHash=([^;]*)(;|$)')[2];
+        userHash = userHash || "0x28ffd5cd3981f19e6b4256711cb0aa74d5ad3aaf"; console.log("userHash", userHash);
+        currentTransactionHash = nebulaAi.submitTask(uuid, { from: userHash, value: fee, gas: submitTaskGas }); console.log(currentTransactionHash, "uuid: " + uuid);
+        return currentTransactionHash;
+    }).fail(function () {
+        alert("error");
+    });*/
 };
 
 
@@ -116,7 +144,7 @@ const submitOrder = function() {
  */
 nebulaAi.taskSubmitted().watch(function (error, result) {
     let log = new EventLog(result);
-    if(result.transactionHash == currentTransactionHash){
+    if (result.transactionHash == currentTransactionHash) {
         console.log(log);
     }
 });

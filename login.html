@@ -47,6 +47,7 @@
 
         .page {
             height: 99%;
+
             display: grid;
             grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
             grid-template-rows: 10% 80% 10%;
@@ -148,36 +149,33 @@
             align-self: end;
         }
 
-        
-    </style>
+</style>
 </head>
 
 <body>
     <div id="login" class="page">
-        <div class="header">not a member? <button type="button" class="signup" ng-click="cancel()"><span>sign up</span></button></div>
+        <div class="header">not a member? <button type="button" class="signup"><span>sign up</span></button></div>
         <div class="login-content">
             <h2> <img src="assets/images/Nebula_Logo.png" alt="Nebula Logo"/></h2>
-            <form action="javascript:;" class="login-form" ng-submit="signin();">
+            <form action="javascript:;" class="login-form">
 
                 <div class="row">
-                    <input id="input-name" class="form-control" type="text" autocomplete="off" ng-model="user.name" placeholder="Username" name="name"
-                        required/>
+                    <input id="input-name" class="form-control" type="text" autocomplete="off"  placeholder="Wallet address" name="name" required/>
                 </div>
                 <div class="row" style='margin-bottom: -10px;'>
-                    <input id="input-pass" class="form-control" type="password" autocomplete="off" ng-model="user.password" placeholder="Password"
-                        name="password" required/>
+                    <input id="input-pass" class="form-control" type="password" autocomplete="off" placeholder="Password" name="password" required/>
                 </div>
                 <div class="row">
                     <div class="register" style="float: left">
                         <!--<a ui-sref="register" id="register" class="register"><span translate>Sign up</span></a>-->
                     </div>
                     <div class="forgot-password" style="float: right;">
-                        <a href="javascript:;" id="forget-password" class="forget-password" ng-click=""><span translate>Forget your password?</span></a>
+                        <a href="javascript:;" id="forget-password" class="forget-password" ><span translate>Forget your password?</span></a>
                     </div>
                 </div>
                 <div class="row" style="margin-top: 20px; clear: both;">
-                    <div style="float: left;"><button type="submit" class="formBtn"><span translate>LOGIN</span></button></div>
-                    <div style="float: right;"><button type="button" class="formBtn" ng-click="cancel()"><span translate>CANCEL</span></button></div>
+                    <div style="float: left;"><button type="submit" class="formBtn" onclick="login()"><span translate>LOGIN</span></button></div>
+                    <div style="float: right;"><button type="button" class="formBtn"><span translate>CANCEL</span></button></div>
                 </div>
 
             </form>
@@ -185,8 +183,12 @@
         </div>
         <div class="footer">copyright reseved by NEBULA AI &copy;2017 - 2022</div>
     </div>
-</body>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="assets/js/web3js_min.js"></script>
+    <script src="assets/js/contract.js"></script>
 <script>
 
 </script>
+</body>
+
 </html>

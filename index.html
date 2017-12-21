@@ -5,36 +5,12 @@
 <head>
     <title>Nebula Create task</title>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/main.css" rel="stylesheet" type="text/css" />
     <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0 auto;
-            padding: 0;
-        }
-
-        body {
-            background: #fff;
-            color:  #2F3238;
-            font-weight: 300;
-            font-size: 18px;
-            font-family: 'Titillium Web', sans-serif;
-            line-height: 28px;
-        }
-
-        .page {
-            height: 100%;
-            display: grid;
-            grid-template-columns: .5fr 1fr 2fr 1fr .5fr;
-            grid-template-rows: 10% 80% 10%;
-            /*grid-template-areas: 
-                "header header header header"
-                "main main . sidebar"
-                "footer footer footer footer";*/
-        }
 
         .mainContent {
-            grid-column: 3;
+            grid-column: 5/span 4;
+            grid-row:2/span 10;
             align-self: center;
             justify-self: center;
             width: 100%;
@@ -68,13 +44,10 @@
         .mainContent>.data-form input:focus{
             outline: none;
         }
+      
         button{
             font-size: 16px;
-            color: #fff;
             padding: 5px;
-            cursor: pointer;
-        }
-        .header button{
             background: #fff;
             border: 3px solid #2F3238;
             color: #2F3238;
@@ -86,20 +59,26 @@
             
         }
         div.header{
-            grid-column: 2/span 2; /* grid-column: 1/3;*/
+            grid-column: 2/span 4; /* grid-column: 1/3;*/
+            grid-row: 1;
             /*justify-self: end;*/
         }
         div.time{
-            grid-column: 4;
+            grid-column: 6/span 6;
+            grid-row:1;
             justify-self: end;
         }
-        div.footer{
-            grid-column: 2/span 3;
+        /*div.footer{
+            grid-column: 6/span 6;
+            grid-row: 12;
             justify-self: end;
             align-self: end;
             font-size: 12px;
+        }*/
+        div#payment{
+            display: none;
         }
-
+        input#amount{width:80px; height: 50px; font-size: 36px; color:orange;}
         
     </style>
 </head>
@@ -107,44 +86,66 @@
 <body>
     <div id="login" class="page">
         
-        <div class="header"><button type="button"><span>View All Tasks</span></button>
-                            <button type="button"><span>View Wallet</span></button></div>
-        <div class="time"><i class="fa fa-clock-o" aria-hidden="true"></i> Dec 3. 14:20</div>
+        <div class="header"><button type="button" onclick="window.open('history.html', '_self')"><span>View All Tasks</span></button>
+                            <button type="button" onclick="window.open('transaction.html', '_self')"><span>View Wallet</span></button></div>
+        <div class="time"><i class="fa fa-clock-o" aria-hidden="true"></i><span id="datetime"></span></div>
         <div class="mainContent">
             <h2><img src="assets/images/Nebula_Logo2.png" alt="Nebula Logo" /></h2>
             <form class="data-form" id="taskForm" action="#">
                 <p class="row">
-                    <label for="taskName">Task Name</label><input id="taskName" name="taskName" class="form-control" type="text" />
+                    <label for="taskName">Task Name</label><input id="taskName" name="taskName" class="form-control" type="text" placeholder="task name" />
                 </p>
                 <p class="row">
-                    <label for="dataUri">Data Uri</label><input id="dataUri" name="dataUri" class="form-control" type="text" />
+                    <label for="dataUri">Data Uri</label><input id="dataUri" name="dataUri" class="form-control" type="text" value="http://192.168.88.192:8080/data/usdbtc11261203unix.csv" disabled />
                 </p>
                 <p class="row">
-                    <label for="script">Script</label><input id="script" name="script" class="form-control" type="text" />
+                    <label for="script">Script</label><input id="script" name="script" class="form-control" type="text" placeholder=" arima / lstm / wavelet" value="arima" disabled />
                 </p>
                 <p class="row">
-                    <label for="output">Output</label><input id="output" name="output" class="form-control" type="text" />
+                    <label for="output">Output</label><input id="output" name="output" class="form-control" type="text" placeholder="default empty" />
                 </p>
                 <div class="row" style="text-align: center;">
                     <div><button type="submit" class="create">Create</button></div>
                 </div>
             </form>
-
+            <div id="payment">
+                <p style="font-size: 12px; color: #999;">Task is created successfully. Please pay the token to see the analysis</p>
+                <p>Suggestion Amount:<input id="amount" type="text" value="2.06" /> <span style="font-size: 12px; color: #999;">*The more you pay, less time you wait</span></p>
+                <p><button type="button" style="float: left; padding: 20px;" onclick="payToken()">Pay Token</button>
+                    <button type="button" style="float: right; padding: 20px; "><span>View Wallet</span></button></p>
+            </div>
         </div>
         <div class="footer">copyright reseved by NEBULA AI &copy;2017 - 2022</div>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="assets/js/web3js_min.js"></script>
+<script src="assets/js/contract.js"></script>
+<script src="assets/js/setDatetime.js"></script>
 <script>
     $("#taskForm").on("submit", function(e){
         e.preventDefault();
-        var data = {};
+        /*var data = {};
        $(this).serializeArray().map(function(x){data[x.name] = x.value;}); 
         console.log(data);
-        /*$.post("task.php", {dataUri: dataUri}, function(result){
+        $.post("task.php", {dataUri: dataUri}, function(result){
             console.log(result);
         });*/
+        var cth = submitOrder();
+        if(cth){
+            $("#payment").show();
+            $("button.create").hide();
+        }
     })
+    function payToken(){        console.log("payed");
+        let history = nebulaAi.myTaskHistoryClient();                              
+        $.each(history, function(index, value){                                              console.log(index, value);
+            let uuid = web3.toAscii(value);                                         console.log(uuid);
+        });
+        //console.log(nebulaAi.myTaskHistoryClient());
+        //window.open("output.html", "_self");
+    }
 
 </script>
+
 </html>

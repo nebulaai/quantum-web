@@ -4,68 +4,77 @@
 
 <head>
     <title>Nebula Create task</title>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+    />
     <link href="assets/css/main.css" rel="stylesheet" type="text/css" />
     <style>
-
         .mainContent {
             grid-column: 5/span 4;
-            grid-row:2/span 10;
+            grid-row: 2/span 10;
             align-self: center;
             justify-self: center;
             width: 100%;
-           
         }
-        .mainContent>.data-form p{
-            width:100%; 
-            border: 1px solid #999; 
+
+        .mainContent>.data-form p {
+            width: 100%;
+            border: 1px solid #999;
             overflow-x: hidden;
             display: flex;
-            flex-direction:row;
-        } 
-        .mainContent>h2{
+            flex-direction: row;
+        }
+
+        .mainContent>h2 {
             text-align: center;
         }
-        .mainContent>h2>img{
+
+        .mainContent>h2>img {
             width: 38%;
         }
-        .mainContent>.data-form label{
+
+        .mainContent>.data-form label {
             padding: 6px 15px;
             width: 20%;
-            background: #2F3238; color: #fff;
+            background: #2F3238;
+            color: #fff;
             display: inline-block;
         }
-        .mainContent>.data-form input.form-control{
+
+        .mainContent>.data-form input.form-control {
             padding: 6px 0px;
-            flex:1;
+            flex: 1;
             font-size: 16px;
             /*border: none;*/
         }
-        .mainContent>.data-form input:focus{
+
+        .mainContent>.data-form input:focus {
             outline: none;
         }
-      
-        button{
+
+        button {
             font-size: 16px;
             padding: 5px;
             background: #fff;
             border: 3px solid #2F3238;
             color: #2F3238;
         }
-        button.create{
+
+        button.create {
             background: orange;
             padding: 10px 25px;
             border: none;
-            
         }
-        div.header{
-            grid-column: 2/span 4; /* grid-column: 1/3;*/
+
+        div.header {
+            grid-column: 2/span 4;
+            /* grid-column: 1/3;*/
             grid-row: 1;
             /*justify-self: end;*/
         }
-        div.time{
+
+        div.time {
             grid-column: 6/span 6;
-            grid-row:1;
+            grid-row: 1;
             justify-self: end;
         }
         /*div.footer{
@@ -75,34 +84,44 @@
             align-self: end;
             font-size: 12px;
         }*/
-        div#payment{
+
+        div#payment {
             display: none;
         }
-        input#amount{width:80px; height: 50px; font-size: 36px; color:orange;}
-        
+
+        input#amount {
+            width: 80px;
+            height: 50px;
+            font-size: 36px;
+            color: orange;
+        }
     </style>
 </head>
 
 <body>
     <div id="login" class="page">
-        
+
         <div class="header"><button type="button" onclick="window.open('history.html', '_self')"><span>View All Tasks</span></button>
-                            <button type="button" onclick="window.open('transaction.html', '_self')"><span>View Wallet</span></button></div>
+            <button type="button" onclick="window.open('transaction.html', '_self')"><span>View Wallet</span></button></div>
         <div class="time"><i class="fa fa-clock-o" aria-hidden="true"></i><span id="datetime"></span></div>
         <div class="mainContent">
             <h2><img src="assets/images/Nebula_Logo2.png" alt="Nebula Logo" /></h2>
             <form class="data-form" id="taskForm" action="#">
                 <p class="row">
-                    <label for="taskName">Task Name</label><input id="taskName" name="taskName" class="form-control" type="text" placeholder="task name" />
+                    <label for="taskName">Task Name</label><input id="taskName" name="taskName" class="form-control" type="text"
+                        placeholder="task name" />
                 </p>
                 <p class="row">
-                    <label for="dataUri">Data Uri</label><input id="dataUri" name="dataUri" class="form-control" type="text" value="http://192.168.88.192:8080/data/usdbtc11261203unix.csv" disabled />
+                    <label for="dataUri">Data Uri</label><input id="dataUri" name="dataUri" class="form-control" type="text"
+                        value="http://192.168.88.192:8080/data/usdbtc11261203unix.csv" disabled />
                 </p>
                 <p class="row">
-                    <label for="script">Script</label><input id="script" name="script" class="form-control" type="text" placeholder=" arima / lstm / wavelet" value="arima" disabled />
+                    <label for="script">Script</label><input id="script" name="script" class="form-control" type="text" placeholder=" arima / lstm / wavelet"
+                        value="arima" />
                 </p>
                 <p class="row">
-                    <label for="output">Output</label><input id="output" name="output" class="form-control" type="text" placeholder="default empty" />
+                    <label for="output">Output</label><input id="output" name="output" class="form-control" type="text" placeholder="default empty"
+                    />
                 </p>
                 <div class="row" style="text-align: center;">
                     <div><button type="submit" class="create">Create</button></div>
@@ -123,28 +142,50 @@
 <script src="assets/js/contract.js"></script>
 <script src="assets/js/setDatetime.js"></script>
 <script>
-    $("#taskForm").on("submit", function(e){
+    $("#taskForm").on("submit", function (e) {
         e.preventDefault();
-        /*var data = {};
-       $(this).serializeArray().map(function(x){data[x.name] = x.value;}); 
-        console.log(data);
-        $.post("task.php", {dataUri: dataUri}, function(result){
-            console.log(result);
-        });*/
-        submitOrder(function(cth){    console.log(cth);
+
+        submitOrder(function () {    //console.log();
             $("#payment").show();
             $("button.create").hide();
         });
-        
+
     })
-    function payToken(){        console.log("payed");
-        let history = nebulaAi.myTaskHistoryClient();                              
-        $.each(history, function(index, value){                                              console.log(index, value);
-            let uuid = web3.toAscii(value);                                         console.log(uuid);
-        });
+    function payToken() {                           console.log("payed");
+
+        if ($("#amount").val() >= 2.06) {
+            let fee = web3.toWei(parseInt(/*$("#fee").val()*/ 10), "ether");
+            currentTransactionHash = nebulaAi.submitTask(uuid, { from: userHash, value: fee, gas: submitTaskGas }); console.log(currentTransactionHash)
+            $("#payment").empty().append("<div>Task ( " + taskname + " ) created ... <div>")
+                .append("<div>Transaction Hash: <a href='http://192.168.88.192:8000/#/tx/"+ currentTransactionHash +"' target='_blank'>"+currentTransactionHash+"</a></div>");
+
+        } else alert("Paytoke is less than 2.06. Please pay higher");
         //console.log(nebulaAi.myTaskHistoryClient());
         //window.open("output.html", "_self");
     }
+
+    nebulaAi.taskSubmitted().watch(function (error, result) {
+        let log = new EventLog(result);
+        if (result.transactionHash == currentTransactionHash) {
+            console.log(log);
+            $("#payment").append("<div>Task ( " + taskname + " ) submitted ... <div>");
+        }
+    });
+
+    nebulaAi.taskDispatched().watch(function (error, result) {
+                                                                                    console.log(result);
+        let log = new EventLog(result);                                             //console.log(log);
+        $("#payment").append("<div>Task ( " + taskname + " ) dispatched ... <div>")
+            .append("<div>Transaction Hash: <a href='http://192.168.88.192:8000/#/tx/"+ log.transactionHash +"' target='_blank'>"+log.transactionHash+"</a></div>");;
+    });
+    nebulaAi.taskCompleted().watch(function (error, result) {
+        console.log(result);
+        let log = new EventLog(result);                                             //console.log(log);
+        $("#payment").append("<div>Task ( " + taskname + " ) completed ... <div>")
+            .append("<div>Transaction Hash: <a href='http://192.168.88.192:8000/#/tx/"+ log.transactionHash +"' target='_blank'>"+log.transactionHash+"</a></div>")
+            .append("<div>We are going to transfer you to the output page<div>");
+        setTimeout(function () { window.open("history.html?uuid=" + uuid, "_self"); }, 500);
+    });
 
 </script>
 

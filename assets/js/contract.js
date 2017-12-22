@@ -47,6 +47,7 @@ const nebulaAi = NebulaAi.at(contractAddress);
 let userHash;
 const submitTaskGas = 300000;
 const timeoutLimit = 60000; //1 min
+let currentTransactionHash;
 /**
  * Unlock account function for temporary test usage,
  * Account is unlock for 10 min
@@ -74,7 +75,7 @@ function uuidv4() {
     )
 }
 
-let currentTransactionHash;
+
 /**
  * TODO 1. the gas here should be a constant value, since it is the same process every time
  * TODO 2. Some of the fee calculation can be done in frontend to save gas fee (safety???)
@@ -82,25 +83,27 @@ let currentTransactionHash;
  *
  * This is scratch version of the submit function
  */
+let uuid = uuidv4(); uuid = uuid.replace(/-/g, "");
+let taskname; 
 const submitOrder = function (callback) {
     let addr = $("#dataUri").val();
     let scpt = $("#script").val();
     let outp = $("#output").val();
-    let name = $("#taskName").val();
-    let uuid = uuidv4(); uuid = uuid.replace(/-/g, "");  //This should be moved to backend
+    taskname= $("#taskName").val();
+      //This should be moved to backend
     let fee = web3.toWei(parseInt(/*$("#fee").val()*/ 10), "ether"); // a default value 2.06 is provided
 
     let url = "http://192.168.88.187:8080/nebula-task/task/"; //debugger;
-    let postData = {
+    /*let postData = {
         "uuid": uuid,
         "datasetURI": addr,
         "name": name,
         "script": scpt,
         "outputURI": outp,
         "fee": fee
-    };                //console.log(postData)
+    };              
 
-    /*$.get("http://192.168.88.187:8080/nebula-task/task/56", function(data){
+    $.get("http://192.168.88.187:8080/nebula-task/task/56", function(data){
         console.log(data);
     })*/
     $.ajax({
@@ -109,7 +112,7 @@ const submitOrder = function (callback) {
         data: JSON.stringify({
             "uuid": uuid,
             "datasetURI": addr,
-            "name": name,
+            "name": taskname,
             "script": scpt,
             "outputURI": outp,
             "fee": fee
@@ -120,32 +123,14 @@ const submitOrder = function (callback) {
             console.log(e);
         },
         success: function(data){                    console.log("Post result: ", data);
-            userHash = document.cookie.match('(^|;) ?userHash=([^;]*)(;|$)')[2];
+            //userHash = document.cookie.match('(^|;) ?userHash=([^;]*)(;|$)')[2];
             userHash = userHash || "0x28ffd5cd3981f19e6b4256711cb0aa74d5ad3aaf";                                                                  //console.log("userHash", userHash);
-            currentTransactionHash = nebulaAi.submitTask(uuid, { from: userHash, value: fee, gas: submitTaskGas });                               //console.log(currentTransactionHash, "uuid: " + uuid);
-            callback(currentTransactionHash);
+            //currentTransactionHash = nebulaAi.submitTask(uuid, { from: userHash, value: fee, gas: submitTaskGas });                               //console.log(currentTransactionHash, "uuid: " + uuid);
+            callback();
             //return currentTransactionHash;
         }
     })
     
-    /*.done(function (data) {                                           
-        userHash = document.cookie.match('(^|;) ?userHash=([^;]*)(;|$)')[2];
-        userHash = userHash || "0x28ffd5cd3981f19e6b4256711cb0aa74d5ad3aaf"; console.log("userHash", userHash);
-        currentTransactionHash = nebulaAi.submitTask(uuid, { from: userHash, value: fee, gas: submitTaskGas }); console.log(currentTransactionHash, "uuid: " + uuid);
-        return currentTransactionHash;
-    }).fail(function () {
-        alert("error");
-    });*/
+ 
 };
 
-
-/**
- * This event contains the information about newly submitted tasks
- *
- */
-nebulaAi.taskSubmitted().watch(function (error, result) {
-    let log = new EventLog(result);
-    if (result.transactionHash == currentTransactionHash) {
-        console.log(log);
-    }
-});

@@ -131,11 +131,11 @@
         $.post("task.php", {dataUri: dataUri}, function(result){
             console.log(result);
         });*/
-        var cth = submitOrder();
-        if(cth){
+        submitOrder(function(cth){    console.log(cth);
             $("#payment").show();
             $("button.create").hide();
-        }
+        });
+        
     })
     function payToken(){        console.log("payed");
         let history = nebulaAi.myTaskHistoryClient();                              

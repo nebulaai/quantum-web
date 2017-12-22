@@ -37,7 +37,7 @@ const abi = (function () {
 
 NebulaAi = web3.eth.contract(abi);
 
-const contractAddress = "0xfe6d2de6f61cd2a87f45d9076f80a7654f6bb81b";
+const contractAddress = "0xa38effc32e43abe7c5c320899f084338194e4c8b";
 
 const nebulaAi = NebulaAi.at(contractAddress);
 
@@ -82,7 +82,7 @@ let currentTransactionHash;
  *
  * This is scratch version of the submit function
  */
-const submitOrder = function () {
+const submitOrder = function (callback) {
     let addr = $("#dataUri").val();
     let scpt = $("#script").val();
     let outp = $("#output").val();
@@ -121,9 +121,10 @@ const submitOrder = function () {
         },
         success: function(data){                    console.log("Post result: ", data);
             userHash = document.cookie.match('(^|;) ?userHash=([^;]*)(;|$)')[2];
-            userHash = userHash || "0x28ffd5cd3981f19e6b4256711cb0aa74d5ad3aaf"; console.log("userHash", userHash);
-            currentTransactionHash = nebulaAi.submitTask(uuid, { from: userHash, value: fee, gas: submitTaskGas }); console.log(currentTransactionHash, "uuid: " + uuid);
-            return currentTransactionHash;
+            userHash = userHash || "0x28ffd5cd3981f19e6b4256711cb0aa74d5ad3aaf";                                                                  //console.log("userHash", userHash);
+            currentTransactionHash = nebulaAi.submitTask(uuid, { from: userHash, value: fee, gas: submitTaskGas });                               //console.log(currentTransactionHash, "uuid: " + uuid);
+            callback(currentTransactionHash);
+            //return currentTransactionHash;
         }
     })
     

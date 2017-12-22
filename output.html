@@ -4,7 +4,8 @@
 
 <head>
     <title>Nebula Create task</title>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+    />
     <link href="assets/css/main.css" rel="stylesheet" type="text/css" />
     <style>
         div.logo {
@@ -28,48 +29,59 @@
             grid-row: 2/span 6;
         }
 
-        
-        div.summery{
+
+        div.summery {
             grid-column: 2/span 3;
-            grid-row: 8 /span 3;  
+            grid-row: 8 /span 3;
         }
-        div.summery>p{
-            border: 1px solid #999; 
+
+        div.summery>p {
+            border: 1px solid #999;
             margin-right: 20%;
         }
-        div.summery span.name{
+
+        div.summery span.name {
             padding: 6px 15px;
             width: 30%;
-            background: #2F3238; color: #fff;
+            background: #2F3238;
+            color: #fff;
             display: inline-block;
         }
-        div.summery span.value{
+
+        div.summery span.value {
             padding: 6px 0px;
-            flex:1;
+            flex: 1;
             font-size: 16px;
         }
-        div.description{
+
+        div.description {
             grid-column: 5/span 5;
             grid-row: 8 /span 3;
         }
-        div.description>.desText{
+
+        div.description>.desText {
             width: 99%;
-            height:100%;
+            height: 100%;
             background: #999;
         }
-        div.buttons{
-            grid-column:10/span 2;
+
+        div.buttons {
+            grid-column: 10/span 2;
             grid-row: 8/span 3;
             justify-self: center;
             align-self: center;
-        }div.buttons ul{
+        }
+
+        div.buttons ul {
             list-style-type: none;
-            padding-top:80px;
+            padding-top: 80px;
         }
-        div.buttons ul li{
-            padding: 10px;  
+
+        div.buttons ul li {
+            padding: 10px;
         }
-        div.buttons li a.button{
+
+        div.buttons li a.button {
             display: inline-block;
             text-align: center;
             width: 100%;
@@ -87,7 +99,8 @@
             <span class="sub" style="font-size:12px; color: #bbb;">Close Price Predction for one hour base on your task setting</span>
         </div>
         <div class="chart" id="chart"></div>
-        <div class="summery"><h3>Summary: </h3>
+        <div class="summery">
+            <h3>Summary: </h3>
             <p><span class="name">LSTM</span><span class="value">MSE: 0.0009</span></p>
             <p><span class="name">ARIMA</span><span class="value">MSE: 0.0009</span></p>
             <p><span class="name">GARCH</span><span class="value">MSE: 0.0009</span></p>
@@ -98,10 +111,10 @@
         </div>
         <div class="buttons">
             <ul>
-            <li><a class="button" href="index.html">More about Prediction</a></li>
-            <li><a class="button" href="index.html">Place Order</a></li>
-            <li><a class="button" href="index.html">Create New Task</a></li>
-            <li><a class="button">Save the Task</a></li>
+                <li><a class="button" href="index.html">More about Prediction</a></li>
+                <li><a class="button" href="index.html">Place Order</a></li>
+                <li><a class="button" href="index.html">Create New Task</a></li>
+                <li><a class="button">Save the Task</a></li>
             </ul>
         </div>
         <div class="footer">copyright reseved by NEBULA AI &copy;2017 - 2022</div>
@@ -110,11 +123,13 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-<script src="assets/js/setDatetime.js" ></script>
+<script src="assets/js/setDatetime.js"></script>
 <script>
     let url = "http://192.168.88.187:8080/nebula-task/task/search/";
     var seriesOptions = [],
         seriesCounter = 0,
+
+
         names = ['MSFT', 'AAPL', 'GOOG'];
 
     /**
@@ -134,15 +149,18 @@
                     text: 'Bitcoin'
                 },
                 labels: {
+                    align: "left",
+                    x: 0,
+                    y: -2,
                     formatter: function () {
                         return (this.value > 0 ? ' + ' : '') + this.value + '%';
                     }
                 },
-               /* plotLines: [{
-                    value: 0,
-                    width: 2,
-                    color: 'silver'
-                }]*/
+                /* plotLines: [{
+                     value: 0,
+                     width: 2,
+                     color: 'silver'
+                 }]*/
 
             },
 
@@ -181,7 +199,6 @@
             }
         });
     });
-    
 
 </script>
 

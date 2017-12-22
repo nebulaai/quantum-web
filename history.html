@@ -4,7 +4,8 @@
 
 <head>
     <title>Nebula Create task</title>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+    />
     <link href="assets/css/main.css" rel="stylesheet" type="text/css" />
     <style>
         .mainContent {
@@ -37,7 +38,12 @@
         }
 
         table tr td {
-            text-align: center;
+            /*text-align: center;*/
+            font-weight: bold;
+        }
+        table tr td span{
+            /*text-align: center;*/
+            font-weight: normal ;
         }
 
         #chart {
@@ -60,26 +66,26 @@
         <div class="mainContent">
             <h2>Task Detail (selected)</h2>
             <table class="task">
-                <thead>
+                <!--<thead>
                     <tr>
                         <th><span class="title" translate>Task Name</span></th>
                         <th><span class="title" translate>Data</span></th>
                         <th><span class="title" translate>Script</span></th>
                         <th><span class="title" translate>Status</span></th>
                     </tr>
-                </thead>
+                </thead>-->
                 <tbody>
                     <tr>
-                        <td>Task Name #1</td>
-                        <td>2017-08-10</td>
-                        <td>001script</td>
-                        <td>Complete</td>
+                        <td>Task Name: </td>
+                        <td><span id="taskName">Task name #5</span></td>
+                        <td>Script: </td>
+                        <td><span id"script">arima</span></td>
                     </tr>
                     <tr>
-                        <td>Task Name #1</td>
-                        <td>2017-08-10</td>
-                        <td>001script</td>
-                        <td>Complete</td>
+                        <td>MSE: </td>
+                        <td><span id="mse">758.9897072865382</span></td>
+                        <td>AVG_ERROR_RATE: </td>
+                        <td><span id="">0.03474418365026563</span></td>
                     </tr>
                 </tbody>
 
@@ -89,39 +95,96 @@
         </div>
         <div class="footer">copyright reseved by NEBULA AI &copy;2017 - 2022</div>
     </div>
-</body>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="assets/js/web3js_min.js"></script>
-<script src="assets/js/contract.js"></script>
-<script>
 
-    let history = nebulaAi.myTaskHistoryClient();
-    $.each(history, function (index, value) {                                              //console.log(index, value);
-        let uuid = web3.toAscii(value); console.log(uuid);
-        if(!isUnicode(uuid))
-            $("ul.histList").append("<li><a href='#'>" + uuid + "</a></li>");
-    });
-    function isUnicode(str) {
-        for (var i = 0; i < str.length; i++) {
-            if (str.charCodeAt(i) > 127) return true;
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="assets/js/web3js_min.js"></script>
+    <script src="assets/js/contract.js"></script>
+    <script>
+        let history = nebulaAi.myTaskHistoryClient();
+        let base_url = "http://192.168.88.187:8080/nebula-task/task/search/";
+        let tasks = {};
+        /*history.map(value=>{ });*/
+        $.each(history, function (index, value) {                                              //console.log(index, value);
+            let uuid = web3.toAscii(value);                                                     //console.log(uuid);
+            if (!isUnicode(uuid)) {                                                           //console.log(uuid);
+                $.ajax({
+                    url: "http://192.168.88.187:8080/nebula-task/task/search/findByUuid?uuid=" + uuid,
+                    type: "GET",
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(textStatus);
+                    },
+                    success: function (data) {                  //console.log(data);
+                        if (data) {
+                            //let result = JSON.parse(data);
+                            tasks[index] = data;                //console.log(uuid.toString())
+                            $("ul.histList").append("<li><a href='javascript:showChart(" + index + ")'>" + data.name + "</a></li>");
+                        }
+                    }
+                });
+
+            }
+
+        });
+
+        function showChart(index) {
+            console.log(index);
+            //$(".chart").empty();
+            let output = JSON.parse(tasks[index].outputJson);                                           console.log(output);
+            let dataUri = tasks[index].datasetURI;                                                      console.log(dataUri);
+            if (!output || !output.forecast) {
+                alert("data corrupted"); return;
+            }
+            if (dataUri && dataUri.indexOf(".csv") > 0)
+                $.get("http://192.168.88.192:8080/data/usdbtc11261203unix.csv", function (data) { //console.log(data);
+                    let jsonData = csvJSON(data);                                                                       
+                    console.log(jsonData);
+                    let timeInMs = Date.now();                       //console.log(timeInMs);
+                    let interval = 1000 * 60 * 5;                        //console.log(interval);
+                    let forecast = output.forecast.map((x, i) => [timeInMs + interval * i, x]);                        console.log(forecast);
+                    //let series = jsonData.concat(forecast);                                                      
+                    let seriesOptions=[];
+                    seriesOptions[0] = {
+                        name: tasks[index].name,
+                        data: jsonData
+                    };
+                    seriesOptions[1] = {
+                        name: tasks[index].name + " - forecast",
+                        data: forecast
+                    };
+                    createChart(seriesOptions);
+                });
+
         }
-        return false;
-    }
-    
-</script>
-<script src="https://code.highcharts.com/stock/highstock.js"></script>
-<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-<script>
-        var seriesOptions = [],
-            seriesCounter = 0,
-            names = ['MSFT', 'AAPL', 'GOOG'];
+        function isUnicode(str) {
+            for (var i = 0; i < str.length; i++) {
+                if (str.charCodeAt(i) > 127) return true;
+            }
+            return false;
+        }
+        function csvJSON(csv) {
 
-        /**
-         * Create the chart when all data is loaded
-         * @returns {undefined}
-         */
-        function createChart() {
+            var lines = csv.split("\n"), result = [];
+            for (var i = 1; i < lines.length; i++) {
+                var currentline = lines[i].replace(/\r/g, "").split(",").map((x, i)=> i==0? parseInt(x)*1000: parseInt(x));
+                result.push(currentline);
+            }
+            return result; //JSON
+        }
+    </script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script>
+        /*var seriesOptions = [],
+        seriesCounter = 0,
+        names = ['MSFT', 'AAPL', 'GOOG'];
 
+    ** Create the chart when all data is loaded
+     * @returns {undefined}
+     */
+        function createChart(seriesOption) {
+            let seriesOptions = [];
+            if(seriesOption.length>1) seriesOptions = seriesOption;
+            else seriesOptions.push(seriesOption)
             Highcharts.stockChart('chart', {
 
                 rangeSelector: {
@@ -130,7 +193,7 @@
 
                 yAxis: {
                     title: {
-                        text: 'Temperature'
+                        text: 'Price'
                     },
                     labels: {
                         formatter: function () {
@@ -142,7 +205,6 @@
                         width: 2,
                         color: 'silver'
                     }]
-
                 },
 
                 plotOptions: {
@@ -161,24 +223,20 @@
                 series: seriesOptions
             });
         }
-        let url = "http://192.168.88.187:8080/nebula-task/task/search/findByUuid?uuid=aaaa1c7970d443179a4f883cdbd645a1";
-        //url = 'https://www.highcharts.com/samples/data/jsonp.php?filename=msft-c.json&callback=?';
-        $.getJSON(url, function(data){                       //console.log(data.outputJson);
-            let output = JSON.parse(data.outputJson);        console.log(output.forecast);
-            let timeInMs = Date.now();                       console.log(timeInMs);
-            let interval = 1000*60*5;                        console.log(interval);
-            seriesOptions[0] = {
-                    name: name,
-                    data: data //output.forecast
-                };
+        /*let url = "http://192.168.88.187:8080/nebula-task/task/search/findByUuid?uuid=aaaa1c7970d443179a4f883cdbd645a1";
+        $.getJSON(url, function (data) {
+            let output = JSON.parse(data.outputJson);        //console.log(output.forecast);
+            let timeInMs = Date.now();                       //console.log(timeInMs);
+            let interval = 1000 * 60 * 5;                        //console.log(interval);
+            let forecast = output.forecast.map((x, i) => [timeInMs + interval * i, x]);                        //console.log(forecast);
+            let seriesOption = {
+                name: data.name,
+                data: forecast
+            };
+            createChart(seriesOption);
 
-                seriesCounter += 1;
-
-                if (seriesCounter === names.length) {
-                    createChart();
-                }
         });
-        /*$.each(names, function (i, name) {
+        $.each(names, function (i, name) {
             let url = 'https://www.highcharts.com/samples/data/jsonp.php?filename=' + name.toLowerCase() + '-c.json&callback=?';
            
             $.getJSON(url, function (data) {                       console.log(data)
@@ -197,7 +255,7 @@
                 }
             });
         });*/
-
-</script>
+    </script>
+</body>
 
 </html>

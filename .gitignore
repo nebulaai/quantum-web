@@ -51,3 +51,5 @@ fabric.properties
 
 web/WEB-INF/
 /.idea/
+/.idea/artifacts/
+/out/

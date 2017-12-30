@@ -1,0 +1,55 @@
+html,
+body {
+            height: 100%;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        body {
+            background: #fff;
+            color: #2F3238;
+            font-weight: 300;
+            font-size: 16px;
+            font-family: 'Titillium Web', sans-serif;
+            /*line-height: 28px;*/
+        }
+
+        .page {
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(12, 1fr);
+            /*grid-template-areas: 
+                "header header header header"
+                "main main . sidebar"
+                "footer footer footer footer";*/
+        }
+div.footer {
+            grid-column: 5/span 7;
+            grid-row: 12;
+            justify-self: end;
+            align-self: center;
+            font-size: 12px;
+        }
+
+a {
+	color: #7F8289;
+	font-size: 16px;
+    /*display: block;	*/
+    text-decoration: none;
+}
+
+a:hover {
+	color: #7F8289;
+}
+
+a.selected {
+	color: #DE5E60;
+}
+a.button {
+    font-size: 16px;
+    padding: 5px;
+    background: #fff;
+    border: 3px solid #2F3238;
+    color: #2F3238;
+}

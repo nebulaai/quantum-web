@@ -1,0 +1,489 @@
+[
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "taskId",
+        "type": "uint256"
+      }
+    ],
+    "name": "viewTask",
+    "outputs": [
+      {
+        "name": "displayId",
+        "type": "uint256"
+      },
+      {
+        "name": "uuid",
+        "type": "bytes32"
+      },
+      {
+        "name": "taskProgress",
+        "type": "uint256"
+      },
+      {
+        "name": "fee",
+        "type": "uint256"
+      },
+      {
+        "name": "minerAddress",
+        "type": "address"
+      },
+      {
+        "name": "senderAddress",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "worker",
+        "type": "address"
+      }
+    ],
+    "name": "removeEligibility",
+    "outputs": [
+
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+
+    ],
+    "name": "requestTask",
+    "outputs": [
+
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "version",
+    "outputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "valid",
+        "type": "bool"
+      },
+      {
+        "name": "version",
+        "type": "uint256"
+      },
+      {
+        "name": "previousVersion",
+        "type": "address"
+      },
+      {
+        "name": "newVersion",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "newAddress",
+        "type": "address"
+      }
+    ],
+    "name": "invalidateContract",
+    "outputs": [
+
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "miner",
+        "type": "address"
+      }
+    ],
+    "name": "giveEligibility",
+    "outputs": [
+
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "amIEligible",
+    "outputs": [
+      {
+        "name": "eligible",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawFromContract",
+    "outputs": [
+
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "uuid",
+        "type": "bytes32"
+      }
+    ],
+    "name": "submitTask",
+    "outputs": [
+
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+
+    ],
+    "name": "applyForMining",
+    "outputs": [
+
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "queueLength",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "taskId",
+        "type": "uint256"
+      },
+      {
+        "name": "progress",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateProgress",
+    "outputs": [
+
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "myTaskHistoryWorder",
+    "outputs": [
+      {
+        "name": "uuids",
+        "type": "bytes32[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "toBan",
+        "type": "address"
+      }
+    ],
+    "name": "banClient",
+    "outputs": [
+
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "amIBanned",
+    "outputs": [
+      {
+        "name": "ban",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "amIBusy",
+    "outputs": [
+      {
+        "name": "busy",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "taskId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getProgress",
+    "outputs": [
+      {
+        "name": "progress",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [
+
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "myTaskHistoryClient",
+    "outputs": [
+      {
+        "name": "uuids",
+        "type": "bytes32[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "versionName",
+        "type": "string"
+      },
+      {
+        "name": "previousAddress",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "fallback"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "newAddress",
+        "type": "address"
+      }
+    ],
+    "name": "contractUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "minerAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "eligible",
+        "type": "bool"
+      }
+    ],
+    "name": "eligibilityGiven",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "taskId",
+        "type": "uint256"
+      }
+    ],
+    "name": "taskSubmitted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "taskId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "progress",
+        "type": "uint256"
+      }
+    ],
+    "name": "taskProgressUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "taskId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "uuid",
+        "type": "bytes32"
+      }
+    ],
+    "name": "taskCompleted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "taskId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "uuid",
+        "type": "bytes32"
+      }
+    ],
+    "name": "taskIdInvalid",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "taskId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "uuid",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "fee",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "worker",
+        "type": "address"
+      }
+    ],
+    "name": "taskDispatched",
+    "type": "event"
+  }
+]

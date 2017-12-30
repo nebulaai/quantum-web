@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Trasaction</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/main.css" rel="stylesheet" type="text/css" />
+    <style>
+        
+        .mainContent {
+            grid-column: 5 /span 7;
+            grid-row: 2 /span 10;
+            padding: 20px;
+        }
+
+        div.left {
+            grid-column: 2/span 3;
+            grid-row: 1/span 12;
+            background: #2F3238;
+            padding: 20px;
+            color: #fff;
+        }
+
+        div.left img {
+            width: 60%;
+        }
+        div.leftMid{
+            grid-column: 2/span 3; 
+            grid-row: 2/11;
+            z-index: 2;
+            align-self: center;
+            color: #fff;
+            padding: 20px;
+        }
+        div.header {
+            grid-column: 5/ span 7;
+            grid-row: 1;
+            justify-self: end;
+            align-self: center;
+        }
+
+        table {
+            width: 100%; 
+        }
+
+        table tr td {
+            text-align: center;
+            padding: 5px;
+        }table td a.button{
+            background: orange;
+            color: #fff;
+            padding: 10px 25px;
+            border: none;
+        }
+       
+    </style>
+</head>
+
+<body>
+    <div id="login" class="page">
+
+        <div class="left"><a href="index.html"><img src="assets/images/Nebula_Logo.png" alt="Nebula Logo" /></a>
+        </div>
+        <div class="leftMid"><span style="font-size: 36px;">Account1</span><br />
+            <span style="font-size: 12px;">0x86eeE231op112vni</span><br /><br />
+            <table class="task">
+                <tbody>
+                    <tr>
+                        <td>3 BTC</td>
+                        <td>2 ETH</td>
+                    </tr>
+                    <tr>
+                        <td>0.00 USD</td>
+                        <td>5 TOKEN</td>
+                    </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><a class="button" href="index.html">Buy</a><!--<button type="button">Buy</button>--></td>
+                        <td> <a class="button" href="index.html">Send</a><!--<button type="button">Send</button>--></td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+        <div class="header"><a class="button" href="index.html">Back to Main</a></div>
+        <div class="mainContent">
+            <h2>Transaction History</h2>
+            <table class="task">
+                <thead>
+                    <tr>
+                        <th><span class="title" translate>Data</span></th>
+                        <th><span class="title" translate>Type</span></th>
+                        <th><span class="title" translate>Amount</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2017-08-10</td>
+                        <td>001script</td>
+                        <td>Complete</td>
+                    </tr>
+                    <tr>
+                        <td>2017-08-10</td>
+                        <td>001script</td>
+                        <td>Complete</td>
+                    </tr>
+                </tbody>
+
+            </table>
+            
+
+        </div>
+        <div class="footer">copyright reseved by NEBULA AI &copy;2017 - 2022</div>
+    </div>
+</body>
+</html>

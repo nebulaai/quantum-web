@@ -1,13 +1,10 @@
 [
   {
-    "constant": false,
+    "constant": true,
     "inputs": [
-      {
-        "name": "_task_address",
-        "type": "address"
-      }
+
     ],
-    "name": "confirmTask",
+    "name": "started",
     "outputs": [
       {
         "name": "",
@@ -15,18 +12,15 @@
       }
     ],
     "payable": false,
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": true,
     "inputs": [
-      {
-        "name": "_address",
-        "type": "address"
-      }
+
     ],
-    "name": "taskPosition",
+    "name": "task_id",
     "outputs": [
       {
         "name": "",
@@ -40,30 +34,17 @@
   {
     "constant": false,
     "inputs": [
-
+      {
+        "name": "_worker_address",
+        "type": "address"
+      }
     ],
-    "name": "joinAiQueue",
+    "name": "reassignTask",
     "outputs": [
       {
         "name": "",
         "type": "bool"
       }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_new_contract_address",
-        "type": "address"
-      }
-    ],
-    "name": "setNewVersion",
-    "outputs": [
-
     ],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -72,16 +53,13 @@
   {
     "constant": true,
     "inputs": [
-      {
-        "name": "_client_address",
-        "type": "address"
-      }
+
     ],
-    "name": "isEligible",
+    "name": "task_name",
     "outputs": [
       {
         "name": "",
-        "type": "bool"
+        "type": "bytes32"
       }
     ],
     "payable": false,
@@ -91,18 +69,133 @@
   {
     "constant": true,
     "inputs": [
-      {
-        "name": "_address",
-        "type": "address"
-      }
+
     ],
-    "name": "aiPosition",
+    "name": "worker",
     "outputs": [
       {
         "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+
+    ],
+    "name": "reportTaskContainsIssue",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "data_address",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_worker_address",
+        "type": "address"
+      }
+    ],
+    "name": "dispatchTask",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "parameters",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_completion_fee",
         "type": "uint256"
       }
     ],
+    "name": "reportTaskCompletion",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+
+    ],
+    "name": "confirmTaskAcquisition",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "cancelled",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -112,21 +205,133 @@
     "inputs": [
 
     ],
-    "name": "modifyTask",
+    "name": "output_address",
     "outputs": [
-
+      {
+        "name": "",
+        "type": "string"
+      }
     ],
     "payable": false,
-    "stateMutability": "pure",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "completed",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "task_issue",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "script_address",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "uuid",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "task_owner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "isWorkerAssigned",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+
+    ],
+    "name": "dispatcher",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": false,
     "inputs": [
-      {
-        "name": "_task_address",
-        "type": "address"
-      }
+
     ],
     "name": "cancelTask",
     "outputs": [
@@ -140,55 +345,6 @@
     "type": "function"
   },
   {
-    "constant": true,
-    "inputs": [
-
-    ],
-    "name": "owner",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-
-    ],
-    "name": "Queue_ai",
-    "outputs": [
-
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_client_address",
-        "type": "address"
-      }
-    ],
-    "name": "isBanned",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
     "inputs": [
       {
         "name": "_task_id",
@@ -203,136 +359,32 @@
         "type": "bytes32"
       },
       {
+        "name": "_data",
+        "type": "string"
+      },
+      {
         "name": "_script",
         "type": "string"
       },
       {
         "name": "_output",
         "type": "string"
-      }
-    ],
-    "name": "submitTask",
-    "outputs": [
-
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
+      },
       {
-        "name": "_client_address",
+        "name": "_params",
+        "type": "string"
+      },
+      {
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "name": "_worker",
         "type": "address"
       }
     ],
-    "name": "isWaiting",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_client_address",
-        "type": "address"
-      }
-    ],
-    "name": "banClient",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_client_address",
-        "type": "address"
-      }
-    ],
-    "name": "unbanClient",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_client_address",
-        "type": "address"
-      }
-    ],
-    "name": "isWorking",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-
-    ],
-    "name": "leaveAiQueue",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-
-    ],
-    "name": "applyForAiComputing",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
+    "payable": true,
+    "stateMutability": "payable",
     "type": "constructor"
   },
   {
@@ -340,29 +392,7 @@
     "inputs": [
       {
         "indexed": true,
-        "name": "_sender_address",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "name": "_task_address",
-        "type": "address"
-      }
-    ],
-    "name": "TaskSubmitted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "_worker_address",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "_task_address",
+        "name": "worker_address",
         "type": "address"
       }
     ],
@@ -373,36 +403,36 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "name": "_client_address",
+        "indexed": false,
+        "name": "_worker_address",
         "type": "address"
       }
     ],
-    "name": "AiEligible",
+    "name": "TaskReassigned",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": true,
-        "name": "_client_address",
-        "type": "address"
-      }
+
     ],
-    "name": "AiUnbanned",
+    "name": "TaskCancelled",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": true,
-        "name": "_client_address",
-        "type": "address"
-      }
+
     ],
-    "name": "ClientBanned",
+    "name": "TaskStarted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+
+    ],
+    "name": "TaskContainsIssue",
     "type": "event"
   },
   {
@@ -410,11 +440,11 @@
     "inputs": [
       {
         "indexed": false,
-        "name": "_new_address",
-        "type": "address"
+        "name": "_completion_fee",
+        "type": "uint256"
       }
     ],
-    "name": "NewVersionReleased",
+    "name": "TaskCompleted",
     "type": "event"
   }
 ]

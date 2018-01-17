@@ -1,0 +1,104 @@
+html,
+body {
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+body {
+    background: #DADADA;
+    background-image: url("../assets/images/quantai-background.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #2F3238;
+    font-weight: 300;
+    font-size: 16px;
+    font-family: 'Titillium Web', sans-serif;
+    /*line-height: 28px;*/
+}
+
+.page {
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    /*grid-template-areas:
+        "header header header header"
+        "main main . sidebar"
+        "footer footer footer footer";*/
+}
+div.footer {
+    text-align: center;
+    font-size: 12px;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+}
+
+a {
+	color: #7F8289;
+	font-size: 16px;
+    /*display: block;	*/
+    text-decoration: none;
+}
+
+a:hover {
+	color: #7F8289;
+}
+
+a.selected {
+	color: #DE5E60;
+}
+a.button {
+    font-size: 16px;
+    padding: 5px;
+    background: #fff;
+    border: 3px solid #2F3238;
+    color: #2F3238;
+}
+
+.header {
+    position: fixed;
+    height: 100px;
+    width: 100%;
+    padding: 10px;
+}
+
+.logo {
+    position: absolute;
+    left: 20px;
+    height: 100px;
+    width:100px;
+    
+}
+
+.header .action{
+    position: absolute;
+    right: 20px;
+    height: 50px;
+    width:150px;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.content .editor {
+    width: 40%;
+    margin-top: 150px;
+    margin-left: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.content .result {
+    margin-top: 150px;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

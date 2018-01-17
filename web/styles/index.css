@@ -1,0 +1,127 @@
+.mainContent {
+    grid-column: 5/span 4;
+    grid-row: 2/span 10;
+    align-self: center;
+    justify-self: center;
+    width: 100%;
+}
+
+.mainContent>.data-form p {
+    width: 100%;
+    border: 1px solid #999;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+}
+
+.mainContent>h2 {
+    text-align: center;
+}
+
+.mainContent>h2>img {
+    width: 38%;
+}
+
+.mainContent>.data-form label {
+    padding: 6px 15px;
+    width: 20%;
+    background: #2F3238;
+    color: #fff;
+    display: inline-block;
+}
+
+.mainContent>.data-form input.form-control {
+    padding: 6px 0px;
+    flex: 1;
+    font-size: 16px;
+    /*border: none;*/
+}
+
+.mainContent>.data-form input:focus {
+    outline: none;
+}
+
+button {
+    font-size: 16px;
+    padding: 5px;
+    background: #fff;
+    border: 3px solid #2F3238;
+    color: #2F3238;
+}
+
+button.create {
+    background: orange;
+    padding: 10px 25px;
+    border: none;
+}
+button.modify {
+    background: #0e90d2;
+    padding: 10px 25px;
+    border: none;
+}
+input.try{
+    background: greenyellow;
+    padding: 10px 25px;
+    border: none;
+}
+
+div.header {
+    grid-column: 2/span 4;
+    /* grid-column: 1/3;*/
+    grid-row: 1;
+    /*justify-self: end;*/
+}
+
+div.time {
+    grid-column: 6/span 6;
+    grid-row: 1;
+    justify-self: end;
+}
+/*div.footer{
+    grid-column: 6/span 6;
+    grid-row: 12;
+    justify-self: end;
+    align-self: end;
+    font-size: 12px;
+}*/
+
+div#payment {
+    display: none;
+}
+
+div#waitForTraining {
+    display: none;
+}
+
+div#showResultDiv{
+    display: none;
+}
+
+input#amount {
+    width: 80px;
+    height: 50px;
+    font-size: 36px;
+    color: orange;
+}
+
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+.upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+.btn-upload {
+    border: 2px solid gray;
+    color: gray;
+    background-color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+}

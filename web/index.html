@@ -3,70 +3,363 @@
 <html lang="en">
 
 <head>
-    <title>Nebula Create task</title>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/css/main.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/index.css" rel="stylesheet" type="text/css"/>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="assets/js/web3js_min.js"></script>
-    <script src="assets/js/contract.js"></script>
-    <script src="assets/js/index.js"></script>
-    <script src="assets/js/setDatetime.js"></script>
+    <title>Nebula AI Create Task</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Nebula AI blockchain tool">
+    <meta name="keywords" content="AI, Blockchain">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+    />
+    <link href="./styles/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+    <link href="./styles/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="./styles/main.css" rel="stylesheet" type="text/css" />
+    <!-- <link href="./styles/index.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="./assets/js/web3js_min.js"></script>
+    <script src="./assets/js/contract.js"></script>
+    <script src="./assets/js/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.js"></script>
 </head>
 
 <body>
-    <div id="login" class="page">
+    <div class="header">
+        <div class="logo">
+            <img src="./assets/images/Nebula_Logo2.png" alt="Nebula Logo" />
+        </div>
+        <div class="action">
+            <button type="button" class="btn btn-default" onclick="window.open('./templates/history.html', '_self')">
+                <span>View All Tasks</span>
+            </button>
+            <!-- <button type="button" class="btn btn-primary" onclick="window.open('./templates/transaction.html', '_self')">
+                <span>View Wallet</span>
+            </button> -->
+        </div>
+    </div>
 
+    <div class="content">
+        <div class="editor">
+            <h2>Quant AI task</h2>
+            <form class="data-form" id="taskForm" action="#">
+                <label for="taskName">Task Name</label>
+                <div class="input-group-lg">
+                    <input type="text" class="form-control" id="taskName" placeholder="task name" aria-describedby="basic-addon3">
+                </div>
+                <label for="dataUri">Training Script URI</label>
+                <div class="input-group-lg">
+                    <input id="dataUri" name="dataUri" class="form-control" type="text" value=""
+                        placeholder="python training script uri or upload to our server"/>
+                    <span class="input-group-btn" style="width:100%" id="btn-group-1">
+                        <button onclick="toggleUploadPanel()" class="btn btn-default" type="button">Upload</button>
+                        <button onclick="useDefault()" class="btn btn-default" type="button" style="align-content: right">Use our sample LSTM algorithm</button>
+                    </span>
+                </div>
+                <div id="uploadPanel" style="display: none">
+                    <input type="file" id="myFile" multiple size="1" onchange="uploadFile()">
+                    <button class="btn btn-default" type=button onclick="uploadFile()">Upload</button>
+                    <button class="btn btn-warning" type="button" onclick="toggleUploadPanel()">Back</button>
+                    <!--<form action="http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8080/" method=post enctype=multipart/form-data>-->
+                </div>
+                <!--<form enctype="multipart/form-data" action="/files" method="post">-->
+                    <!--<input id="image-file" type="file" />-->
+                <!--</form>-->
+                <label for="epoch">Epoch</label>
+                <div class="input-group-lg">
+                    <input id="epoch" name="epochAmount" class="form-control" type="text" value="20">
+                </div>
+                <div class="row" style="text-align: center">
+                    <button type="submit" class="btn btn-primary" id="create_task_btn">Create a new task</button>
+                    <button type="button" class="btn-info" style="display: none" id="mod_task_btn">Modify</button>
+                </div>
+            </form>
+            <div style="margin-top:10px; display: none" class="panel panel-info" id="payment">
+                <div class="panel-heading">Task confirmation</div>
+                <div style="padding: 20px;">
+                    <p style="font-size: 12px; color: #999;">
+                        Task has created successfully. Please pay the token to see the analysis
+                    </p>
+                    <label for="tx_fee_value">Suggestion Amount:</label>
+                    <div class="input-group-lg">
+                        <input id="tx_fee_value" name="epochAmount" class="form-control" type="text" value="5">
+                    </div>
+                    <div class="row" style="text-align: center">
+                        <button type="button" class="btn btn-primary" onclick="payToken()">Pay Token</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="result">
+            <div id="status">
+                <div id="transactionHash">
+
+                </div>
+                <div id="taskReceived">
+                    <h4>Task Contract Information</h4>
+                    <table>
+                        <tr>
+                            <td>Address : </td>
+                            <td id="task_add_cell"></td>
+                        </tr>
+                        <tr>
+                            <td>Task Id : </td>
+                            <td id="task_id_cell"></td>
+                        </tr>
+                        <tr>
+                            <td>UUID : </td>
+                            <td id="uuid_cell"></td>
+                        </tr>
+                        <tr>
+                            <td>Worker : </td>
+                            <td id="task_worker_cell"></td>
+                        </tr>
+                        <tr>
+                            <td>Issue : </td>
+                            <td id="task_ok_cell"></td>
+                        </tr>
+                        <tr>
+                            <td>Issue Reported txHash : </td>
+                            <td id="task_issue_txhash"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="taskDispatched">
+                    <h3>Task Dispatched</h3>
+                    <table>
+                        <tr>
+                            <td>Block : </td>
+                            <td id="dispatch_block"></td>
+                        </tr>
+                        <tr>
+                            <td>Block Hash : </td>
+                            <td id="dispatch_block_hash"></td>
+                        </tr>
+                        <tr>
+                            <td>Dispatch txHash :</td>
+                            <td id="task_disp_txhash"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="taskStarted">
+                    <h3>Task Started</h3>
+                    <table>
+                        <tr>
+                            <td>Block : </td>
+                            <td id="start_block"></td>
+                        </tr>
+                        <tr>
+                            <td>Block Hash : </td>
+                            <td id="start_block_hash"></td>
+                        </tr>
+                        <tr>
+                            <td>Starting txHash : </td>
+                            <td id="task_start_txhash"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="taskCompleted">
+                    <h3>Task Completed</h3>
+                    <table>
+                        <tr>
+                            <td>Block : </td>
+                            <td id="complete_block"></td>
+                        </tr>
+                        <tr>
+                            <td>Block Hash : </td>
+                            <td id="complete_block_hash"></td>
+                        </tr>
+                        <tr>
+                            <td>Completion txHash</td>
+                            <td id="task_compl_txhash"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">copyright reserved by NEBULA AI &copy;2017 - 2022</div>
+
+
+
+    <!-- <div id="mainBody" class="page">
         <div class="header">
-            <button type="button" onclick="window.open('history.html', '_self')"><span>View All Tasks</span></button>
-        <!--<div class="time"><i class="fa fa-clock-o" aria-hidden="true"></i><span id="datetime"></span></div>-->
+            <p id="contractReady" style="display: none; color:Green">Contract Ready</p>
+            <button type="button" onclick="window.open('./templates/history.html', '_self')">
+                <span>View All Tasks</span>
+            </button>
+            <button type="button" onclick="window.open('./templates/transaction.html', '_self')">
+                <span>View Wallet</span>
+            </button>
+        </div>
         <div class="mainContent">
-            <h2><img src="assets/images/Nebula_Logo2.png" alt="Nebula Logo" /></h2>
+            <h2>
+                <img src="../static/images/Nebula_Logo2.png" alt="Nebula Logo" />
+            </h2>
+
             <form class="data-form" id="taskForm" action="#">
                 <p class="row">
                     <label for="taskName">Task Name</label>
                     <input id="taskName" name="taskName" class="form-control" type="text" placeholder="task name" />
                 </p>
                 <p class="row">
-                    <label for="dataUri">Data Uri</label>
-                    <input id="dataUri" name="dataUri" class="form-control" type="text"
-                           value="http://192.168.88.192:8080/data/usdbtc11261203unix.csv"/>
+                    <label for="dataUri">Training Set URI</label>
+                    <input id="dataUri" name="dataUri" class="form-control" type="text" value="http://192.168.88.192:8080/data/rt-polarity.zip"
+                        placeholder="Zip/txt Training set address or upload to our server" />
+                    <button onclick="toggleUploadPanel()">Upload</button>
                 </p>
                 <p class="row">
-                    <label for="script">Script</label>
-                    <input id="script" name="script" class="form-control" type="text"
-                           placeholder=" arima / lstm / wavelet" value="arima" />
+                    <label for="epoch">Epoch</label>
+                    <input id="epoch" name="epochAmount" class="form-control" type="text" value="200">
                 </p>
-                <p class="row">
-                    <label for="output">Output</label>
-                    <input id="output" name="output" class="form-control" type="text" placeholder="default empty"/>
-                </p>
-                <div class="row" style="text-align: center;">
-                    <div><button type="submit" class="create">Create</button></div>
+                <div class="row" style="text-align: center">
+                    <button type="submit" class="btn-large" id="create_task_btn">Create a new task</button>
+                    <button type="button" class="btn-info" style="display: none" id="mod_task_btn">Modify</button>
+                </div>
+                <div class="row" style="text-align: center">
+                    Or
                 </div>
             </form>
-            <div id="payment">
-                <p style="font-size: 12px; color: #999;">Task is created successfully. Please pay the token to see the analysis</p>
-                <p>Suggestion Amount:<input id="amount" type="text" value="2.06" /> <span style="font-size: 12px; color: #999;">*The more you pay, less time you wait</span></p>
-                <p><button type="button" style="float: left; padding: 20px;" onclick="payToken()">Pay Token</button>
-                    <button type="button" style="float: right; padding: 20px; "><span>View Wallet</span></button></p>
+            <form id="testedModel" action="http://127.0.0.1:5000/tested_model" method="get" enctype=multipart/form-data class="row" style="text-align: center">
+                <input type=submit class="btn btn-info" value="Experiment with Pre-trained model">
+            </form>
+
+            <div id="uploadPanel" style="display: none">
+                <form action="http://127.0.0.1:5000/upload_local" method=post enctype=multipart/form-data>
+                    <p>
+                        <input class="btn btn-info" type=file name=file>
+                    </p>
+                    <p>
+                        <input class="btn btn-info" type=submit value=Upload>
+                        <button class="btn btn-warning" type="button" onclick="toggleUploadPanel()">Back</button>
+                    </p>
+                </form>
             </div>
+            <script>
+                $('.data-form').on('submit', function (e) {
+                    e.preventDefault();
+                    submitOrder(function () {    //console.log();
+                        $("#payment").show();
+                        $("#create_task_btn").hide();
+                        $("#mod_task_btn").show();
+                    }
+                    );
+                });
+            </script>
+
+            <div id="payment">
+                <p style="font-size: 12px; color: #999;">
+                    Task has created successfully. Please pay the token to see the analysis
+                </p>
+                <p>
+                    Suggestion Amount:
+                    <input id="tx_fee_value" type="text" value="10" />
+                </p>
+                <p>
+                    <button type="button" style="padding: 20px;" onclick="payToken()">Pay Token</button>
+                </p>
+            </div>
+            <div id="status">
+                <div id="transactionHash">
+
+                </div>
+                <div id="taskReceived">
+                    <h4>Task Contract Information</h4>
+                    <table>
+                        <tr>
+                            <td>Address : </td>
+                            <td id="task_add_cell"></td>
+                        </tr>
+                        <tr>
+                            <td>Task Id : </td>
+                            <td id="task_id_cell"></td>
+                        </tr>
+                        <tr>
+                            <td>UUID : </td>
+                            <td id="uuid_cell"></td>
+                        </tr>
+                        <tr>
+                            <td>Worker : </td>
+                            <td id="task_worker_cell"></td>
+                        </tr>
+                        <tr>
+                            <td>Issue : </td>
+                            <td id="task_ok_cell"></td>
+                        </tr>
+                        <tr>
+                            <td>Issue Reported txHash : </td>
+                            <td id="task_issue_txhash"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="taskDispatched">
+                    <h3>Task Dispatched</h3>
+                    <table>
+                        <tr>
+                            <td>Block : </td>
+                            <td id="dispatch_block"></td>
+                        </tr>
+                        <tr>
+                            <td>Block Hash : </td>
+                            <td id="dispatch_block_hash"></td>
+                        </tr>
+                        <tr>
+                            <td>Dispatch txHash :</td>
+                            <td id="task_disp_txhash"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="taskStarted">
+                    <h3>Task Started</h3>
+                    <table>
+                        <tr>
+                            <td>Block : </td>
+                            <td id="start_block"></td>
+                        </tr>
+                        <tr>
+                            <td>Block Hash : </td>
+                            <td id="start_block_hash"></td>
+                        </tr>
+                        <tr>
+                            <td>Starting txHash : </td>
+                            <td id="task_start_txhash"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="taskCompleted">
+                    <h3>Task Completed</h3>
+                    <table>
+                        <tr>
+                            <td>Block : </td>
+                            <td id="complete_block"></td>
+                        </tr>
+                        <tr>
+                            <td>Block Hash : </td>
+                            <td id="complete_block_hash"></td>
+                        </tr>
+                        <tr>
+                            <td>Completion txHash</td>
+                            <td id="task_compl_txhash"></td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="footer">copyright reserved by NEBULA AI &copy;2017 - 2022</div>
         </div>
-        <div class="footer">copyright reserved by NEBULA AI &copy;2017 - 2022</div>
     </div>
-    </div>
+    <div id="outputDivMain" style="display: none" class="page">
+        <div>
+
+        </div>
+    </div> -->
 </body>
-
-<script>
-    $("#taskForm").on("submit", function (e) {
-        e.preventDefault();
-
-        submitOrder(function () {    //console.log();
-            $("#payment").show();
-            $("button.create").hide();
-        });
-
-    });
-</script>
 
 </html>

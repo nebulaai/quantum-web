@@ -30,10 +30,10 @@ let complete_task_history_address = [];
  * @param to
  */
 const get_task_history = function (from, to ) {
-    initiateContract(function () {
+    initiateContract(function () {                                                              
         loadContract(
             function () {
-                nebulaAi.showTasks(function (error, result) {
+                nebulaAi.showTasks(function (error, result) {                   console.log(result);       
                     if (error) {
                         console.log(error);
                     } else {
@@ -103,7 +103,7 @@ const get_task_history = function (from, to ) {
                                     my_task_list[index].parameters = result;
                                 }
                             });
-                            my_task_list[index].address = result[i];
+                            my_task_list[index].address = result[i];                
                         }
                     }
                 });
@@ -111,7 +111,7 @@ const get_task_history = function (from, to ) {
         );
         prepareTaskContract();
         setTimeout(function(){
-            loadHistoryList()
+            loadHistoryList();
         },1000);
     });
 };
@@ -130,16 +130,16 @@ const loadTask = function (index) {
     $("#completed").html(t.completed);
     $("#error").html(t.has_issue);
     $("#params").html(t.parameters);
+    $("#btnChart").attr("href", "output.html");
 
 };
 
-const loadHistoryList = function (){
-    $.each(my_task_list, function(index, value){
+const loadHistoryList = function (){                        console.log(my_task_list);
+    $.each(my_task_list, function(index, value){                       
         $("ul.histList").append("<li><a href='javascript:loadTask(" + index + ")'>" + value.task_id + " - " + value.name + "</a></li>");
-
     });
 
-    loadTask(my_task_list.length-1);
+    loadTask(0);
 };
 
 
@@ -148,7 +148,7 @@ get_task_history();
 
 
 
-let base_url = "";
+//let base_url = "";
 // Temporarily unavailable
 // $.each(my_task_list, function (index, value) {
 //     let uuid = web3.toAscii(value.uuid);

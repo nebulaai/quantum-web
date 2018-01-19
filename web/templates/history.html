@@ -36,8 +36,12 @@
                 </button> 
         </div>
     </div>  
-    <div class="container-fluid content ">
-        <div class="taskdetail-content  col-xs-12 col-md-8">
+    <div class="container-fluid content">
+        <div class="row taskdetail-content">
+        <div class="col-xs-12 col-md-4">
+            <ul class="histList"></ul>
+        </div>
+        <div class="col-xs-12 col-md-8">
             <h2>Task Detail (selected)</h2>
             <table>
                 <tr>
@@ -73,9 +77,13 @@
                 <tr>
                     <td>Task Parameters</td><td id="params"></td>
                 </tr>
+                <tr><td colspan="2"><a id="btnChart" class="btn btn-primary">View Chart</a>
+                    </td>
+                </tr>
             </table>
-            <div id="chart"></div>
+            <!--<div id="chart"></div>-->
 
+        </div>
         </div>
         <div class="footer">
             copyright reseved by NEBULA AI &copy;2017 - 2022

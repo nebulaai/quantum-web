@@ -6,7 +6,7 @@ body {
 }
 
 body {
-    background: #DADADA;
+    /* background: #DADADA; */
     background-image: url("../assets/images/quantai-background.svg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -132,4 +132,12 @@ a.button {
 
 .data-form {
     width: 80%;
+}
+
+#chart {
+    position: absolute;
+    top:10%;
+    left:10%;
+    width: 80%;
+    height: 80%;
 }

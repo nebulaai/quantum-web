@@ -3,16 +3,25 @@
 <html lang="en">
 
 <head>
-    <title>Nebula Create task</title>
+    <title>Quant AI Result</title>
+
+    <meta charset="utf-8">
+    <meta name="description" content="Nebula AI blockchain tool">
+    <meta name="keywords" content="AI, Blockchain">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"
     />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
     <link href="../styles/main.css" rel="stylesheet" type="text/css" />
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="../scripts/setDatetime.js"></script>
     <style>
-        div.logo {
+        /* div.logo {
             grid-column: 2/span 2;
             justify-self: start;
             align-self: center;
@@ -20,7 +29,7 @@
 
         div.logo img {
             width: 60%;
-        }
+        } */
 
         div.time {
             grid-column: 5/span 7;
@@ -97,20 +106,24 @@
 
 <body>
     <div id="output" class="page">
-
-        <div class="logo">
-            <a href="index.html">
+        <div class="header">
+            <div class="logo">
                 <img src="../assets/images/Nebula_Logo2.png" alt="Nebula Logo" />
-            </a>
+            </div>
+            <div class="action">
+                <button type="button" class="btn btn-default" onclick="window.open('../index.html', '_self')">
+                    <span>Back to Main</span>
+                </button>
+            </div>
         </div>
-        <div class="time">
+        <!-- <div class="time">
             <i class="fa fa-clock-o" aria-hidden="true"></i>
             <span id="datetime"></span>
             <br />
             <span class="sub" style="font-size:12px; color: #bbb;">Close Price Predction for one hour base on your task setting</span>
-        </div>
+        </div> -->
         <div class="chart" id="chart"></div>
-        <div class="summery">
+        <!-- <div class="summery">
             <h3>Summary: </h3>
             <p>
                 <span class="name">LSTM</span>
@@ -144,8 +157,8 @@
                     <a class="button">Save the Task</a>
                 </li>
             </ul>
-        </div>
-        <div class="footer">copyright reseved by NEBULA AI &copy;2017 - 2022</div>
+        </div> -->
+        <div class="footer">Copyright reseved by NEBULA AI &copy;2017 - 2022</div>
     </div>
 </body>
 

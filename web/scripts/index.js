@@ -219,6 +219,7 @@ const waitingForTaskCompletion = function () {
                     let completion_fee = result.args._completion_fee;
                     showResult(completion_fee, "--", result.transactionHash, "--", result);
                     $('#taskCompleted').show();
+                    $('#report-loading').hide();
                     $('#view-report-btn').show();
                     $("#complete_block").html(createLinkToExplorer(result.blockNumber, "block"));
                     $('#complete_block_hash').html(createLinkToExplorer(result.blockHash, "block"));

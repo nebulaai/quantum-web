@@ -11,28 +11,23 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     color: #2F3238;
-    font-weight: 300;
     font-size: 16px;
     font-family: 'Titillium Web', sans-serif;
     /*line-height: 28px;*/
 }
 
-.page {
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(12, 1fr);
-    /*grid-template-areas:
-        "header header header header"
-        "main main . sidebar"
-        "footer footer footer footer";*/
-}
 div.footer {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-size: 12px;
     position: absolute;
     bottom: 10px;
     width: 100%;
+}
+
+div.footer img {
+    height:58px;
 }
 
 a {
@@ -69,7 +64,10 @@ a.button {
     left: 20px;
     height: 100px;
     width:100px;
-    
+}
+
+.logo img{
+    height: 100px;
 }
 
 .header .action{
@@ -80,13 +78,13 @@ a.button {
 }
 
 .content {
-    display: flex;
-    flex-direction: row;
+    /* display: flex;
+    flex-direction: row; */
 
 }
 
 .content .editor {
-    width: 40%;
+    padding: 20px;
     margin-top: 150px;
     margin-left: 100px;
     display: flex;
@@ -96,9 +94,42 @@ a.button {
 }
 
 .content .result {
-    margin-top: 150px;
-    width: 60%;
+    margin-top: 100px;
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.report-content {
+    margin: 20px 0;
+    padding: 5px; 
+    height: 68%;
+    overflow: scroll;
+    width: 750px; 
+    border: 1px solid #4a2f8e;
+    box-shadow: 2px 3px #888888;
+}
+
+
+.taskdetail-content  {
+    margin: 20px 0;
+    padding: 5px;
+    margin-top: 150px;
+    margin-left: 100px;
+    height: 68%;
+    width: 750px; 
+    border: 1px solid #4a2f8e;
+    box-shadow: 2px 3px #888888;
+}
+
+.report-content::-webkit-scrollbar { 
+    display: none; 
+}
+
+.input-group-lg {
+    margin-bottom: 10px;
+}
+
+.data-form {
+    width: 80%;
 }

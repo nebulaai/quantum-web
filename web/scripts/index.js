@@ -1,5 +1,5 @@
 initiateContract(function () {
-    loadContract(function () {});
+    loadContract(function () { });
     prepareTaskContract();
 });
 
@@ -12,7 +12,7 @@ const minimalFee = 5;
  * Temporary solution, this must move to backend
  * @return {*|XML|string|void}
  */
-const uuidv4 = function() {
+const uuidv4 = function () {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     ).replace(/-/g, "");
@@ -24,18 +24,18 @@ const uuidv4 = function() {
  */
 let currentOrder;
 const blocks = {
-    submit : {},
-    task : {
-        task_id:0,
-        uuid:"",
-        worker:"",
-        has_issue:false,
-        started:false,
-        completed:false
+    submit: {},
+    task: {
+        task_id: 0,
+        uuid: "",
+        worker: "",
+        has_issue: false,
+        started: false,
+        completed: false
     },
-    dispatch : {},
-    start : {},
-    complete : {}
+    dispatch: {},
+    start: {},
+    complete: {}
 };
 
 const useDefault = function () {
@@ -55,7 +55,7 @@ function Order(uuid, name, datasetUri, script, output, param) {
     this.scriptURI = script;
     this.outputURI = output;
     this.parameters = param;
-    this.fee = 10 * 10^18;
+    this.fee = 10 * 10 ^ 18;
     this.progress = 0;
     this.status = 0;
     this.transactionHash = "";
@@ -73,7 +73,7 @@ const submitOrder = function (callback) {
     let uuid = uuidv4();
     // let dataUri = $("#dataUri").val();
     let taskName = $("#taskName").val();
-    let params = { "epoch" : $("#epoch").val() };
+    let params = { "epoch": $("#epoch").val() };
     let scriptAddress = $("#dataUri").val();
 
     currentOrder = new Order(
@@ -99,6 +99,7 @@ $(document).ready(function () {
 });
 
 const waitingForSubmitConfirmation = function (result) {
+    $('#report-loading').show();
 
     currentOrder.setTransactionHash(result);
 
@@ -112,7 +113,7 @@ const waitingForSubmitConfirmation = function (result) {
 
 
     submitEvent.watch(function (error, result) {
-        if(result.args._sender_address.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
+        if (result.args._sender_address.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
             submitEvent.stopWatching();
             if (error) {
                 console.log("error: ", error);
@@ -161,15 +162,15 @@ const waitingForTaskDispatch = function () {
                 $("#taskDispatched").show();
 
 
-                $("#dispatch_block").html(createLinkToExplorer(result.blockNumber,"block"));
-                $("#dispatch_block_hash").html(createLinkToExplorer(result.blockHash,"block"));
-                $("#task_disp_txhash").html(createLinkToExplorer(result.transactionHash,"tx"));
+                $("#dispatch_block").html(createLinkToExplorer(result.blockNumber, "block"));
+                $("#dispatch_block_hash").html(createLinkToExplorer(result.blockHash, "block"));
+                $("#task_disp_txhash").html(createLinkToExplorer(result.transactionHash, "tx"));
                 myTaskWorker();
             }
         }
     });
 };
-const waitingForTaskStart = function(){
+const waitingForTaskStart = function () {
     //wait for start
     console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to start");
     let startEvent = nebulaAi.TaskConfirmed();
@@ -178,23 +179,23 @@ const waitingForTaskStart = function(){
             if (error) {
                 console.log(error);
             } else {
-                if(result.args._task_owner.toLowerCase() === web3.eth.defaultAccount.toLowerCase()){
+                if (result.args._task_owner.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
                     startEvent.stopWatching();
                     $('#taskStarted').show();
-                    console.log('Task '+currentOrder.taskContractAddress+' started');
-                    $('#start_block').html(createLinkToExplorer(result.blockNumber,"block"));
-                    $('#start_block_hash').html(createLinkToExplorer(result.blockHash,"tx"));
-                    $('#task_start_txhash').html(createLinkToExplorer(result.transactionHash,"tx"));
+                    console.log('Task ' + currentOrder.taskContractAddress + ' started');
+                    $('#start_block').html(createLinkToExplorer(result.blockNumber, "block"));
+                    $('#start_block_hash').html(createLinkToExplorer(result.blockHash, "tx"));
+                    $('#task_start_txhash').html(createLinkToExplorer(result.transactionHash, "tx"));
                 }
             }
         }
     );
 };
 
-const showResult = function(fee, hash){
-    console.log("Completion fee : " + fee +hash);
+const showResult = function (fee, hash) {
+    console.log("Completion fee : " + fee + hash);
     localStorage.setItem("completed", true);
-    localStorage.setItem("uuid",currentOrder.uuid);
+    localStorage.setItem("uuid", currentOrder.uuid);
     localStorage.setItem("task_address", currentOrder.taskContractAddress);
 
     console.log(localStorage.completed);
@@ -203,21 +204,22 @@ const showResult = function(fee, hash){
     window.open("output.html"); //, "_self"
 };
 
-const waitingForTaskCompletion = function(){
+const waitingForTaskCompletion = function () {
 
     //wait for completion
     console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to complete");
     let completionEvent = nebulaAi.TaskCompleted();
     completionEvent.watch(
         function (error, result) {
-            if(error){
+            if (error) {
                 console.log(error);
-            }else{
-                if(result.args._task_owner.toLowerCase() === web3.eth.defaultAccount.toLowerCase()){
+            } else {
+                if (result.args._task_owner.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
                     completionEvent.stopWatching();
                     let completion_fee = result.args._completion_fee;
-                    showResult(completion_fee,"--", result.transactionHash, "--",result);
+                    showResult(completion_fee, "--", result.transactionHash, "--", result);
                     $('#taskCompleted').show();
+                    $('#view-report-btn').show();
                     $("#complete_block").html(createLinkToExplorer(result.blockNumber, "block"));
                     $('#complete_block_hash').html(createLinkToExplorer(result.blockHash, "block"));
                     $('#task_compl_txhash').html(createLinkToExplorer(result.transactionHash, "tx"));
@@ -236,85 +238,88 @@ const payToken = function () {
     if (fee >= minimalFee) {
 
         currentOrder.fee = web3.toWei(fee, "ether");
-
-        nebulaAi.submitTask(
-            currentOrder.uuid,
-            currentOrder.name,
-            "",
-            currentOrder.scriptURI,
-            currentOrder.outputURI,
-            JSON.stringify(currentOrder.parameters),
-            {
-                value: currentOrder.fee
-            },
-            function (error, result) {
-                if(error){
-                    console.log(error);
-                }else{
-                    waitingForSubmitConfirmation(result);
-                    waitingForTaskDispatch();
-                    waitingForTaskStart();
-                    waitingForTaskCompletion();
-                }
-            });
-    }else alert("Minimum fee is less than 10 token, if you need more use the link below to get some token to try");
+        try {
+            nebulaAi.submitTask(
+                currentOrder.uuid,
+                currentOrder.name,
+                "",
+                currentOrder.scriptURI,
+                currentOrder.outputURI,
+                JSON.stringify(currentOrder.parameters),
+                {
+                    value: currentOrder.fee
+                },
+                function (error, result) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        waitingForSubmitConfirmation(result);
+                        waitingForTaskDispatch();
+                        waitingForTaskStart();
+                        waitingForTaskCompletion();
+                    }
+                });
+        } catch (error) {
+            alert('Please unlock your Metamask.');
+        }
+    } else alert("Minimum fee is less than 10 token, if you need more use the link below to get some token to try");
 };
 
-function isTaskStarted(){
+function isTaskStarted() {
     taskContractInstance.started(function (error, result) {
-        if(error){
+        if (error) {
             console.log(error);
-        }else{
+        } else {
             blocks.task.started = result;
         }
     });
 }
-function isTaskOk(){
+function isTaskOk() {
     taskContractInstance.task_issue(function (error, result) {
-        if(error){
+        if (error) {
             console.log(error);
-        }else{
+        } else {
             blocks.task.has_issue = result;
         }
     });
 }
-function isTaskCompleted(){
+function isTaskCompleted() {
     taskContractInstance.completed(function (error, result) {
-        if(error){
+        if (error) {
             console.log(error);
-        }else{
+        } else {
             blocks.task.completed = result;
         }
     });
 }
 
-function myTaskWorker(){
+function myTaskWorker() {
     taskContractInstance.worker(function (error, result) {
-        if(error){
+        if (error) {
             console.log(error);
-        }else{
+        } else {
             blocks.task.worker = result;
-            $("#task_worker_cell").empty().html(createLinkToExplorer(result,"address"));
+            $("#task_worker_cell").empty().html(createLinkToExplorer(result, "address"));
         }
     });
 }
 
 function getTaskID() {
     taskContractInstance.task_id(function (error, result) {
-        if(error){
+        if (error) {
             console.log(error);
-        }else{
+        } else {
             blocks.task.task_id = Number(result);
             $("#task_id_cell").empty().html(blocks.task.task_id);
         }
     })
 }
 
-function getUuid(){
+function getUuid() {
     taskContractInstance.uuid(function (error, result) {
-        if(error){
+        if (error) {
             console.log(error);
-        }else{
+        } else {
             blocks.task.uuid = result;
             $("#uuid_cell").empty().html(result);
         }
@@ -324,32 +329,32 @@ function getUuid(){
 
 
 function getTransaction(panel, block, hash) {
-    web3.eth.getTransaction(hash,function (error, result) {
-        if(error){
+    web3.eth.getTransaction(hash, function (error, result) {
+        if (error) {
             console.log(error);
-        }else{
+        } else {
             block = result;
             $(panel).show().empty().append(
                 "<h5>Transaction Details</h5>" +
                 "<table>" +
-                "<tr><td>Tx Hash : </td><td>"+createLinkToExplorer(result.hash,"tx")+"</td></tr>" +
-                "<tr><td>Block Number : </td><td>" + result.blockNumber+"</td></tr>" +
-                "<tr><td>Block Hash : </td><td>"+createLinkToExplorer(result.blockHash,"block")+"</td></tr>" +
-                "<tr><td>From Wallet : </td><td>"+createLinkToExplorer(result.from,"address")+"</td></tr>" +
-                "<tr><td>To Nebula Contract @: </td><td>"+createLinkToExplorer(result.to,"address")+"</td></tr>" +
-                "<tr><td>Gas Spent : </td><td>"+result.gas+"</td></tr>" +
-                "<tr><td>Gas Price : </td><td>"+ toEther(result.gasPrice) + "</td></tr>" +
-                "<tr><td>Fee : </td><td>"+ toEther(result.value)+"</td></tr>" +
+                "<tr><td>Tx Hash : </td><td>" + createLinkToExplorer(result.hash, "tx") + "</td></tr>" +
+                "<tr><td>Block Number : </td><td>" + result.blockNumber + "</td></tr>" +
+                "<tr><td>Block Hash : </td><td>" + createLinkToExplorer(result.blockHash, "block") + "</td></tr>" +
+                "<tr><td>From Wallet : </td><td>" + createLinkToExplorer(result.from, "address") + "</td></tr>" +
+                "<tr><td>To Nebula Contract @: </td><td>" + createLinkToExplorer(result.to, "address") + "</td></tr>" +
+                "<tr><td>Gas Spent : </td><td>" + result.gas + "</td></tr>" +
+                "<tr><td>Gas Price : </td><td>" + toEther(result.gasPrice) + "</td></tr>" +
+                "<tr><td>Fee : </td><td>" + toEther(result.value) + "</td></tr>" +
                 "</table>"
             );
         }
     });
 }
-function createLinkToExplorer(fill, type){
-    return "<a href='http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8000/#/"+type+"/"+fill+"' target='_blank'>"+fill+"</a>"
+function createLinkToExplorer(fill, type) {
+    return "<a href='http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8000/#/" + type + "/" + fill + "' target='_blank'>" + fill + "</a>"
 }
 
-function toEther(value){
+function toEther(value) {
     return web3.fromWei(value, 'ether');
 }
 

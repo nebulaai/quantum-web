@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Nebula AI Create Task</title>
+    <title>Nebula AI Quantum</title>
     <meta charset="utf-8">
     <meta name="description" content="Nebula AI blockchain tool">
     <meta name="keywords" content="AI, Blockchain">
@@ -84,7 +84,7 @@
                         <input id="tx_fee_value" name="epochAmount" class="form-control" type="text" value="5">
                     </div>
                     <div class="row" style="text-align: center">
-                        <button type="button" class="btn btn-primary" onclick="payToken()">Pay Token</button>
+                        <button type="button" class="btn btn-primary"  style="background-color: #4a2f8e;" onclick="payToken()">Pay Token</button>
                     </div>
                 </div>
             </div>
@@ -178,6 +178,11 @@
                         </tr>
                     </table>
                 </div>
+               
+            </div>
+            <div class="row" style="text-align: center; margin-top:10px;">
+                <i id="report-loading" class="fa fa-spinner fa-spin" style="font-size:24px; display:none;"></i>
+                <button id="view-report-btn" style="background-color: #4a2f8e; display:none;" class="btn btn-primary">View reports</button>
             </div>
         </div>
     </div>

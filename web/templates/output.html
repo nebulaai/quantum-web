@@ -6,7 +6,11 @@
     <title>Nebula Create task</title>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"
     />
-    <link href="assets/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../styles/main.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="../scripts/setDatetime.js"></script>
     <style>
         div.logo {
             grid-column: 2/span 2;
@@ -94,16 +98,32 @@
 <body>
     <div id="output" class="page">
 
-        <div class="logo"><a href="index.html"><img src="assets/images/Nebula_Logo2.png" alt="Nebula Logo" /></a></div>
-        <div class="time"><i class="fa fa-clock-o" aria-hidden="true"></i><span id="datetime"></span><br />
+        <div class="logo">
+            <a href="index.html">
+                <img src="../assets/images/Nebula_Logo2.png" alt="Nebula Logo" />
+            </a>
+        </div>
+        <div class="time">
+            <i class="fa fa-clock-o" aria-hidden="true"></i>
+            <span id="datetime"></span>
+            <br />
             <span class="sub" style="font-size:12px; color: #bbb;">Close Price Predction for one hour base on your task setting</span>
         </div>
         <div class="chart" id="chart"></div>
         <div class="summery">
             <h3>Summary: </h3>
-            <p><span class="name">LSTM</span><span class="value">MSE: 0.0009</span></p>
-            <p><span class="name">ARIMA</span><span class="value">MSE: 0.0009</span></p>
-            <p><span class="name">GARCH</span><span class="value">MSE: 0.0009</span></p>
+            <p>
+                <span class="name">LSTM</span>
+                <span class="value">MSE: 0.0009</span>
+            </p>
+            <p>
+                <span class="name">ARIMA</span>
+                <span class="value">MSE: 0.0009</span>
+            </p>
+            <p>
+                <span class="name">GARCH</span>
+                <span class="value">MSE: 0.0009</span>
+            </p>
         </div>
         <div class="description">
             <h3>Description</h3>
@@ -111,25 +131,28 @@
         </div>
         <div class="buttons">
             <ul>
-                <li><a class="button" href="index.html">More about Prediction</a></li>
-                <li><a class="button" href="index.html">Place Order</a></li>
-                <li><a class="button" href="index.html">Create New Task</a></li>
-                <li><a class="button">Save the Task</a></li>
+                <li>
+                    <a class="button" href="index.html">More about Prediction</a>
+                </li>
+                <li>
+                    <a class="button" href="index.html">Place Order</a>
+                </li>
+                <li>
+                    <a class="button" href="index.html">Create New Task</a>
+                </li>
+                <li>
+                    <a class="button">Save the Task</a>
+                </li>
             </ul>
         </div>
         <div class="footer">copyright reseved by NEBULA AI &copy;2017 - 2022</div>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://code.highcharts.com/stock/highstock.js"></script>
-<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-<script src="assets/js/setDatetime.js"></script>
+
 <script>
     let url = "http://192.168.88.187:8080/nebula-task/task/search/";
     var seriesOptions = [],
         seriesCounter = 0,
-
-
         names = ['MSFT', 'AAPL', 'GOOG'];
 
     /**

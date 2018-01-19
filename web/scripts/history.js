@@ -1,5 +1,4 @@
 
-
 function TaskInfo(contract){
     this.contract = contract;
     this.error = false;
@@ -112,7 +111,7 @@ const get_task_history = function (from, to ) {
         prepareTaskContract();
         setTimeout(function(){
             loadHistoryList()
-        },1000);
+        },3000);
     });
 };
 

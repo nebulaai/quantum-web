@@ -11,7 +11,7 @@ const contractAddress = "0x44b3ab87604ea9e778d81e4af55977c4a7e21a4d"; //Helix v0
 
 const loadContract = function(callback) {
     $.ajax({
-        url: "../assets/ABI/NebulaAi1.json",
+        url: "http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8080/quantum/assets/ABI/NebulaAi1.json",
         dataType: "json",
         error: function (e) {
             console.log(e);
@@ -28,7 +28,7 @@ const loadContract = function(callback) {
 };
 const prepareTaskContract = function(){
     $.ajax({
-        url: "../assets/ABI/Task_1.json",
+        url: "http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8080/quantum/assets/ABI/Task_1.json",
         dataType: "json",
         error: function (e) {
             console.log(e);

@@ -322,7 +322,7 @@ function getUuid() {
             console.log(error);
         } else {
             blocks.task.uuid = result;
-            $("#uuid_cell").empty().html(result);
+            $("#uuid_cell").empty().html(web3.fromAscii(result));
         }
     })
 }

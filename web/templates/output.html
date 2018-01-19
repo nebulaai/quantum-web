@@ -19,8 +19,8 @@
     <link href="../styles/main.css" rel="stylesheet" type="text/css" />
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-    <script src="../scripts/setDatetime.js"></script>
-    <style>
+    <!--<script src="../scripts/setDatetime.js"></script>-->
+    <!--<style>
         /* div.logo {
             grid-column: 2/span 2;
             justify-self: start;
@@ -101,7 +101,7 @@
             background: #2F3238;
             color: #fff;
         }
-    </style>
+    </style>-->
 </head>
 
 <body>
@@ -161,17 +161,66 @@
         <div class="footer">Copyright reseved by NEBULA AI &copy;2017 - 2022</div>
     </div>
 </body>
-
 <script>
+    let url = "http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8080/nebula/scripts/testoutput3";
+    let startTime, endTime, forecast=[], states = ["open", "high", "low", "close"]; 
+    $.getJSON(url, function (data) {                           
+        let times = JSON.parse(Object.keys(data.script.open[0])[0]);                        //console.log(times_forecast);
+        endTime = times[0]*1000 - 300;
+        startTime = times[0]*1000 - 15000;
+        times.map((x,i)=> {                    console.log(x,i);
+            states.map((y, j)=>{
+                
+            });
+            //forecast.push([x, ])
+        });
+
+        $.each(states, function(index, value){       
+            //let state = data.script[value][0];                                  console.log(state[Object.keys(state)]);
+            //state[Object.keys(state)].map(x=>)
+           
+        });
+    });
+
+    function createChart(data){
+        Highcharts.stockChart('container', {
+
+            rangeSelector: {
+                selected: 1
+            },
+
+            title: {
+                text: 'Bitcoin Price'
+            },
+
+            series: [{
+                type: 'candlestick',
+                name: 'Bitcoin Price',
+                data: data,
+                dataGrouping: {
+                    units: [
+                        [
+                            'week', // unit name
+                            [1] // allowed multiples
+                        ], [
+                            'month',
+                            [1, 2, 3, 4, 6]
+                        ]
+                    ]
+                }
+            }]
+        });
+    }
+
+</script>
+<!--<script>
     let url = "http://192.168.88.187:8080/nebula-task/task/search/";
+    
     var seriesOptions = [],
         seriesCounter = 0,
         names = ['MSFT', 'AAPL', 'GOOG'];
 
-    /**
-     * Create the chart when all data is loaded
-     * @returns {undefined}
-     */
+   
     function createChart() {
 
         Highcharts.stockChart('chart', {
@@ -192,11 +241,7 @@
                         return (this.value > 0 ? ' + ' : '') + this.value + '%';
                     }
                 },
-                /* plotLines: [{
-                     value: 0,
-                     width: 2,
-                     color: 'silver'
-                 }]*/
+               
 
             },
 
@@ -226,8 +271,6 @@
                 data: data
             };
 
-            // As we're loading the data asynchronously, we don't know what order it will arrive. So
-            // we keep a counter and create the chart when all the data is loaded.
             seriesCounter += 1;
 
             if (seriesCounter === names.length) {
@@ -236,6 +279,6 @@
         });
     });
 
-</script>
+</script>-->
 
 </html>

@@ -1,7 +1,7 @@
 initiateContract(function () {
     loadContract(function () { });
     prepareTaskContract();
-});
+});                                                                     ///console.log(nebulaAi);
 
 const scriptAddressDefault = "http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8080/script/Nebula_LSTM.py";
 const outputAddress = "http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8080/nebula-quantum/create/";
@@ -43,8 +43,9 @@ const useDefault = function () {
 };
 
 const toggleUploadPanel = function () {
-    $("#btn-group-1").slideToggle();
-    $("#uploadPanel").slideToggle();
+    //$("#btn-group-1").slideToggle();
+    //$("#uploadPanel").slideToggle();
+    alert("The function isn't ready yet.\n Coming soon!!!");
 };
 
 
@@ -89,6 +90,9 @@ const submitOrder = function (callback) {
 };
 
 $(document).ready(function () {
+    // changes ex, input placeholder to default value
+    $("#dataUri").focus().attr('value', scriptAddressDefault);
+    ////////end changes
     $('.data-form').on('submit', function (e) {
         e.preventDefault();
         submitOrder(function () {
@@ -175,7 +179,7 @@ const waitingForTaskStart = function () {
     console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to start");
     let startEvent = nebulaAi.TaskConfirmed();
     startEvent.watch(
-        function (error, result) {
+        function (error, result) {                                      console.log(result);
             if (error) {
                 console.log(error);
             } else {
@@ -210,7 +214,7 @@ const waitingForTaskCompletion = function () {
     console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to complete");
     let completionEvent = nebulaAi.TaskCompleted();
     completionEvent.watch(
-        function (error, result) {
+        function (error, result) {                                      console.log(result);
             if (error) {
                 console.log(error);
             } else {
@@ -232,9 +236,9 @@ const waitingForTaskCompletion = function () {
 };
 
 const payToken = function () {
-    let fee = parseFloat($("#tx_fee_value").val());
+    let fee = parseFloat($("#tx_fee_value").val());                               console.log(JSON.stringify(currentOrder.parameters));
 
-    console.log(JSON.stringify(currentOrder.parameters));
+    
 
     if (fee >= minimalFee) {
 
@@ -260,8 +264,8 @@ const payToken = function () {
                         waitingForTaskCompletion();
                     }
                 });
-        } catch (error) {
-            alert('Please unlock your Metamask.');
+        } catch (error) { console.log(error);
+            //alert('submit error.');
         }
     } else alert("Minimum fee is less than 10 token, if you need more use the link below to get some token to try");
 };

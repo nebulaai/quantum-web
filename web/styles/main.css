@@ -38,7 +38,8 @@ a {
 }
 
 a:hover {
-	color: #7F8289;
+    color: #7F8289;
+    text-decoration: none;
 }
 
 a.selected {
@@ -116,10 +117,10 @@ a.button {
     padding: 5px;
     margin-top: 150px;
     margin-left: 100px;
-    height: 68%;
+    /*height: 68%;
     width: 750px; 
     border: 1px solid #4a2f8e;
-    box-shadow: 2px 3px #888888;
+    box-shadow: 2px 3px #888888;*/
 }
 
 .report-content::-webkit-scrollbar { 

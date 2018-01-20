@@ -104,9 +104,10 @@ a.button {
 .report-content {
     margin: 20px 0;
     padding: 5px; 
-    height: 68%;
+    height: 65%;
+    max-height: 68%;
     overflow: scroll;
-    width: 750px; 
+    width: 90%; 
     border: 1px solid #4a2f8e;
     box-shadow: 2px 3px #888888;
 }

@@ -163,28 +163,50 @@
 </body>
 <script>
     let url = "http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8080/nebula/scripts/testoutput3";
-    let startTime, endTime, forecast=[], states = ["open", "high", "low", "close"]; 
-    $.getJSON(url, function (data) {                           
+    let startTime, endTime, forecast = [], states = ["open", "high", "low", "close"];
+    $.getJSON(url, function (data) {
         let times = JSON.parse(Object.keys(data.script.open[0])[0]);                        //console.log(times_forecast);
-        endTime = times[0]*1000 - 300;
-        startTime = times[0]*1000 - 15000;
-        times.map((x,i)=> {                    console.log(x,i);
-            states.map((y, j)=>{
-                
-            });
-            //forecast.push([x, ])
-        });
+        endTime = times[0] - 300;
+        startTime = times[0] - 15000;                              //console.log(startTime,endTime);
+        times.map((x, i) => {
+            let arr = [x * 1000];
+            states.map((value, index) => {
+                let state = data.script[value][0];                                      //console.log(state[Object.keys(state)]);
+                state[Object.keys(state)].map((y, j) => {
+                    if (i === j) { arr.push(y) }
+                });
+            });                                                                         //console.log(arr);
 
-        $.each(states, function(index, value){       
-            //let state = data.script[value][0];                                  console.log(state[Object.keys(state)]);
-            //state[Object.keys(state)].map(x=>)
-           
+            forecast.push(arr);
         });
+        getTaskData(startTime, endTime);                                                                                      //console.log(forecast);
+        //createChart(forecast);
+
     });
+    function getTaskData(startTime, endTime) {
+        let taskData = [];
+        let taskUrl = "https://poloniex.com/public?period=300&command=returnChartData&currencyPair=USDT_ETH&start=" + startTime + "&end=" + endTime;
+        $.getJSON(taskUrl, function (data) {                                                          //console.log(data);
+            data.map(x => {
+                let arr = [x.date * 1000];
+                states.map(y => {
+                    arr.push(x[y]);
+                });                             //console.log(arr);
+                taskData.push(arr);
+            });
+            createChart(taskData);
+        });
 
-    function createChart(data){
-        Highcharts.stockChart('container', {
-
+    }
+    function createChart(data) {
+        Highcharts.stockChart('chart', {
+            plotOptions: {
+                candlestick: {
+                    lineColor: '#2f7ed8',
+                    upLineColor: 'silver', // docs
+                    upColor: 'silver'
+                }
+            },
             rangeSelector: {
                 selected: 1
             },
@@ -196,18 +218,15 @@
             series: [{
                 type: 'candlestick',
                 name: 'Bitcoin Price',
-                data: data,
-                dataGrouping: {
-                    units: [
-                        [
-                            'week', // unit name
-                            [1] // allowed multiples
-                        ], [
-                            'month',
-                            [1, 2, 3, 4, 6]
-                        ]
-                    ]
-                }
+                data: data//,
+            }, {
+                type: 'candlestick',
+                name: 'forecast',
+                data: forecast,
+                color: "#FF0000",
+                lineColor: '#FF0000',
+                upLineColor: '#FF0000', // docs
+                upColor: '#FF0000'
             }]
         });
     }

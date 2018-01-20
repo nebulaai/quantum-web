@@ -134,8 +134,10 @@ const loadTask = function (index) {
 
 };
 
-const loadHistoryList = function (){                        console.log(my_task_list);
-    $.each(my_task_list, function(index, value){                       
+const loadHistoryList = function (){                       
+    console.log(my_task_list);
+    $.each(my_task_list, function(index, value){   
+        $('#history-loading').hide();                    
         $("ul.histList").append("<li><a href='javascript:loadTask(" + index + ")'>" + value.task_id + " - " + value.name + "</a></li>");
     });
 

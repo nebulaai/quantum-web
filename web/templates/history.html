@@ -31,62 +31,80 @@
             <img src="../assets/images/Nebula_Logo2.png" alt="Nebula Logo" />
         </div>
         <div class="action">
-                <button type="button" class="btn btn-default" onclick="window.open('../index.html', '_self')">
-                    <span>Back to Main</span>
-                </button> 
+            <button type="button" class="btn btn-default" onclick="window.open('../index.html', '_self')">
+                <span>Back to Main</span>
+            </button>
         </div>
-    </div>  
+    </div>
     <div class="container-fluid content">
         <div class="row taskdetail-content">
-        <div class="col-xs-12 col-md-4">
-            <ul class="histList"></ul>
-        </div>
-        <div class="col-xs-12 col-md-8">
-            <h2>Task Detail (selected)</h2>
-            <table>
-                <tr>
-                    <td>Task id</td><td id="task_id"></td>
-                </tr>
-                <tr>
-                    <td>Task Address</td><td id="task_addr"></td>
-                </tr>
-                <tr>
-                    <td>UUID</td><td id="uuid"></td>
-                </tr>
-                <tr>
-                    <td>Task Name</td><td id="task_name"></td>
-                </tr>
-                <tr>
-                    <td>Data Address</td><td id="data_addr"></td>
-                </tr>
-                <tr>
-                    <td>Script Address</td><td id="scpt_addr"></td>
-                </tr>
-                <tr>
-                    <td>Output Address</td><td id="outp_addr"></td>
-                </tr>
-                <tr>
-                    <td>Task Started</td><td id="started"></td>
-                </tr>
-                <tr>
-                    <td>Task Completed</td><td id="completed"></td>
-                </tr>
-                <tr>
-                    <td>Task Error</td><td id="error"></td>
-                </tr>
-                <tr>
-                    <td>Task Parameters</td><td id="params"></td>
-                </tr>
-                <tr><td colspan="2"><a id="btnChart" class="btn btn-primary">View Chart</a>
-                    </td>
-                </tr>
-            </table>
-            <!--<div id="chart"></div>-->
+            <div class="col-xs-12 col-md-3 col-md-offset-1">
+                <h2>Task history</h2>
+                <div style="margin-left:25px;">
+                    <i id="history-loading" class="fa fa-spinner fa-spin" style="font-size:24px;"></i>
+                </div>
+                
+                <ul class="histList"></ul>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <h2>Task Detail (selected)</h2>
+                <table class="table">
+                    <tr>
+                        <td>Task id</td>
+                        <td id="task_id"></td>
+                    </tr>
+                    <tr>
+                        <td>Task Address</td>
+                        <td id="task_addr"></td>
+                    </tr>
+                    <tr>
+                        <td>UUID</td>
+                        <td id="uuid"></td>
+                    </tr>
+                    <tr>
+                        <td>Task Name</td>
+                        <td id="task_name"></td>
+                    </tr>
+                    <tr>
+                        <td>Data Address</td>
+                        <td id="data_addr"></td>
+                    </tr>
+                    <tr>
+                        <td>Script Address</td>
+                        <td id="scpt_addr"></td>
+                    </tr>
+                    <tr>
+                        <td>Output Address</td>
+                        <td id="outp_addr"></td>
+                    </tr>
+                    <tr>
+                        <td>Task Started</td>
+                        <td id="started"></td>
+                    </tr>
+                    <tr>
+                        <td>Task Completed</td>
+                        <td id="completed"></td>
+                    </tr>
+                    <tr>
+                        <td>Task Error</td>
+                        <td id="error"></td>
+                    </tr>
+                    <tr>
+                        <td>Task Parameters</td>
+                        <td id="params"></td>
+                    </tr>
+                </table>
+                <div style="text-align:center;">
+                    <button id="btnChart" class="btn btn-primary" style="background-color: #4a2f8e;">View Chart</button>
+                </div>
+                
+                <!--<div id="chart"></div>-->
 
-        </div>
+            </div>
         </div>
         <div class="footer">
-            copyright reseved by NEBULA AI &copy;2017 - 2022
+                <img src="../assets/images/QuantAI-logo.png" alt="">
+                Copyright reserved by NEBULA AI &copy;2017 - 2022
         </div>
     </div>
 </body>

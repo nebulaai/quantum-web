@@ -120,7 +120,7 @@ const loadTask = function (index) {
     let t = my_task_list[index];
 
     $("#task_id").html(t.task_id);
-    $("#task_addr").html("<a href='http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8000/#/address/"+t.address+"' target='_blank'>"+t.address+"</a>");
+    $("#task_addr").html("<a href='http://quantum.nebula-ai.network:8000/#/address/"+t.address+"' target='_blank'>"+t.address+"</a>");
     $("#uuid").html(t.uuid);
     $("#task_name").html(t.name);
     $("#data_addr").html(t.data_address);

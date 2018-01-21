@@ -3,8 +3,8 @@ initiateContract(function () {
     prepareTaskContract();
 });                                                                     ///console.log(nebulaAi);
 
-const scriptAddressDefault = "http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8080/script/Nebula_LSTM.py";
-const outputAddress = "http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8080/nebula-quantum/create/";
+const scriptAddressDefault = "http://quantum.nebula-ai.network/script/Nebula_LSTM.py";
+const outputAddress = "http://quantum.nebula-ai.network/nebula/nebula/scripts/";
 
 const minimalFee = 5;
 

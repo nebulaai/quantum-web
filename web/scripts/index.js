@@ -116,7 +116,7 @@ const waitingForSubmitConfirmation = function (result) {
     let submitEvent = nebulaAi.TaskSubmitted();
 
 
-    submitEvent.watch(function (error, result) {
+    submitEvent.watch(function (error, result) {                    console.log('submitEvent', result);
         if (result.args._sender_address.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
             submitEvent.stopWatching();
             if (error) {
@@ -156,7 +156,7 @@ const waitingForTaskDispatch = function () {
 
     let dispatchEvent = nebulaAi.TaskDispatched();
 
-    dispatchEvent.watch(function (error, result) {
+    dispatchEvent.watch(function (error, result) {             console.log('dispatchEvent', result);
         if (error) {
             console.log(error);
         } else {
@@ -179,7 +179,7 @@ const waitingForTaskStart = function () {
     console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to start");
     let startEvent = nebulaAi.TaskConfirmed();
     startEvent.watch(
-        function (error, result) {                                      console.log(result);
+        function (error, result) {                                      console.log("startEvent: ", result);
             if (error) {
                 console.log(error);
             } else {
@@ -214,7 +214,7 @@ const waitingForTaskCompletion = function () {
     console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to complete");
     let completionEvent = nebulaAi.TaskCompleted();
     completionEvent.watch(
-        function (error, result) {                                      console.log(result);
+        function (error, result) {                                      console.log("completionEvent: ",result);
             if (error) {
                 console.log(error);
             } else {
@@ -236,7 +236,7 @@ const waitingForTaskCompletion = function () {
 };
 
 const payToken = function () {
-    let fee = parseFloat($("#tx_fee_value").val());                               console.log(JSON.stringify(currentOrder.parameters));
+    let fee = parseFloat($("#tx_fee_value").val());                               //console.log(JSON.stringify(currentOrder.parameters));
 
     
 

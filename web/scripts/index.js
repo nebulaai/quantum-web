@@ -4,7 +4,7 @@ initiateContract(function () {
 });                                                                     ///console.log(nebulaAi);
 
 const scriptAddressDefault = "http://quantum.nebula-ai.network/script/Nebula_LSTM.py";
-const outputAddress = "http://quantum.nebula-ai.network/nebula/nebula/scripts/";
+const outputAddress = "http://quantum.nebula-ai.network/nebula/scripts/";
 
 const minimalFee = 5;
 
@@ -205,7 +205,7 @@ const showResult = function (fee, hash) {
     console.log(localStorage.completed);
     console.log(localStorage.uuid);
     console.log(localStorage.task_address);
-    window.open("output.html"); //, "_self"
+    window.open("/templates/output.html"); //, "_self"
 };
 
 const waitingForTaskCompletion = function () {
@@ -356,7 +356,7 @@ function getTransaction(panel, block, hash) {
     });
 }
 function createLinkToExplorer(fill, type) {
-    return "<a href='http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8000/#/" + type + "/" + fill + "' target='_blank'>" + fill + "</a>"
+    return "<a href='http://18.218.112.136:8000/#/" + type + "/" + fill + "' target='_blank'>" + fill + "</a>"
 }
 
 function toEther(value) {

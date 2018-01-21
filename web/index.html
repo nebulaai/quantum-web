@@ -29,16 +29,17 @@
             <img src="./assets/images/Nebula_Logo2.png" alt="Nebula Logo" />
         </div>
         <div class="action">
-            <button type="button" class="btn btn-default" onclick="window.open('./templates/history.html', '_self')">
+            <a type="button" class="btn btn-default" href="./templates/history.html">
                 <span>View All Tasks</span>
-            </button>
+            </a>
             <!-- <button type="button" class="btn btn-primary" onclick="window.open('./templates/transaction.html', '_self')">
                 <span>View Wallet</span>
             </button> -->
         </div>
     </div>
 
-    <div class="container-fluid content">
+    <div class="container-fluid content row">
+
         <div class="editor col-xs-12 col-md-5">
             <h2>Quant AI task</h2>
             <form class="data-form" id="taskForm" action="#">
@@ -48,12 +49,13 @@
                 </div>
                 <label for="dataUri">Training Script URI</label>
                 <div class="input-group-lg">
-                    <input id="dataUri" name="dataUri" class="form-control" type="text" value=""
-                        placeholder="python training script uri or upload to our server"/>
+                    <input id="dataUri" name="dataUri" class="form-control" type="text" value="" placeholder="python training script uri or upload to our server"
+                    />
                 </div>
                 <div class="input-group-btn" style="width:100%; margin-top: 5px; text-align: center;" id="btn-group-1">
                     <button onclick="toggleUploadPanel()" class="btn btn-default" type="button">Upload</button>
-                    <button onclick="useDefault()" class="btn btn-primary" style="margin-left: 10px; background-color: #4a2f8e;" type="button" style="align-content: right">Use our sample LSTM algorithm</button>
+                    <button onclick="useDefault()" class="btn btn-primary" style="margin-left: 10px; background-color: #4a2f8e;" type="button"
+                        style="align-content: right">Use our sample LSTM algorithm</button>
                 </div>
                 <div id="uploadPanel" style="display: none">
                     <input type="file" id="myFile" multiple size="1" onchange="uploadFile()">
@@ -62,7 +64,7 @@
                     <!--<form action="http://ec2-18-218-114-50.us-east-2.compute.amazonaws.com:8080/" method=post enctype=multipart/form-data>-->
                 </div>
                 <!--<form enctype="multipart/form-data" action="/files" method="post">-->
-                    <!--<input id="image-file" type="file" />-->
+                <!--<input id="image-file" type="file" />-->
                 <!--</form>-->
                 <label for="epoch">Epoch</label>
                 <div class="input-group-lg">
@@ -84,7 +86,7 @@
                         <input id="tx_fee_value" name="epochAmount" class="form-control" type="text" value="5">
                     </div>
                     <div class="row" style="text-align: center">
-                        <button type="button" class="btn btn-primary"  style="background-color: #4a2f8e;" onclick="payToken()">Pay Token</button>
+                        <button type="button" class="btn btn-primary" style="background-color: #4a2f8e;" onclick="payToken()">Pay Token</button>
                     </div>
                 </div>
             </div>
@@ -95,102 +97,113 @@
                 <h2>Reports</h2>
                 <p>This calculation will last about 10 minutes, please don't close this window, thw result will show below.</p>
                 <div class="report-content">
-                <div id="transactionHash">
+                    <div id="transactionHash">
+
+                    </div>
+                    <div id="taskReceived">
+                        <h3>Task Contract Information</h3>
+                        <table>
+                            <tr>
+                                <td>Address : </td>
+                                <td id="task_add_cell"></td>
+                            </tr>
+                            <tr>
+                                <td>Task Id : </td>
+                                <td id="task_id_cell"></td>
+                            </tr>
+                            <tr>
+                                <td>UUID : </td>
+                                <td id="uuid_cell"></td>
+                            </tr>
+                            <tr>
+                                <td>Worker : </td>
+                                <td id="task_worker_cell"></td>
+                            </tr>
+                            <tr>
+                                <td>Issue : </td>
+                                <td id="task_ok_cell"></td>
+                            </tr>
+                            <tr>
+                                <td>Issue Reported txHash : </td>
+                                <td id="task_issue_txhash"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="taskDispatched">
+                        <h3>Task Dispatched</h3>
+                        <table>
+                            <tr>
+                                <td>Block : </td>
+                                <td id="dispatch_block"></td>
+                            </tr>
+                            <tr>
+                                <td>Block Hash : </td>
+                                <td id="dispatch_block_hash"></td>
+                            </tr>
+                            <tr>
+                                <td>Dispatch txHash :</td>
+                                <td id="task_disp_txhash"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="taskStarted">
+                        <h3>Task Started</h3>
+                        <table>
+                            <tr>
+                                <td>Block : </td>
+                                <td id="start_block"></td>
+                            </tr>
+                            <tr>
+                                <td>Block Hash : </td>
+                                <td id="start_block_hash"></td>
+                            </tr>
+                            <tr>
+                                <td>Starting txHash : </td>
+                                <td id="task_start_txhash"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="taskCompleted">
+                        <h3>Task Completed</h3>
+                        <table>
+                            <tr>
+                                <td>Block : </td>
+                                <td id="complete_block"></td>
+                            </tr>
+                            <tr>
+                                <td>Block Hash : </td>
+                                <td id="complete_block_hash"></td>
+                            </tr>
+                            <tr>
+                                <td>Completion txHash</td>
+                                <td id="task_compl_txhash"></td>
+                            </tr>
+                        </table>
+                    </div>
 
                 </div>
-                <div id="taskReceived">
-                    <h3>Task Contract Information</h3>
-                    <table>
-                        <tr>
-                            <td>Address : </td>
-                            <td id="task_add_cell"></td>
-                        </tr>
-                        <tr>
-                            <td>Task Id : </td>
-                            <td id="task_id_cell"></td>
-                        </tr>
-                        <tr>
-                            <td>UUID : </td>
-                            <td id="uuid_cell"></td>
-                        </tr>
-                        <tr>
-                            <td>Worker : </td>
-                            <td id="task_worker_cell"></td>
-                        </tr>
-                        <tr>
-                            <td>Issue : </td>
-                            <td id="task_ok_cell"></td>
-                        </tr>
-                        <tr>
-                            <td>Issue Reported txHash : </td>
-                            <td id="task_issue_txhash"></td>
-                        </tr>
-                    </table>
+                <div class="row" style="text-align: center; margin-top:10px;">
+                    <i id="report-loading" class="fa fa-spinner fa-spin" style="font-size:24px; display:none;"></i>
+                    <a id="view-report-btn" style="background-color: #4a2f8e; display:none;" class="btn btn-primary" href="web/templates/output.html">View reports</a>
                 </div>
-                <div id="taskDispatched">
-                    <h3>Task Dispatched</h3>
-                    <table>
-                        <tr>
-                            <td>Block : </td>
-                            <td id="dispatch_block"></td>
-                        </tr>
-                        <tr>
-                            <td>Block Hash : </td>
-                            <td id="dispatch_block_hash"></td>
-                        </tr>
-                        <tr>
-                            <td>Dispatch txHash :</td>
-                            <td id="task_disp_txhash"></td>
-                        </tr>
-                    </table>
-                </div>
-                <div id="taskStarted">
-                    <h3>Task Started</h3>
-                    <table>
-                        <tr>
-                            <td>Block : </td>
-                            <td id="start_block"></td>
-                        </tr>
-                        <tr>
-                            <td>Block Hash : </td>
-                            <td id="start_block_hash"></td>
-                        </tr>
-                        <tr>
-                            <td>Starting txHash : </td>
-                            <td id="task_start_txhash"></td>
-                        </tr>
-                    </table>
-                </div>
-                <div id="taskCompleted">
-                    <h3>Task Completed</h3>
-                    <table>
-                        <tr>
-                            <td>Block : </td>
-                            <td id="complete_block"></td>
-                        </tr>
-                        <tr>
-                            <td>Block Hash : </td>
-                            <td id="complete_block_hash"></td>
-                        </tr>
-                        <tr>
-                            <td>Completion txHash</td>
-                            <td id="task_compl_txhash"></td>
-                        </tr>
-                    </table>
-                </div>
-               
-            </div>
-            <div class="row" style="text-align: center; margin-top:10px;">
-                <i id="report-loading" class="fa fa-spinner fa-spin" style="font-size:24px; display:none;"></i>
-                <button id="view-report-btn" style="background-color: #4a2f8e; display:none;" class="btn btn-primary">View reports</button>
             </div>
         </div>
-    </div>
-
-    <div class="footer">
-        <img src="./assets/images/QuantAI-logo.png" alt="">
-        Copyright reserved by NEBULA AI &copy;2017 - 2022
-    </div>
+        <div class="container text-center text-danger"><span id="msg">
+            For testing, please click <a class="text-primary" href="javascript:getCoins()">here</a> to get eth coins</span>
+        </div>
+        <script>
+            
+            function getCoins(){
+                let account = web3.eth.defaultAccount;                                                     console.log(account.toString());
+                let url = "http://18.218.112.136:5000/free_token/" + account.toString()
+                $.get(url, function(data){                     console.log(url);
+                   if(data) $("#msg").html(data+"<br/> ( This is just for testing - no real value )");  
+                })
+            }
+        </script>
+        <div class="footer">
+            <img src="./assets/images/QuantAI-logo.png" alt="logo"> Copyright reserved by NEBULA AI &copy;2017 - 2022
+        </div>
 
 
 </body>

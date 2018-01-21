@@ -116,7 +116,7 @@ const waitingForSubmitConfirmation = function (result) {
     let submitEvent = nebulaAi.TaskSubmitted();
 
 
-    submitEvent.watch(function (error, result) {                    console.log('submitEvent', result);
+    submitEvent.watch(function (error, result) {                    //console.log('submitEvent', result);
         if (result.args._sender_address.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
             submitEvent.stopWatching();
             if (error) {
@@ -143,7 +143,7 @@ const waitingForSubmitConfirmation = function (result) {
                     }
                 });
 
-                console.log("Task submitted @ address : ", currentOrder.taskContractAddress);
+                                                                                                console.log("Task submitted @ address : ", currentOrder.taskContractAddress);
 
                 // waitingForTaskDispatch();
             }
@@ -156,7 +156,7 @@ const waitingForTaskDispatch = function () {
 
     let dispatchEvent = nebulaAi.TaskDispatched();
 
-    dispatchEvent.watch(function (error, result) {             console.log('dispatchEvent', result);
+    dispatchEvent.watch(function (error, result) {             //console.log('dispatchEvent', result);
         if (error) {
             console.log(error);
         } else {
@@ -179,7 +179,7 @@ const waitingForTaskStart = function () {
     console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to start");
     let startEvent = nebulaAi.TaskConfirmed();
     startEvent.watch(
-        function (error, result) {                                      console.log("startEvent: ", result);
+        function (error, result) {                                      //console.log("startEvent: ", result);
             if (error) {
                 console.log(error);
             } else {
@@ -205,7 +205,7 @@ const showResult = function (fee, hash) {
     console.log(localStorage.completed);
     console.log(localStorage.uuid);
     console.log(localStorage.task_address);
-    window.open("/templates/output.html"); //, "_self"
+    window.open("web/templates/output.html", "_self"); //, "_self"
 };
 
 const waitingForTaskCompletion = function () {
@@ -214,7 +214,7 @@ const waitingForTaskCompletion = function () {
     console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to complete");
     let completionEvent = nebulaAi.TaskCompleted();
     completionEvent.watch(
-        function (error, result) {                                      console.log("completionEvent: ",result);
+        function (error, result) {                                      //console.log("completionEvent: ",result);
             if (error) {
                 console.log(error);
             } else {
@@ -325,8 +325,8 @@ function getUuid() {
         if (error) {
             console.log(error);
         } else {
-            blocks.task.uuid = result;
-            $("#uuid_cell").empty().html(web3.fromAscii(result));
+            blocks.task.uuid = result;                          //console.log(result, web3.toAscii(result))
+            $("#uuid_cell").empty().html(web3.toAscii(result));
         }
     })
 }

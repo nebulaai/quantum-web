@@ -205,7 +205,7 @@ const showResult = function (fee, hash) {
     console.log(localStorage.completed);
     console.log(localStorage.uuid);
     console.log(localStorage.task_address);
-    window.open("web/templates/output.html", "_self"); //, "_self"
+    window.open("templates/output.html", "_self"); 
 };
 
 const waitingForTaskCompletion = function () {
@@ -325,7 +325,7 @@ function getUuid() {
         if (error) {
             console.log(error);
         } else {
-            blocks.task.uuid = result;                          //console.log(result, web3.toAscii(result))
+            blocks.task.uuid = result;                          console.log(web3.toAscii(result))
             $("#uuid_cell").empty().html(web3.toAscii(result));
         }
     })

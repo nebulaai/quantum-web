@@ -89,16 +89,23 @@ const submitOrder = function (callback) {
     callback();
 };
 
+
 $(document).ready(function () {
     // changes ex, input placeholder to default value
     $("#dataUri").focus().attr('value', scriptAddressDefault);
     ////////end changes
     $('.data-form').on('submit', function (e) {
         e.preventDefault();
-        submitOrder(function () {
-            $("#payment").show();
-            $("#create_task_btn").hide();
-        });
+        let epoch = $("#epoch").val();              
+        if (epoch && parseInt(epoch) == epoch && epoch <= 20 && epoch>0) {
+            submitOrder(function () {
+                $("#payment").show();
+                $("#create_task_btn").hide();
+            });
+        }else{
+            alert("Epoch must Integer number between 1-20 !!!");
+        }
+
     });
 });
 
@@ -143,7 +150,7 @@ const waitingForSubmitConfirmation = function (result) {
                     }
                 });
 
-                                                                                                console.log("Task submitted @ address : ", currentOrder.taskContractAddress);
+                console.log("Task submitted @ address : ", currentOrder.taskContractAddress);
 
                 // waitingForTaskDispatch();
             }
@@ -205,7 +212,7 @@ const showResult = function (fee, hash) {
     console.log(localStorage.completed);
     console.log(localStorage.uuid);
     console.log(localStorage.task_address);
-    window.open("templates/output.html", "_self"); 
+    window.open("templates/output.html", "_self");
 };
 
 const waitingForTaskCompletion = function () {
@@ -238,7 +245,7 @@ const waitingForTaskCompletion = function () {
 const payToken = function () {
     let fee = parseFloat($("#tx_fee_value").val());                               //console.log(JSON.stringify(currentOrder.parameters));
 
-    
+
 
     if (fee >= minimalFee) {
 
@@ -264,7 +271,8 @@ const payToken = function () {
                         waitingForTaskCompletion();
                     }
                 });
-        } catch (error) { console.log(error);
+        } catch (error) {
+            console.log(error);
             //alert('submit error.');
         }
     } else alert("Minimum fee is less than 10 token, if you need more use the link below to get some token to try");
@@ -325,8 +333,9 @@ function getUuid() {
         if (error) {
             console.log(error);
         } else {
-            blocks.task.uuid = result;                          console.log(web3.toAscii(result))
-            $("#uuid_cell").empty().html(web3.toAscii(result));
+            blocks.task.uuid = result;
+            let output_uuid = web3.toAscii(result); console.log(output_uuid)
+            $("#uuid_cell").empty().html(output_uuid);
         }
     })
 }

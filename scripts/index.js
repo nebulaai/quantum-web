@@ -124,8 +124,8 @@ const waitingForSubmitConfirmation = function (result) {
             $("#sub_from").html(createLinkToExplorer(result.from, "address"));
             $("#sub_to").html(createLinkToExplorer(result.to, "address"));
             $("#sub_gas_spent").html(result.gas);
-            $("#sub_gas_price").html(toEther(result.gasPrice));
-            $("#sub_fee").html(toEther(result.value));
+            $("#sub_gas_price").html((new BigNumber(toEther(result.gasPrice))).toString());
+            $("#sub_fee").html((new BigNumber(toEther(result.value))).toString());
         }
     });
     console.log("waiting for submit confirmation");

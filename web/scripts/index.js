@@ -82,7 +82,7 @@ const submitOrder = function (callback) {
         taskName,
         "",
         scriptAddress,
-        outputAddress,
+        outputAddress + uuid,
         params
     );
 
@@ -109,143 +109,229 @@ $(document).ready(function () {
     });
 });
 
+
 const waitingForSubmitConfirmation = function (result) {
+    console.log("Transaction Hash: ", result);
     $('#report-loading').show();
 
     currentOrder.setTransactionHash(result);
 
-    let txHash = result;
-    getTransaction("#transactionHash", blocks.submit, txHash);
-
-    console.log("Transaction Hash: ", result);
-    console.log("waiting for submit confirmation");
-
-    let submitEvent = nebulaAi.TaskSubmitted();
-
-
-    submitEvent.watch(function (error, result) {                    //console.log('submitEvent', result);
-        if (result.args._sender_address.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
-            submitEvent.stopWatching();
-            if (error) {
-                console.log("error: ", error);
-            } else {
-                getTransaction("#transactionHash", blocks.submit, txHash);
-                currentOrder.setTaskContractAddress(result.args._task_address);
-                loadTaskContract(result.args._task_address);
-
-                $("#taskReceived").show();
-                $("#task_add_cell").empty().html(createLinkToExplorer(result.args._task_address, "address"));
-
-                getTaskID();
-                getUuid();
-                myTaskWorker();
-                taskContractInstance.task_issue(function (error, result) {
-                    if (error) {
-                        console.log(error);
-                        $('#task_ok_cell').empty().html('error');
-                        $('#task_issue_txhash').empty().html(error ? "ERROR_HASH" : "N/A");
-                    } else {
-                        $('#task_ok_cell').empty().html('ok');
-                        blocks.task.has_issue = result;
-                    }
-                });
-
-                console.log("Task submitted @ address : ", currentOrder.taskContractAddress);
-
-                // waitingForTaskDispatch();
-            }
-        }
-    });
-};
-const waitingForTaskDispatch = function () {
-
-    console.log("waiting for task @ ", currentOrder.taskContractAddress, " to be dispatched");
-
-    let dispatchEvent = nebulaAi.TaskDispatched();
-
-    dispatchEvent.watch(function (error, result) {             //console.log('dispatchEvent', result);
+    web3.eth.getTransaction(result, function (error, result) {
         if (error) {
             console.log(error);
         } else {
-            if (result.args._sender_address.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
+            blocks.submit = result;
+            $("#sub_txhash").html(createLinkToExplorer(result.hash, "tx"));
+            $("#sub_block_number").html("Not yet mined");
+            $("#sub_block_hash").html("0x0");
+            $("#sub_from").html(createLinkToExplorer(result.from, "address"));
+            $("#sub_to").html(createLinkToExplorer(result.to, "address"));
+            $("#sub_gas_spent").html(result.gas);
+            $("#sub_gas_price").html(toEther(result.gasPrice));
+            $("#sub_fee").html(toEther(result.value));
+        }
+    });
+    console.log("waiting for submit confirmation");
 
-                dispatchEvent.stopWatching();
-                $("#taskDispatched").show();
+    checkForSubmission(result);
+};
+function checkForSubmission(hash){
+    web3.eth.getTransaction(hash, function (error, result) {
+        if(error){
+            console.log(error);
+        }else{
+            if(result.blockNumber === null){
+                setTimeout(function () {
+                    checkForSubmission(hash);
+                }, 2500);
+            }else{
+                console.log("Transaction has been mined");
+                $("#sub_block_number").html(createLinkToExplorer(result.blockNumber, "block"));
+                $("#sub_block_hash").html(createLinkToExplorer(result.blockHash, "block"));
 
-
-                $("#dispatch_block").html(createLinkToExplorer(result.blockNumber, "block"));
-                $("#dispatch_block_hash").html(createLinkToExplorer(result.blockHash, "block"));
-                $("#task_disp_txhash").html(createLinkToExplorer(result.transactionHash, "tx"));
-                myTaskWorker();
+                //Task mined, go get task address
+                getCurrentTask();
             }
         }
     });
-};
-const waitingForTaskStart = function () {
-    //wait for start
-    console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to start");
-    let startEvent = nebulaAi.TaskConfirmed();
-    startEvent.watch(
-        function (error, result) {                                      //console.log("startEvent: ", result);
-            if (error) {
-                console.log(error);
-            } else {
-                if (result.args._task_owner.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
-                    startEvent.stopWatching();
-                    $('#taskStarted').show();
-                    console.log('Task ' + currentOrder.taskContractAddress + ' started');
-                    $('#start_block').html(createLinkToExplorer(result.blockNumber, "block"));
-                    $('#start_block_hash').html(createLinkToExplorer(result.blockHash, "tx"));
-                    $('#task_start_txhash').html(createLinkToExplorer(result.transactionHash, "tx"));
-                }
+}
+
+
+function getCurrentTask(){
+    nebulaAi.getMyActiveTasks(function (error, result) {
+        if(error){
+            console.log(error);
+        }else{
+            if(result.length==0){
+                setTimeout(function(){
+                    getCurrentTask();
+                },2500);
+            }else{
+                console.log("Current Task address" + result[0]);
+                currentOrder.taskContractAddress = result[0];
+
+                //Load Task at address
+                loadTaskContract(currentOrder.taskContractAddress);
+
+                loadTaskContractDetails();
+
+                //Task address found
+                //check for dispatch
+                //TODO constant checking will cause too much read if there is a long queue
+                //TODO to change in next update
+                waitingForTaskDispatch();
             }
         }
-    );
+    });
+}
+
+function loadTaskContractDetails(){
+    $("#task_add_cell").html(currentOrder.taskContractAddress);
+    $("#task_id_cell").html(getTaskID());
+    $("#uuid_cell").html(getUuid());
+    $("#task_worker_cell").html(myTaskWorker());
+    $("#task_ok_cell").html(isTaskOk() ? "OK" : "Issue found");
+}
+
+const waitingForTaskDispatch = function () {
+    taskContractInstance.worker(function (error, result) {
+        if(error){
+            console.log(error);
+        }else{
+
+            if (web3.toDecimal(result) != 0) {
+                console.log("Worker address : "+result);
+                $("#taskDispatched").show();
+
+                //TODO add some info here
+                //TODO use event check to find the txhash
+
+                waitingForTaskStart();
+
+            }
+            else {
+                setTimeout(function () {
+                        waitingForTaskDispatch();
+                    },2500
+                )
+                // $("#dispatch_block").html(createLinkToExplorer(result.blockNumber, "block"));
+                // $("#dispatch_block_hash").html(createLinkToExplorer(result.blockHash, "block"));
+                // $("#task_disp_txhash").html(createLinkToExplorer(result.transactionHash, "tx"));
+            }
+        }
+    });
+
+    //
+    //
+    // let dispatchEvent = nebulaAi.TaskDispatched();
+    //
+    // dispatchEvent.watch(function (error, result) {             //console.log('dispatchEvent', result);
+    //     if (error) {
+    //         console.log(error);
+    //     } else {
+    //         if (result.args._sender_address.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
+    //
+    //             dispatchEvent.stopWatching();
+    //
+    //             myTaskWorker();
+    //         }
+    //     }
+    // });
+};
+const waitingForTaskStart = function () {
+    taskContractInstance.started(function (error, result) {
+        if(error){
+            console.log(error);
+        } else{
+            if(result){
+                console.log("Task has been started");
+                $('#taskStarted').show();
+                waitingForTaskCompletion();
+            }else{
+                setTimeout(function () {
+                    waitingForTaskStart();
+                },2500);
+            }
+        }
+    });
+    // //wait for start
+    // console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to start");
+    // let startEvent = nebulaAi.TaskConfirmed();
+    // startEvent.watch(
+    //     function (error, result) {                                      //console.log("startEvent: ", result);
+    //         if (error) {
+    //             console.log(error);
+    //         } else {
+    //             if (result.args._task_owner.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
+    //                 startEvent.stopWatching();
+    //                 $('#taskStarted').show();
+    //                 console.log('Task ' + currentOrder.taskContractAddress + ' started');
+    //                 $('#start_block').html(createLinkToExplorer(result.blockNumber, "block"));
+    //                 $('#start_block_hash').html(createLinkToExplorer(result.blockHash, "tx"));
+    //                 $('#task_start_txhash').html(createLinkToExplorer(result.transactionHash, "tx"));
+    //             }
+    //         }
+    //     }
+    // );
 };
 
-const showResult = function (fee, hash) {
-    console.log("Completion fee : " + fee + hash);
+const showResult = function () {
     localStorage.setItem("completed", true);
     localStorage.setItem("uuid", currentOrder.uuid);
     localStorage.setItem("task_address", currentOrder.taskContractAddress);
 
-    console.log(localStorage.completed);
-    console.log(localStorage.uuid);
-    console.log(localStorage.task_address);
+
     window.open("templates/output.html", "_self");
 };
 
-const waitingForTaskCompletion = function () {
+function waitingForTaskCompletion() {
 
-    //wait for completion
-    console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to complete");
-    let completionEvent = nebulaAi.TaskCompleted();
-    completionEvent.watch(
-        function (error, result) {                                      //console.log("completionEvent: ",result);
-            if (error) {
-                console.log(error);
-            } else {
-                if (result.args._task_owner.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
-                    completionEvent.stopWatching();
-                    let completion_fee = result.args._completion_fee;
-                    showResult(completion_fee, "--", result.transactionHash, "--", result);
-                    $('#taskCompleted').show();
-                    $('#report-loading').hide();
-                    $('#view-report-btn').show();
-                    $("#complete_block").html(createLinkToExplorer(result.blockNumber, "block"));
-                    $('#complete_block_hash').html(createLinkToExplorer(result.blockHash, "block"));
-                    $('#task_compl_txhash').html(createLinkToExplorer(result.transactionHash, "tx"));
-                }
-
+    taskContractInstance.completed(function (error, result) {
+        if(error){
+            console.log(error);
+        }else{
+            if(result){
+                showResult();
+                $('#taskCompleted').show();
+                $('#report-loading').hide();
+                $('#view-report-btn').show();
+            }else{
+                setTimeout(function () {
+                    waitingForTaskCompletion();
+                }, 2500);
             }
+
         }
-    )
+    });
+
+
+    // //wait for completion
+    // console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to complete");
+    // let completionEvent = nebulaAi.TaskCompleted();
+    // completionEvent.watch(
+    //     function (error, result) {                                      //console.log("completionEvent: ",result);
+    //         if (error) {
+    //             console.log(error);
+    //         } else {
+    //             if (result.args._task_owner.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
+    //                 completionEvent.stopWatching();
+    //                 let completion_fee = result.args._completion_fee;
+    //                 showResult(completion_fee, "--", result.transactionHash, "--", result);
+    //                 $('#taskCompleted').show();
+    //                 $('#report-loading').hide();
+    //                 $('#view-report-btn').show();
+    //                 $("#complete_block").html(createLinkToExplorer(result.blockNumber, "block"));
+    //                 $('#complete_block_hash').html(createLinkToExplorer(result.blockHash, "block"));
+    //                 $('#task_compl_txhash').html(createLinkToExplorer(result.transactionHash, "tx"));
+    //             }
+    //
+    //         }
+    //     }
+    // )
 };
 
 const payToken = function () {
-    let fee = parseFloat($("#tx_fee_value").val());                               //console.log(JSON.stringify(currentOrder.parameters));
-
-
+    let fee = parseFloat($("#tx_fee_value").val());
 
     if (fee >= minimalFee) {
 
@@ -266,9 +352,6 @@ const payToken = function () {
                         console.log(error);
                     } else {
                         waitingForSubmitConfirmation(result);
-                        waitingForTaskDispatch();
-                        waitingForTaskStart();
-                        waitingForTaskCompletion();
                     }
                 });
         } catch (error) {
@@ -277,6 +360,7 @@ const payToken = function () {
         }
     } else alert("Minimum fee is less than 10 token, if you need more use the link below to get some token to try");
 };
+
 
 function isTaskStarted() {
     taskContractInstance.started(function (error, result) {
@@ -342,28 +426,6 @@ function getUuid() {
 
 
 
-function getTransaction(panel, block, hash) {
-    web3.eth.getTransaction(hash, function (error, result) {
-        if (error) {
-            console.log(error);
-        } else {
-            block = result;
-            $(panel).show().empty().append(
-                "<h5>Transaction Details</h5>" +
-                "<table>" +
-                "<tr><td>Tx Hash : </td><td>" + createLinkToExplorer(result.hash, "tx") + "</td></tr>" +
-                "<tr><td>Block Number : </td><td>" + result.blockNumber + "</td></tr>" +
-                "<tr><td>Block Hash : </td><td>" + createLinkToExplorer(result.blockHash, "block") + "</td></tr>" +
-                "<tr><td>From Wallet : </td><td>" + createLinkToExplorer(result.from, "address") + "</td></tr>" +
-                "<tr><td>To Nebula Contract @: </td><td>" + createLinkToExplorer(result.to, "address") + "</td></tr>" +
-                "<tr><td>Gas Spent : </td><td>" + result.gas + "</td></tr>" +
-                "<tr><td>Gas Price : </td><td>" + toEther(result.gasPrice) + "</td></tr>" +
-                "<tr><td>Fee : </td><td>" + toEther(result.value) + "</td></tr>" +
-                "</table>"
-            );
-        }
-    });
-}
 function createLinkToExplorer(fill, type) {
     return "<a href='http://18.218.112.136:8000/#/" + type + "/" + fill + "' target='_blank'>" + fill + "</a>"
 }

@@ -98,9 +98,35 @@
                 <p>This calculation will last about 10 minutes, please don't close this window, thw result will show below.</p>
                 <div class="report-content">
                     <div id="transactionHash">
-
+                        <h3>Transaction Details</h3>
+                        <table>
+                            <tr>
+                                <td>Tx Hash : </td><td id="sub_txhash"></td>
+                            </tr>
+                            <tr>
+                                <td>Block Number : </td><td id="sub_block_number"></td>
+                            </tr>
+                            <tr>
+                                <td>Block Hash : </td><td id="sub_block_hash"></td>
+                            </tr>
+                            <tr>
+                                <td>From Wallet : </td><td id="sub_from"></td>
+                            </tr>
+                            <tr>
+                                <td>To Nebula Contract : </td><td id="sub_to"></td>
+                            </tr>
+                            <tr>
+                                <td>Gas Spent : </td><td id="sub_gas_spent"></td>
+                            </tr>
+                            <tr>
+                                <td>Gas Price : </td><td id="sub_gas_price"></td>
+                            </tr>
+                            <tr>
+                                <td>Fee : </td><td id="sub_fee"></td>
+                            </tr>
+                        </table>
                     </div>
-                    <div id="taskReceived">
+                    <div id="taskReceived" style="display: none">
                         <h3>Task Contract Information</h3>
                         <table>
                             <tr>
@@ -123,62 +149,62 @@
                                 <td>Issue : </td>
                                 <td id="task_ok_cell"></td>
                             </tr>
-                            <tr>
-                                <td>Issue Reported txHash : </td>
-                                <td id="task_issue_txhash"></td>
-                            </tr>
+                            <!--<tr>-->
+                                <!--<td>Issue Reported txHash : </td>-->
+                                <!--<td id="task_issue_txhash"></td>-->
+                            <!--</tr>-->
                         </table>
                     </div>
-                    <div id="taskDispatched">
-                        <h3>Task Dispatched</h3>
-                        <table>
-                            <tr>
-                                <td>Block : </td>
-                                <td id="dispatch_block"></td>
-                            </tr>
-                            <tr>
-                                <td>Block Hash : </td>
-                                <td id="dispatch_block_hash"></td>
-                            </tr>
-                            <tr>
-                                <td>Dispatch txHash :</td>
-                                <td id="task_disp_txhash"></td>
-                            </tr>
-                        </table>
+                    <div id="taskDispatched" style="display: none;">
+                        <h3>Task has been dispatched</h3>
+                        <!--<table>-->
+                            <!--<tr>-->
+                                <!--<td>Block : </td>-->
+                                <!--<td id="dispatch_block"></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td>Block Hash : </td>-->
+                                <!--<td id="dispatch_block_hash"></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td>Dispatch txHash :</td>-->
+                                <!--<td id="task_disp_txhash"></td>-->
+                            <!--</tr>-->
+                        <!--</table>-->
                     </div>
-                    <div id="taskStarted">
-                        <h3>Task Started</h3>
-                        <table>
-                            <tr>
-                                <td>Block : </td>
-                                <td id="start_block"></td>
-                            </tr>
-                            <tr>
-                                <td>Block Hash : </td>
-                                <td id="start_block_hash"></td>
-                            </tr>
-                            <tr>
-                                <td>Starting txHash : </td>
-                                <td id="task_start_txhash"></td>
-                            </tr>
-                        </table>
+                    <div id="taskStarted" style="display: none">
+                        <h3>Task has been Started</h3>
+                        <!--<table>-->
+                            <!--<tr>-->
+                                <!--<td>Block : </td>-->
+                                <!--<td id="start_block"></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td>Block Hash : </td>-->
+                                <!--<td id="start_block_hash"></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td>Starting txHash : </td>-->
+                                <!--<td id="task_start_txhash"></td>-->
+                            <!--</tr>-->
+                        <!--</table>-->
                     </div>
-                    <div id="taskCompleted">
-                        <h3>Task Completed</h3>
-                        <table>
-                            <tr>
-                                <td>Block : </td>
-                                <td id="complete_block"></td>
-                            </tr>
-                            <tr>
-                                <td>Block Hash : </td>
-                                <td id="complete_block_hash"></td>
-                            </tr>
-                            <tr>
-                                <td>Completion txHash</td>
-                                <td id="task_compl_txhash"></td>
-                            </tr>
-                        </table>
+                    <div id="taskCompleted" style="display: none";>
+                        <h3>Task has been Completed</h3>
+                        <!--<table>-->
+                            <!--<tr>-->
+                                <!--<td>Block : </td>-->
+                                <!--<td id="complete_block"></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td>Block Hash : </td>-->
+                                <!--<td id="complete_block_hash"></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td>Completion txHash</td>-->
+                                <!--<td id="task_compl_txhash"></td>-->
+                            <!--</tr>-->
+                        <!--</table>-->
                     </div>
 
                 </div>
@@ -189,7 +215,7 @@
             </div>
         </div>
         <div class="container text-center text-danger"><span id="msg">
-            For testing, please click <a class="text-primary" href="javascript:getCoins()">here</a> to get eth coins</span>
+            For testing, please click <a class="text-primary" href="javascript:getCoins()">here</a> to get NBAI coins</span>
         </div>
         <script>
             
@@ -201,7 +227,7 @@
                 })
             }
         </script>
-        <div class="footer">
+        <div class="footer" style="z-index: -1">
             <img src="./assets/images/QuantAI-logo.png" alt="logo"> Copyright reserved by NEBULA AI &copy;2017 - 2022
         </div>
 

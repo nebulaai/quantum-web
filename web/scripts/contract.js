@@ -11,14 +11,16 @@ const contractAddress = "0x45677a1af702817b00858d6a202136ac3cdc4dca"; //Helix v0
 
 const loadContract = function(callback) {
     $.ajax({
-        url: "http://quantum.nebula-ai.network/assets/ABI/NebulaAi1.json", //"assets/ABI/NebulaAi1.json",
+        url: "http://quantum.nebula-ai.network/assets/ABI/NebulaAi1.json", //production
+        // url: "assets/ABI/NebulaAi1.json", // local testing
         dataType: "json",
         error: function (e) {
             console.log("loadContract error: ", e);
         },
         success: function (data) {                    
             let NebulaAi = web3.eth.contract(data);
-            window.nebulaAi = NebulaAi.at(contractAddress);                             console.log("current nebula base contract @ ", contractAddress);
+            window.nebulaAi = NebulaAi.at(contractAddress);
+            console.log("current nebula base contract @ ", contractAddress);
 
             $("#contractReady").show();
             callback();
@@ -27,7 +29,8 @@ const loadContract = function(callback) {
 };
 const prepareTaskContract = function(){
     $.ajax({
-        url: "http://quantum.nebula-ai.network/assets/ABI/Task_1.json", //"assets/ABI/Task_1.json",
+        url: "http://quantum.nebula-ai.network/assets/ABI/Task_1.json", // production
+        // url: "assets/ABI/Task_1.json", // local testing
         dataType: "json",
         error: function (e) {
             console.log("prepareTaskContract error: ", e);

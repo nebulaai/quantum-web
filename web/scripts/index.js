@@ -43,8 +43,6 @@ const useDefault = function () {
 };
 
 const toggleUploadPanel = function () {
-    //$("#btn-group-1").slideToggle();
-    //$("#uploadPanel").slideToggle();
     alert("The function isn't ready yet.\n Coming soon!!!");
 };
 
@@ -109,7 +107,6 @@ $(document).ready(function () {
     });
 });
 
-
 const waitingForSubmitConfirmation = function (result) {
     console.log("Transaction Hash: ", result);
     $('#report-loading').show();
@@ -155,7 +152,6 @@ function checkForSubmission(hash){
         }
     });
 }
-
 
 function getCurrentTask(){
     nebulaAi.getMyActiveTasks(function (error, result) {
@@ -220,23 +216,6 @@ const waitingForTaskDispatch = function () {
             }
         }
     });
-
-    //
-    //
-    // let dispatchEvent = nebulaAi.TaskDispatched();
-    //
-    // dispatchEvent.watch(function (error, result) {             //console.log('dispatchEvent', result);
-    //     if (error) {
-    //         console.log(error);
-    //     } else {
-    //         if (result.args._sender_address.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
-    //
-    //             dispatchEvent.stopWatching();
-    //
-    //             myTaskWorker();
-    //         }
-    //     }
-    // });
 };
 const waitingForTaskStart = function () {
     taskContractInstance.started(function (error, result) {
@@ -254,25 +233,6 @@ const waitingForTaskStart = function () {
             }
         }
     });
-    // //wait for start
-    // console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to start");
-    // let startEvent = nebulaAi.TaskConfirmed();
-    // startEvent.watch(
-    //     function (error, result) {                                      //console.log("startEvent: ", result);
-    //         if (error) {
-    //             console.log(error);
-    //         } else {
-    //             if (result.args._task_owner.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
-    //                 startEvent.stopWatching();
-    //                 $('#taskStarted').show();
-    //                 console.log('Task ' + currentOrder.taskContractAddress + ' started');
-    //                 $('#start_block').html(createLinkToExplorer(result.blockNumber, "block"));
-    //                 $('#start_block_hash').html(createLinkToExplorer(result.blockHash, "tx"));
-    //                 $('#task_start_txhash').html(createLinkToExplorer(result.transactionHash, "tx"));
-    //             }
-    //         }
-    //     }
-    // );
 };
 
 const showResult = function () {
@@ -303,32 +263,7 @@ function waitingForTaskCompletion() {
 
         }
     });
-
-
-    // //wait for completion
-    // console.log("Waiting for task @ ", currentOrder.taskContractAddress, " to complete");
-    // let completionEvent = nebulaAi.TaskCompleted();
-    // completionEvent.watch(
-    //     function (error, result) {                                      //console.log("completionEvent: ",result);
-    //         if (error) {
-    //             console.log(error);
-    //         } else {
-    //             if (result.args._task_owner.toLowerCase() === web3.eth.defaultAccount.toLowerCase()) {
-    //                 completionEvent.stopWatching();
-    //                 let completion_fee = result.args._completion_fee;
-    //                 showResult(completion_fee, "--", result.transactionHash, "--", result);
-    //                 $('#taskCompleted').show();
-    //                 $('#report-loading').hide();
-    //                 $('#view-report-btn').show();
-    //                 $("#complete_block").html(createLinkToExplorer(result.blockNumber, "block"));
-    //                 $('#complete_block_hash').html(createLinkToExplorer(result.blockHash, "block"));
-    //                 $('#task_compl_txhash').html(createLinkToExplorer(result.transactionHash, "tx"));
-    //             }
-    //
-    //         }
-    //     }
-    // )
-};
+}
 
 const payToken = function () {
     let fee = parseFloat($("#tx_fee_value").val());
@@ -375,8 +310,10 @@ function isTaskOk() {
     taskContractInstance.task_issue(function (error, result) {
         if (error) {
             console.log(error);
+            return false;
         } else {
             blocks.task.has_issue = result;
+            return result;
         }
     });
 }

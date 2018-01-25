@@ -98,7 +98,7 @@
                 <p>This calculation will last about 10 minutes, please don't close this window, thw result will show below.</p>
                 <div class="report-content">
                     <div id="transactionHash">
-                        <h5>Transaction Details</h5>
+                        <h3>Transaction Details</h3>
                         <table>
                             <tr>
                                 <td>Tx Hash : </td><td id="sub_txhash"></td>
@@ -126,7 +126,7 @@
                             </tr>
                         </table>
                     </div>
-                    <div id="taskReceived">
+                    <div id="taskReceived" style="display: none">
                         <h3>Task Contract Information</h3>
                         <table>
                             <tr>
@@ -157,20 +157,20 @@
                     </div>
                     <div id="taskDispatched" style="display: none;">
                         <h3>Task has been dispatched</h3>
-                        <table>
-                            <tr>
-                                <td>Block : </td>
-                                <td id="dispatch_block"></td>
-                            </tr>
-                            <tr>
-                                <td>Block Hash : </td>
-                                <td id="dispatch_block_hash"></td>
-                            </tr>
-                            <tr>
-                                <td>Dispatch txHash :</td>
-                                <td id="task_disp_txhash"></td>
-                            </tr>
-                        </table>
+                        <!--<table>-->
+                            <!--<tr>-->
+                                <!--<td>Block : </td>-->
+                                <!--<td id="dispatch_block"></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td>Block Hash : </td>-->
+                                <!--<td id="dispatch_block_hash"></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td>Dispatch txHash :</td>-->
+                                <!--<td id="task_disp_txhash"></td>-->
+                            <!--</tr>-->
+                        <!--</table>-->
                     </div>
                     <div id="taskStarted" style="display: none">
                         <h3>Task has been Started</h3>
@@ -227,7 +227,7 @@
                 })
             }
         </script>
-        <div class="footer">
+        <div class="footer" style="z-index: -1">
             <img src="./assets/images/QuantAI-logo.png" alt="logo"> Copyright reserved by NEBULA AI &copy;2017 - 2022
         </div>
 

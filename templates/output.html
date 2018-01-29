@@ -4,118 +4,145 @@
 
 <head>
     <title>Quant AI Result</title>
-
     <meta charset="utf-8">
     <meta name="description" content="Nebula AI blockchain tool">
     <meta name="keywords" content="AI, Blockchain">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-          rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-    <link href="../styles/main.css" rel="stylesheet" type="text/css" />
-    <script src="https://code.highcharts.com/stock/highstock.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-   
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link href="../css/main.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-    <div id="output" class="page">
-        <div class="header">
-            <div class="logo">
-                <img src="../assets/images/Nebula_Logo2.png" alt="Nebula Logo" />
-            </div>
-            <div class="action">
-                <button type="button" class="btn btn-default" onclick="window.open('../index.html', '_self')">
-                    <span>Back to Main</span>
-                </button>
-            </div>
+    <!-- <div id="output" class="page"> -->
+    <div class="header">
+        <div class="logo">
+            <a href="../index.html">
+                <img src="../images/Nebula_Logo2.png" alt="Nebula Logo" />
+            </a>
         </div>
-     
-        <div class="chart" id="chart"></div>
-       
-        <div class="footer">Copyright reserved by NEBULA AI &copy;2017 - 2022</div>
+        <div class="action">
+            <a type="button" class="btn btn-default" href='../index.html'>
+                <span>Back to Main</span>
+            </a>
+
+        </div>
     </div>
-</body>
-<script>
-    let uuid = window.localStorage.getItem("uuid"), taskName = window.localStorage.getItem("taskName");                                         console.log(uuid, taskName);
+    <div class="content">
+        <div class="chart" id="chart"></div>
+    </div>
 
-    let url = "http://quantum.nebula-ai.network/nebula/scripts/"+uuid;
-    let startTime, endTime, forecast = [], states = ["open", "high", "low", "close"];
-    $.getJSON(url, function (data) {
-        let times = JSON.parse(Object.keys(data.script.open[0])[0]);                        //console.log(times_forecast);
-        endTime = times[0] - 300;
-        startTime = times[0] - 15000;                              //console.log(startTime,endTime);
-        times.map((x, i) => {
-            let arr = [x * 1000];
-            states.map((value, index) => {
-                let state = data.script[value][0];                                      //console.log(state[Object.keys(state)]);
-                state[Object.keys(state)].map((y, j) => {
-                    if (i === j) { arr.push(y) }
-                });
-            });                                                                         //console.log(arr);
 
-            forecast.push(arr);
-        });
-        getTaskData(startTime, endTime);                                                                                      //console.log(forecast);
-        //createChart(forecast);
-    });
-    function getTaskData(startTime, endTime) {
-        let taskData = [];
-        let taskUrl = "https://poloniex.com/public?period=300&command=returnChartData&currencyPair=USDT_ETH&start=" + startTime + "&end=" + endTime;
-        $.getJSON(taskUrl, function (data) {                                                          //console.log(data);
-            data.map(x => {
-                let arr = [x.date * 1000];
-                states.map(y => {
-                    arr.push(x[y]);
-                });                             //console.log(arr);
-                taskData.push(arr);
+    <div class="footer">
+        <img src="../images/QuantAI-logo.png" alt="logo">
+        <div>Copyright reserved by NEBULA AI &copy;2017 - 2022</div>
+    </div>
+    <!-- </div> -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+
+    <script>
+        let uuid = window.localStorage.getItem("uuid"), taskName = window.localStorage.getItem("taskName"); console.log(uuid, taskName);
+
+        let url = "http://quantum.nebula-ai.network/nebula/scripts/" + uuid;
+        let startTime, endTime, forecast = [], series = [], states = ["open", "high", "low", "close"];
+        $.getJSON(url, function (data) {
+            let times = JSON.parse(Object.keys(data.script.open[0])[0]);                        //console.log(times_forecast);
+            endTime = times[0] - 300;
+            startTime = times[0] - 15000;                              //console.log(startTime,endTime);
+            times.map((x, i) => {
+                let arr = [x * 1000];
+                states.map((value, index) => {
+
+                    let state = data.script[value][0];                                      //console.log(state[Object.keys(state)]);
+                    state[Object.keys(state)].map((y, j) => {
+                        if (i === j) { arr.push(y) }
+                    });
+                });                                                                         //console.log(arr);
+
+                forecast.push(arr);
             });
-            createChart(taskData);
+            getTaskData(startTime, endTime);                                                                                      //console.log(forecast);
+            //createChart(forecast);
         });
+        function getTaskData(startTime, endTime) {
+            let taskData = [];
+            let taskUrl = "https://poloniex.com/public?period=300&command=returnChartData&currencyPair=USDT_ETH&start=" + startTime + "&end=" + endTime;
+            $.getJSON(taskUrl, function (data) {                                                          //console.log(data);
+                data.map(x => {
+                    let arr = [x.date * 1000];
+                    states.map(y => {
+                        arr.push(x[y]);
+                    });                             //console.log(arr);
+                    taskData.push(arr);
+                }); console.log(forecast);
 
-    }
-    function createChart(data) {
-        Highcharts.stockChart('chart', {
-            plotOptions: {
-                candlestick: {
-                    lineColor: '#2f7ed8',
-                    upLineColor: 'silver', // docs
-                    upColor: 'silver'
-                }
-            },
-            rangeSelector: {
-                selected: 1
-            },
+                series.push({
+                    type: 'candlestick',
+                    name: 'Ether Price',
+                    data: taskData
+                });
 
-            title: {
-                text: 'task: '+taskName
-            },
+                forecast.map(x => {
+                    let color = x[1] > x[4] ? "#ff0000" : "#00ff00";
+                    let arr = [x];
+                    series.push({
+                        type: 'candlestick',
+                        name: 'forecast',
+                        data: arr,
+                        color: color,
+                        lineColor: color,
+                        upLineColor: color, // docs
+                        upColor: color
+                    });
+                });           console.log(series)
+                // createChart(taskData);
+                createChart(series);
+            });
 
-            series: [{
-                type: 'candlestick',
-                name: 'Ether Price',
-                data: data//,
-            }, {
-                type: 'candlestick',
-                name: 'forecast',
-                data: forecast,
-                color: "#FF0000",
-                lineColor: '#FF0000',
-                upLineColor: '#FF0000', // docs
-                upColor: '#FF0000'
-            }]
-        });
-    }
+        }
+        function createChart(data) {
+            Highcharts.stockChart('chart', {
+                plotOptions: {
+                    candlestick: {
+                        lineColor: '#2f7ed8',
+                        upLineColor: 'silver', // docs
+                        upColor: 'silver'
+                    }
+                },
+                rangeSelector: {
+                    selected: 1
+                },
 
-</script>
-<!--<script>
+                title: {
+                    text: 'task: ' + taskName
+                },
+
+                series: data
+                // [{
+                //     type: 'candlestick',
+                //     name: 'Ether Price',
+                //     data: data//,
+                // }, {
+                //     type: 'candlestick',
+                //     name: 'forecast',
+                //     data: forecast,
+                //     color: "#FF0000",
+                //     lineColor: '#FF0000',
+                //     upLineColor: '#FF0000', // docs
+                //     upColor: '#FF0000'
+                // }]
+            });
+        }
+
+    </script>
+    <!--<script>
     let url = "http://192.168.88.187:8080/nebula-task/task/search/";
     
     var seriesOptions = [],
@@ -182,5 +209,6 @@
     });
 
 </script>-->
+</body>
 
 </html>

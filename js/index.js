@@ -38,9 +38,9 @@ const blocks = {
     complete: {}
 };
 
-const useDefault = function () {
-    $("#dataUri").val(scriptAddressDefault);
-};
+// const useDefault = function () {
+//     $("#dataUri").val(scriptAddressDefault);
+// };
 
 const toggleUploadPanel = function () {
     alert("The function isn't ready yet.\n Coming soon!!!");
@@ -91,21 +91,111 @@ const submitOrder = function (callback) {
 $(document).ready(function () {
     // changes ex, input placeholder to default value
     $("#dataUri").focus().attr('value', scriptAddressDefault);
-    ////////end changes
-    $('.data-form').on('submit', function (e) {
-        e.preventDefault();
-        let epoch = $("#epoch").val();              
-        if (epoch && parseInt(epoch) == epoch && epoch <= 20 && epoch>0) {
+    $('.data-form').validate({
+        rules: {
+            taskName: {
+                minlength: 5,
+                required: true
+            },
+            dataUri: {
+                required: true
+            },
+            epoch: {
+                epochNumber: true,
+                // regex: "/^([0-1]?[0-9]|20)$/",
+                required: true
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('.input-group-lg').addClass("error");
+            //.removeClass('success').addClass('error');
+        },
+        success: function (element) {
+            $(element).closest('.input-group-lg').removeClass("error");
+            var errorlabel = $(element)[0];                //console.log(errorlabel);
+            $(errorlabel).remove();
+            // element.addClass('valid')
+            //     .closest('.control-group').removeClass('error').addClass('success');
+        },
+        submitHandler: function (form) {
+            $("#taskName").attr("disabled", "disabled");
+            $("#dataUri").attr("disabled", "disabled");
+            $("#epoch").attr("disabled", "disabled");
+            // form.submit();
             submitOrder(function () {
                 $("#payment").show();
                 $("#create_task_btn").hide();
             });
-        }else{
-            alert("Epoch must Integer number between 1-20 !!!");
         }
 
     });
+
+    $("#token").validate({
+        rules: {
+            tx_fee_value: {
+                required: true,
+                tokeNumber: true
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('.input-group-lg').addClass("error");
+            //.removeClass('success').addClass('error');
+        },
+        success: function (element) {
+            $(element).closest('.input-group-lg').removeClass("error");
+            var errorlabel = $(element)[0];                //console.log(errorlabel);
+            $(errorlabel).remove();
+        },
+        submitHandler: function (form) {
+            $("#tx_fee_value").attr("disabled", "disabled");
+            payToken();
+        }
+    });
+    ////////end changes
+    // $('.data-form').on('submit', function (e) {
+    //     e.preventDefault();
+    //     let epoch = $("#epoch").val();              
+    //     if (epoch && parseInt(epoch) == epoch && epoch <= 20 && epoch>0) {
+    //         submitOrder(function () {
+    //             $("#payment").show();
+    //             $("#create_task_btn").hide();
+    //         });
+    //     }else{
+    //         alert("Epoch must Integer number between 1-20 !!!");
+    //     }
+
+    // });
 });
+
+const payToken = function () {
+    let fee = parseFloat($("#tx_fee_value").val());
+
+    currentOrder.fee = web3.toWei(fee, "ether");
+    try {
+        nebulaAi.submitTask(
+            currentOrder.uuid,
+            currentOrder.name,
+            "",
+            currentOrder.scriptURI,
+            currentOrder.outputURI,
+            JSON.stringify(currentOrder.parameters),
+            {
+                value: currentOrder.fee
+            },
+            function (error, result) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    waitingForSubmitConfirmation(result);
+                }
+            });
+    } catch (error) {
+        console.log(error);
+        //alert('submit error.');
+    }
+
+};
+
 
 const waitingForSubmitConfirmation = function (result) {
     console.log("Transaction Hash: ", result);
@@ -118,6 +208,8 @@ const waitingForSubmitConfirmation = function (result) {
             console.log(error);
         } else {
             blocks.submit = result;
+            // $(table).css("white-space", "nowrap");
+            // $(".report-content").css("overflow-y", "scroll");
             $("#sub_txhash").html(createLinkToExplorer(result.hash, "tx"));
             $("#sub_block_number").html("Not yet mined");
             $("#sub_block_hash").html("0x0");
@@ -132,16 +224,16 @@ const waitingForSubmitConfirmation = function (result) {
 
     checkForSubmission(result);
 };
-function checkForSubmission(hash){
+function checkForSubmission(hash) {
     web3.eth.getTransaction(hash, function (error, result) {
-        if(error){
+        if (error) {
             console.log(error);
-        }else{
-            if(result.blockNumber === null){
+        } else {
+            if (result.blockNumber === null) {
                 setTimeout(function () {
                     checkForSubmission(hash);
                 }, 2500);
-            }else{
+            } else {
                 console.log("Transaction has been mined");
                 $("#sub_block_number").html(createLinkToExplorer(result.blockNumber, "block"));
                 $("#sub_block_hash").html(createLinkToExplorer(result.blockHash, "block"));
@@ -153,16 +245,16 @@ function checkForSubmission(hash){
     });
 }
 
-function getCurrentTask(){
+function getCurrentTask() {
     nebulaAi.getMyActiveTasks(function (error, result) {
-        if(error){
+        if (error) {
             console.log(error);
-        }else{
-            if(result.length==0){
-                setTimeout(function(){
+        } else {
+            if (result.length == 0) {
+                setTimeout(function () {
                     getCurrentTask();
-                },2500);
-            }else{
+                }, 2500);
+            } else {
                 console.log("Current Task address" + result[0]);
                 currentOrder.taskContractAddress = result[0];
 
@@ -181,7 +273,7 @@ function getCurrentTask(){
     });
 }
 
-function loadTaskContractDetails(){
+function loadTaskContractDetails() {
     $("#task_add_cell").html(currentOrder.taskContractAddress);
     $("#task_id_cell").html(getTaskID());
     $("#uuid_cell").html(getUuid());
@@ -191,12 +283,12 @@ function loadTaskContractDetails(){
 
 const waitingForTaskDispatch = function () {
     taskContractInstance.worker(function (error, result) {
-        if(error){
+        if (error) {
             console.log(error);
-        }else{
+        } else {
 
             if (web3.toDecimal(result) != 0) {
-                console.log("Worker address : "+result);
+                console.log("Worker address : " + result);
                 $("#taskDispatched").show();
 
                 //TODO add some info here
@@ -207,8 +299,8 @@ const waitingForTaskDispatch = function () {
             }
             else {
                 setTimeout(function () {
-                        waitingForTaskDispatch();
-                    },2500
+                    waitingForTaskDispatch();
+                }, 2500
                 )
                 // $("#dispatch_block").html(createLinkToExplorer(result.blockNumber, "block"));
                 // $("#dispatch_block_hash").html(createLinkToExplorer(result.blockHash, "block"));
@@ -219,17 +311,17 @@ const waitingForTaskDispatch = function () {
 };
 const waitingForTaskStart = function () {
     taskContractInstance.started(function (error, result) {
-        if(error){
+        if (error) {
             console.log(error);
-        } else{
-            if(result){
+        } else {
+            if (result) {
                 console.log("Task has been started");
                 $('#taskStarted').show();
                 waitingForTaskCompletion();
-            }else{
+            } else {
                 setTimeout(function () {
                     waitingForTaskStart();
-                },2500);
+                }, 2500);
             }
         }
     });
@@ -247,15 +339,15 @@ const showResult = function () {
 function waitingForTaskCompletion() {
 
     taskContractInstance.completed(function (error, result) {
-        if(error){
+        if (error) {
             console.log(error);
-        }else{
-            if(result){
+        } else {
+            if (result) {
                 showResult();
                 $('#taskCompleted').show();
                 $('#report-loading').hide();
                 $('#view-report-btn').show();
-            }else{
+            } else {
                 setTimeout(function () {
                     waitingForTaskCompletion();
                 }, 2500);
@@ -265,36 +357,6 @@ function waitingForTaskCompletion() {
     });
 }
 
-const payToken = function () {
-    let fee = parseFloat($("#tx_fee_value").val());
-
-    if (fee >= minimalFee) {
-
-        currentOrder.fee = web3.toWei(fee, "ether");
-        try {
-            nebulaAi.submitTask(
-                currentOrder.uuid,
-                currentOrder.name,
-                "",
-                currentOrder.scriptURI,
-                currentOrder.outputURI,
-                JSON.stringify(currentOrder.parameters),
-                {
-                    value: currentOrder.fee
-                },
-                function (error, result) {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        waitingForSubmitConfirmation(result);
-                    }
-                });
-        } catch (error) {
-            console.log(error);
-            //alert('submit error.');
-        }
-    } else alert("Minimum fee is less than 10 token, if you need more use the link below to get some token to try");
-};
 
 
 function isTaskStarted() {
@@ -370,4 +432,20 @@ function createLinkToExplorer(fill, type) {
 function toEther(value) {
     return web3.fromWei(value, 'ether');
 }
+
+$.validator.addMethod(
+    "epochNumber",
+    function (value, element, bolean) {
+        return parseInt(value) == value && parseInt(value) > 0 && parseInt(value) < 20;
+    },
+    "Epoch must be Integer number between 1-20 !!!"
+);
+
+$.validator.addMethod(
+    "tokeNumber",
+    function (value, element, boolean) {
+        return boolean && parseInt(value) == value && parseInt(value) >= minimalFee;
+    },
+    "Minimum token fee is less than 5<br />Use the link below to get some token to try !!!"
+);
 

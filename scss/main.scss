@@ -1,0 +1,202 @@
+@mixin flex-column() {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* align items in Main Axis */
+    align-items: stretch; /* align items in Cross Axis */
+    align-content: stretch; /* Extra space in Cross Axis */
+}
+$maxHeight: calc(25% - 350px);
+
+html,body {
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+body {
+    // background: #DADADA; 
+    background-image: url("../images/quantai-background.svg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #2F3238;
+    font-size: 1.2em;
+    font-family: 'Titillium Web', sans-serif;
+    @include flex-column();
+}
+
+a, a:hover {
+	color: #7F8289;
+    text-decoration: none;
+}
+
+// a.selected {
+// 	color: #DE5E60;
+// }
+a.button {
+    font-size: 16px;
+    padding: 5px;
+    background: #fff;
+    border: 3px solid #2F3238;
+    color: #2F3238;
+}
+
+div.header {
+    // position: fixed;
+    // display: flex;
+    // height: 100px;
+    width: 100%;
+
+    div.logo {
+        float: left;
+        padding-left: 20px;
+        img{
+            width: 120px;
+        }
+    }
+
+    div.action{
+        float: right;
+        padding-right: 20px;
+        padding-top: 10px;
+        height: 50px;
+        width:150px;
+        font-size: 1.5rem;
+    }
+}
+
+.content{
+    width: 100%;
+    flex: 1;
+    // background: #999;
+    .editor {
+       padding: 6em;
+       form.data-form{
+           width: 100%;
+           .input-group-lg {
+                margin-bottom: 10px;
+            }
+       }
+    }
+
+    .result {
+        padding: 2em;
+        // @include flex-column();
+        .report-content {
+            // margin: 20px 0;
+            padding: 5px; 
+            // flex-grow: 1;
+            max-height:  calc(100vh /2);
+            width: 100%;
+            overflow: hidden;
+            // max-height: 68%;
+            // overflow-y: scroll;
+            border: 1px solid #4a2f8e;
+            box-shadow: 2px 3px #888888;
+            table{
+                width: 100%;
+                white-space: nowrap;
+            }
+        }
+    }
+}
+
+
+// .taskdetail-content  {
+//     margin: 20px 0;
+//     padding: 5px;
+//     margin-top: 150px;
+//     margin-left: 100px;
+// }
+
+// .report-content::-webkit-scrollbar { 
+//     display: none; 
+// }
+
+#chart {
+    position: absolute;
+    top:10%;
+    left:10%;
+    width: 80%;
+    height: 80%;
+}
+
+div.footer {
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+    img{
+        height: 58px;
+    }
+}
+
+// div.footer img {
+//     height:58px;
+// }
+@media (max-width: 991px) {
+    .content {
+        .editor, .task_history{
+            padding: 3em;
+            padding-left: 5em;
+            padding-right: 5em;
+        }
+        .result, .task_detail {
+            padding: 3em;
+            padding-left: 5em;
+            padding-right: 5em;
+            // background: rgba($color: #999, $alpha: .3)
+        }
+    }
+}
+
+@media (max-width: 877px) {
+    // .content {
+    //     .editor {
+    //         padding: 3em;
+    //     }
+    //     .result {
+    //         padding: 3em;
+    //     }
+    // }
+    
+}
+@media (max-width: 792px) {
+    // .content {
+    //     .editor {
+    //         padding: 2em;
+    //     }
+    //     .result {
+    //         padding: 2em;
+    //     }
+    // }
+}
+@media (max-width: 640px){
+    div.header {
+        div.logo {
+            padding-left: 1rem;
+            img{
+                width: 100px;
+            }
+        }
+    
+        div.action{
+            padding-right: 20px;
+            padding-top: 10px;
+            height: 50px;
+            width:100px;
+            font-size: 1.2rem;
+        }
+    }
+
+    .content {
+        .editor {
+            padding: 2em;
+        }
+        .result {
+            padding: 2em;
+        }
+    }
+}

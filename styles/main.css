@@ -7,7 +7,7 @@ body {
 
 body {
     /* background: #DADADA; */
-    background-image: url("../assets/images/quantai-background.svg");
+    background-image: url("/images/quantai-background.svg");
     background-size: cover;
     background-repeat: no-repeat;
     color: #2F3238;

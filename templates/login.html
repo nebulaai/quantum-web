@@ -20,7 +20,7 @@
             font-size: 12px;
             font-family: 'Titillium Web', sans-serif;
             line-height: 28px;
-            background: url(assets/images/bg.jpg) no-repeat center center fixed; 
+            background: url("../images/bg.jpg") no-repeat center center fixed; 
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
@@ -55,21 +55,23 @@
                 "header header header header"
                 "main main . sidebar"
                 "footer footer footer footer";*/
-            
         }
 
         .login-content {
             grid-column: 3;
             align-self: center;
             justify-self: center;
-            width: 300px; 
+            width: 300px;
         }
-        .login-content>h2{
+
+        .login-content>h2 {
             text-align: center;
         }
-        .login-content>h2>img{
+
+        .login-content>h2>img {
             width: 60%;
         }
+
         .login-content>.login-form .form-control {
             width: 100%;
             /*padding: 10px 0;*/
@@ -80,87 +82,98 @@
             font-size: 16px;
             margin-top: 30px;
             border-radius: 0 !important;
-            background-color:rgba(0, 0, 0, 0);
+            background-color: rgba(0, 0, 0, 0);
         }
-        .login-content>.login-form input:focus{
+
+        .login-content>.login-form input:focus {
             outline: none;
         }
-       
+
         #input-name::-webkit-input-placeholder {
             text-align: center;
-            background-image: url("assets/images/Nebula_user.png");
+            background-image: url("../images/Nebula_user.png");
             background-size: 20px;
             background-position: 0 50%;
             background-repeat: no-repeat;
             padding: 2px 2px 3px 2px;
             color: #fff;
-            
+
         }
 
         #input-pass::-webkit-input-placeholder {
             text-align: center;
-            background-image: url("assets/images/Nebula_password.png");
+            background-image: url("../images/Nebula_password.png");
             background-size: 20px;
             background-position: 0 50%;
             background-repeat: no-repeat;
             padding: 2px 2px 6px 2px;
             color: #fff;
-            
+
         }
 
-         :-moz-placeholder {
+        :-moz-placeholder {
             /* Firefox 18- */
             text-align: center;
         }
 
-         ::-moz-placeholder {
+        ::-moz-placeholder {
             /* Firefox 19+ */
             text-align: center;
         }
 
-         :-ms-input-placeholder {
+        :-ms-input-placeholder {
             text-align: center;
         }
 
-        button{
+        button {
             font-size: 16px;
             background: #2F3238;
-            border: 1px  #fff solid;
+            border: 1px #fff solid;
             color: #fff;
             padding: 5px 15px;
             cursor: pointer;
         }
-        button.signup{
-            background-color:rgba(0, 0, 0, 0);
+
+        button.signup {
+            background-color: rgba(0, 0, 0, 0);
         }
-        button.formBtn{
+
+        button.formBtn {
             border-radius: .5em;
             padding: 5px 25px;
             border: none;
             background: steelblue;
         }
-        div.header{
-            grid-column: 2/span 3; /* grid-column: 1/3;*/
+
+        div.header {
+            grid-column: 2/span 3;
+            /* grid-column: 1/3;*/
             justify-self: end;
         }
-        div.footer{
+
+        div.footer {
             grid-column: 2/span 3;
             justify-self: end;
             align-self: end;
         }
-
-</style>
+    </style>
 </head>
 
 <body>
     <div id="login" class="page">
-        <div class="header">not a member? <button type="button" class="signup"><span>sign up</span></button></div>
+        <div class="header">not a member?
+            <button type="button" class="signup">
+                <span>sign up</span>
+            </button>
+        </div>
         <div class="login-content">
-            <h2> <img src="assets/images/Nebula_Logo.png" alt="Nebula Logo"/></h2>
+            <h2>
+                <img src="../images/Nebula_Logo.png" alt="Nebula Logo" />
+            </h2>
             <form action="javascript:;" class="login-form">
 
                 <div class="row">
-                    <input id="input-name" class="form-control" type="text" autocomplete="off"  placeholder="Wallet address" name="name" required/>
+                    <input id="input-name" class="form-control" type="text" autocomplete="off" placeholder="Wallet address" name="name" required/>
                 </div>
                 <div class="row" style='margin-bottom: -10px;'>
                     <input id="input-pass" class="form-control" type="password" autocomplete="off" placeholder="Password" name="password" required/>
@@ -170,12 +183,22 @@
                         <!--<a ui-sref="register" id="register" class="register"><span translate>Sign up</span></a>-->
                     </div>
                     <div class="forgot-password" style="float: right;">
-                        <a href="javascript:;" id="forget-password" class="forget-password" ><span translate>Forget your password?</span></a>
+                        <a href="javascript:;" id="forget-password" class="forget-password">
+                            <span translate>Forget your password?</span>
+                        </a>
                     </div>
                 </div>
                 <div class="row" style="margin-top: 20px; clear: both;">
-                    <div style="float: left;"><button type="submit" class="formBtn" onclick="login()"><span translate>LOGIN</span></button></div>
-                    <div style="float: right;"><button type="button" class="formBtn"><span translate>CANCEL</span></button></div>
+                    <div style="float: left;">
+                        <button type="submit" class="formBtn" onclick="login()">
+                            <span translate>LOGIN</span>
+                        </button>
+                    </div>
+                    <div style="float: right;">
+                        <button type="button" class="formBtn">
+                            <span translate>CANCEL</span>
+                        </button>
+                    </div>
                 </div>
 
             </form>
@@ -184,11 +207,11 @@
         <div class="footer">copyright reseved by NEBULA AI &copy;2017 - 2022</div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="assets/js/web3js_min.js"></script>
-    <script src="assets/js/contract.js"></script>
-<script>
+    <script src="../js/web3js_min.js"></script>
+    <script src="../js/contract.js"></script>
+    <script>
 
-</script>
+    </script>
 </body>
 
 </html>

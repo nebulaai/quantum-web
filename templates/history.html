@@ -2,111 +2,106 @@
 
 <html lang="en">
 
-
 <head>
     <title>Nebula AI Quant AI History</title>
     <meta charset="utf-8">
     <meta name="description" content="Nebula AI blockchain tool">
     <meta name="keywords" content="AI, Blockchain">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"
     />
-    <script src="https://code.highcharts.com/stock/highstock.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-    <link href="../styles/main.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-    <script src="../scripts/web3js_min.js"></script>
-    <script src="../scripts/contract.js"></script>
-    <script src="../scripts/history.js"></script>
+    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body>
     <div class="header">
         <div class="logo">
-            <img src="../assets/images/Nebula_Logo2.png" alt="Nebula Logo" />
+            <a href="http://quantum.nebula-ai.network/"><img src="../images/Nebula_Logo2.png" alt="Nebula Logo" /></a>
         </div>
         <div class="action">
-            <button type="button" class="btn btn-default" onclick="window.open('../index.html', '_self')">
+            <a type="button" class="btn btn-default" href='../index.html'>
                 <span>Back to Main</span>
-            </button>
+            </a>
         </div>
     </div>
-    <div class="container-fluid content">
-        <div class="row taskdetail-content">
-            <div class="col-xs-12 col-md-3 col-md-offset-1">
-                <h2>Task history</h2>
-                <div style="margin-left:25px;">
-                    <i id="history-loading" class="fa fa-spinner fa-spin" style="font-size:24px;"></i>
-                </div>
-                
-                <ul class="histList"></ul>
+    <div class="content row">
+        <!-- <div class="row taskdetail-content"> -->
+        <div class="task_history col-xs-12 col-md-3 col-md-offset-1">
+            <h2>Task history</h2>
+            <div style="margin-left:25px;">
+                <i id="history-loading" class="fa fa-spinner fa-spin" style="font-size:24px;"></i>
             </div>
-            <div class="col-xs-12 col-md-6">
-                <h2>Task Detail (selected)</h2>
-                <table class="table">
-                    <tr>
-                        <td>Task id</td>
-                        <td id="task_id"></td>
-                    </tr>
-                    <tr>
-                        <td>Task Address</td>
-                        <td id="task_addr"></td>
-                    </tr>
-                    <tr>
-                        <td>UUID</td>
-                        <td id="uuid"></td>
-                    </tr>
-                    <tr>
-                        <td>Task Name</td>
-                        <td id="task_name"></td>
-                    </tr>
-                    <tr>
-                        <td>Data Address</td>
-                        <td id="data_addr"></td>
-                    </tr>
-                    <tr>
-                        <td>Script Address</td>
-                        <td id="scpt_addr"></td>
-                    </tr>
-                    <tr>
-                        <td>Output Address</td>
-                        <td id="outp_addr"></td>
-                    </tr>
-                    <tr>
-                        <td>Task Started</td>
-                        <td id="started"></td>
-                    </tr>
-                    <tr>
-                        <td>Task Completed</td>
-                        <td id="completed"></td>
-                    </tr>
-                    <tr>
-                        <td>Task Error</td>
-                        <td id="error"></td>
-                    </tr>
-                    <tr>
-                        <td>Task Parameters</td>
-                        <td id="params"></td>
-                    </tr>
-                </table>
-                <div style="text-align:center;">
-                    <button id="btnChart" class="btn btn-primary" style="background-color: #4a2f8e;" onclick="showTaskResult()">View Chart</button>
-                </div>
-                
-                <!--<div id="chart"></div>-->
-
+            <ul class="histList"></ul>
+        </div>
+        <div class="task_detail col-xs-12 col-md-6">
+            <h2>Task Detail (selected)</h2>
+            <table class="table">
+                <tr>
+                    <td>Task id</td>
+                    <td id="task_id"></td>
+                </tr>
+                <tr>
+                    <td>Task Address</td>
+                    <td id="task_addr"></td>
+                </tr>
+                <tr>
+                    <td>UUID</td>
+                    <td id="uuid"></td>
+                </tr>
+                <tr>
+                    <td>Task Name</td>
+                    <td id="task_name"></td>
+                </tr>
+                <tr>
+                    <td>Data Address</td>
+                    <td id="data_addr"></td>
+                </tr>
+                <tr>
+                    <td>Script Address</td>
+                    <td id="scpt_addr"></td>
+                </tr>
+                <tr>
+                    <td>Output Address</td>
+                    <td id="outp_addr"></td>
+                </tr>
+                <tr>
+                    <td>Task Started</td>
+                    <td id="started"></td>
+                </tr>
+                <tr>
+                    <td>Task Completed</td>
+                    <td id="completed"></td>
+                </tr>
+                <tr>
+                    <td>Task Error</td>
+                    <td id="error"></td>
+                </tr>
+                <tr>
+                    <td>Task Parameters</td>
+                    <td id="params"></td>
+                </tr>
+            </table>
+            <div style="text-align:center;">
+                <button id="btnChart" class="btn btn-primary" style="background-color: #4a2f8e;" onclick="showTaskResult()">View Chart</button>
             </div>
         </div>
-        <div class="footer">
-                <img src="../assets/images/QuantAI-logo.png" alt="">
-                Copyright reserved by NEBULA AI &copy;2017 - 2022
-        </div>
+        <!-- </div> -->
     </div>
+    <div class="footer">
+        <img src="../images/QuantAI-logo.png" alt="logo">
+        <div>Copyright reserved by NEBULA AI &copy;2017 - 2022</div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="../js/web3js_min.js"></script>
+    <script src="../js/contract.js"></script>
+    <script src="../js/history.js"></script>
 </body>
 
 </html>

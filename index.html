@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
     <title>Nebula AI Quantum</title>
     <meta charset="utf-8">
@@ -11,13 +9,11 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"
     />
     <link href="css/main.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <style>
         .error {
             color: #ff0000;
         }
-
         div.error input {
             border: 2px solid #ff0000;
         }
@@ -50,7 +46,7 @@
                     <input type="text" class="form-control" name="taskName" id="taskName" placeholder="task name" aria-describedby="basic-addon3">
                 </div>
 
-                <label for="dataUri">Training Script URI</label>
+                <label for="dataUri">Training Script URL</label>
                 <div class="input-group-lg">
                     <input id="dataUri" name="dataUri" class="form-control" type="text" placeholder="python training script uri or upload to our server"
                     />
@@ -82,7 +78,7 @@
                 <div class="panel-heading">Task confirmation</div>
                 <div class="panel-body" style="padding: 20px;">
                     <p style="font-size: 12px; color: #999;">
-                        Task has created successfully. Please pay the token to see the analysis
+                        The task has been successfully created. Please pay the token to see the analysis.
                     </p>
                     <form id="token">
                         <label for="tx_fee_value">Suggestion Amount:</label>
@@ -230,21 +226,20 @@
     </div>
     <div class="container text-center text-danger">
         For testing, please click
-        <a class="text-primary" href="javascript:getCoins()">here</a> to get NBAI coins
+        <a class="text-primary" href="javascript:getCoins()">here</a> to receive NBAI coins
     </div>
     <div class="footer">
         <img src="images/QuantAI-logo.png" alt="logo">
         <div>Copyright reserved by NEBULA AI &copy;2017 - 2022</div>
     </div>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/web3js_min.js"></script>
     <script src="js/contract.js"></script>
     <script src="js/bignumber.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/index.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.js"></script> -->
     <script>
         function getCoins() {
             let account = web3.eth.defaultAccount; console.log(account.toString());

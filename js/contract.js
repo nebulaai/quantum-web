@@ -7,7 +7,7 @@ window.onload = function () {
         window.location.href = "./notice/notice_supported/index.html";
     } 
     
-    if (typeof web3 !== 'undefined') {
+    else if (typeof web3 !== 'undefined') {
         //Currently only support Chrome with MetaMask plugin installed
         //loginWallet using private key or JSON format
         web3 = new Web3(web3.currentProvider);

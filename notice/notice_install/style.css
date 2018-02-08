@@ -201,7 +201,7 @@ img.logo {
 
 @media only screen and (orientation: landscape) {
     img.logo {
-        margin-top: 25vh;
+        margin-top: 15vh;
         width: 4rem;
     }
     a.faqs {
@@ -234,17 +234,17 @@ img.logo {
         margin-top: 2.5vw;
         margin-left: 8.5vw;
         margin-right: 8.5vw;
-        line-height: 5vh;
+        line-height: 7vh;
         font-weight: 300;
         letter-spacing: 0vw;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-size: 3vw;
-        color: rgb(73, 73, 73);
+        color: rgb(73, 73, 73);  
     }
 
     .contactUs {
         text-align: center;
-        line-height: 1vh;
+        line-height: 2vh;
         font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
         font-weight: 100;
         word-wrap: break-word;
@@ -255,7 +255,7 @@ img.logo {
 
     a#contactUs {
         text-align: center;
-        line-height: 1vh;
+        line-height: 2vh;
         font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
         font-weight: 500;
         word-wrap: break-word;

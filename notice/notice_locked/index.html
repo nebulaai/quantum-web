@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body onload="resize()" onresize="resize()">
+    <div class="content">
+        <a class="faqs" href="#">FAQs</a>
+        <img class="logo" src="logo.png" alt="nebula-ai">
+        <h1 class="yourMetamask" id="yourMetamask" >Your Metamask is Locked</h1>
+        <h3 class="simpleInstall" id="simpleInstall">Simple open MetaMask and follow the instructions to login</h3>
+        <h6 class="contactUs">Contact us if you have any questions: <p class="linehere"></p><a id="contactUs" href='mailto:contact@nebula-ai.com'>contact@nebula-ai.com</a></h6>
+        <p class="copyright">copyright reseved by NEBULA AI 2017 - 2022</p>
+    </div>
+    <script>
+        function resize()  {
+            var heightMobile = screen.height;
+
+            if ( heightMobile < 700 ) {
+                document.getElementById("yourMetamask").innerHTML = "Mobile Not Supported";
+                document.getElementById("simpleInstall").innerHTML = "You can only use AI applications on desktop browser like Chrome and Firefox";
+
+          } else if ( heightMobile > 700) {
+            document.getElementById("yourMetamask").innerHTML = "Your Metamask is Locked";
+            document.getElementById("simpleInstall").innerHTML = "Simple open MetaMask and follow the instructions to login";
+          }
+        }
+    </script>
+</body>
+</html>

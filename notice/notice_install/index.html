@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body onload="resize()" onresize="resize()">
+    <div class="content">
+        <a class="faqs" href="#">FAQs</a>
+        <img class="logo" src="logo.png" alt="nebula-ai">
+        <h1 class="yourMetamask" id="yourMetamask" >Your Metamask is not Installed yet</h1>
+        <h3 class="simpleInstall" id="simpleInstall">Simple install your Metamask in Application Store</h3>
+        <h6 class="contactUs">Contact us if you have any questions: <p class="linehere"></p><a id="contactUs" href='mailto:contact@nebula-ai.com'>contact@nebula-ai.com</a></h6>
+        <h4 class="startDownload" id="startDownload">Start Download Now</h4>
+        <img class="browser pointerDownload" src="metamask.png" id="metamask" alt="Download Metamask">
+        <h6 id="clickhere">Click here!</h6>
+        <p class="copyright">copyright reseved by NEBULA AI 2017 - 2022</p>
+    </div>
+    <script>
+        document.getElementById("metamask").onclick = function (browserMetamask) {
+            var isChrome = !!window.chrome && !!window.chrome.webstore;
+            if (isChrome) {
+                window.open("https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en-US");
+            } else {
+                window.open("https://addons.mozilla.org/en-US/firefox/addon/ether-metamask/");
+            }
+        }
+        function resize()  {
+            var heightMobile = screen.height;
+
+            if ( heightMobile < 700 ) {
+                document.getElementById("yourMetamask").innerHTML = "Mobile Not Supported";
+                document.getElementById("simpleInstall").innerHTML = "You can only use AI applications on desktop browser like Chrome and Firefox";
+
+          } else if ( heightMobile > 700) {
+            document.getElementById("yourMetamask").innerHTML = "Your Metamask is not Installed yet";
+            document.getElementById("simpleInstall").innerHTML = "Simple install your Metamask in Application Store";
+          }
+        }
+    </script>
+</body>
+</html>

@@ -1,9 +1,29 @@
 window.onload = function () {
-    // let isChrome = !!window.chrome && !!window.chrome.webstore;
 
-    // if(!isChrome){
-    //     window.open("../template/InvalidBrowser.html", "_self");
-    // }
+    var browserChrome = !!window.chrome && !!window.chrome.webstore;
+    var browserFirefox = typeof InstallTrigger !== 'undefined';
+
+    if (!browserChrome && !browserFirefox ){
+        window.location.href = "./notice/notice_supported/index.html";
+    } 
+    
+    if (typeof web3 !== 'undefined') {
+        //Currently only support Chrome with MetaMask plugin installed
+        //loginWallet using private key or JSON format
+        web3 = new Web3(web3.currentProvider);
+
+        if (web3.eth.defaultAccount === undefined) {
+            window.location.href = "./notice/notice_locked/index.html"
+            // alert("Please log into your MetaMask account using MetaMask Plugin");
+        }
+        callback();
+
+        } else {
+            window.location.href = "./notice/notice_install/index.html"
+            console.log('No web3? You should consider trying MetaMask!')
+            // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+            web3 = new Web3(new Web3.providers.HttpProvider("http://18.221.71.211:8545"));
+        }
 };
 
 const contractAddress = "0x45677a1af702817b00858d6a202136ac3cdc4dca"; //Helix v0.2
@@ -27,6 +47,7 @@ const loadContract = function(callback) {
         }
     })
 };
+
 const prepareTaskContract = function(){
     $.ajax({
         url: "http://quantum.nebula-ai.network/assets/ABI/Task_1.json", // production
@@ -44,45 +65,47 @@ const loadTaskContract = function(taskAddress){
     window.taskContractInstance = window.taskContract.at(taskAddress);
 };
 
-const initiateContract = function (callback) {
+// const initiateContract = function (callback) {
 
-    window.addEventListener('load', function() {
+//     window.addEventListener('load', function() {
 
-        // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-        if (typeof web3 !== 'undefined') {
-            //Currently only support Chrome with MetaMask plugin installed
-            //loginWallet using private key or JSON format
-            web3 = new Web3(web3.currentProvider);
+//         // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+//         if (typeof web3 !== 'undefined') {
+//             //Currently only support Chrome with MetaMask plugin installed
+//             //loginWallet using private key or JSON format
+//             web3 = new Web3(web3.currentProvider);
 
-            if (web3.eth.defaultAccount === undefined) {
-                alert("Please log into your MetaMask account using MetaMask Plugin");
-            }
-            callback();
+//             if (web3.eth.defaultAccount === undefined) {
+//                 window.location.href = "./notice/notice_locked/index.html"
+//                 // alert("Please log into your MetaMask account using MetaMask Plugin");
+//             }
+//             callback();
 
-        } else {
-            console.log('No web3? You should consider trying MetaMask!')
-            // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-            web3 = new Web3(new Web3.providers.HttpProvider("http://18.221.71.211:8545"));
-        }
+//             } else {
+//                 window.location.href = "./notice/notice_install/index.html"
+//                 console.log('No web3? You should consider trying MetaMask!')
+//                 // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+//                 web3 = new Web3(new Web3.providers.HttpProvider("http://18.221.71.211:8545"));
+//             }
 
-        // // Now you can start your app & access web3 freely:
-        // startApp()
+//         // // Now you can start your app & access web3 freely:
+//         // startApp()
 
-    })
+//     })
 
-    // if (typeof web3 !== 'undefined') {
-    //     web3 = new Web3(web3.currentProvider);
-    //     //Currently only support Chrome with MetaMask plugin installed
-    //     //loginWallet using private key or JSON format
-    //
-    //     if (web3.eth.defaultAccount === undefined) {
-    //         alert("Please log into your MetaMask account using MetaMask Plugin");
-    //     }
-    //     callback();
-    //
-    //
-    // } else {
-    //     alert('No web3? You should consider trying MetaMask! Redirecting to loginWallet page...');
-    //     // window.open('need_MetaMask.html', '_self');
-    // }
-};
+//     // if (typeof web3 !== 'undefined') {
+//     //     web3 = new Web3(web3.currentProvider);
+//     //     //Currently only support Chrome with MetaMask plugin installed
+//     //     //loginWallet using private key or JSON format
+//     //
+//     //     if (web3.eth.defaultAccount === undefined) {
+//     //         alert("Please log into your MetaMask account using MetaMask Plugin");
+//     //     }
+//     //     callback();
+//     //
+//     //
+//     // } else {
+//     //     alert('No web3? You should consider trying MetaMask! Redirecting to loginWallet page...');
+//     //     // window.open('need_MetaMask.html', '_self');
+//     // }
+// };

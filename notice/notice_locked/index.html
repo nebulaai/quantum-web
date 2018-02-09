@@ -33,6 +33,15 @@
         </div>
     </div>
     <script>
+
+        function doStuff() {
+            if (web3.eth.defaultAccount !== undefined) {
+            window.location.href = "http://quantum.nebula-ai.network";
+            console.log(web3.eth.defaultAccount);
+        }
+        }
+        var myTimer = setInterval(doStuff, 1000);
+
         var loading = setInterval(function() {
             clearInterval(loading);
             document.getElementById("loading").style.display = "none";

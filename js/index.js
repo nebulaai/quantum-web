@@ -1,7 +1,7 @@
-initiateContract(function () {
-    loadContract(function () { });
-    prepareTaskContract();
-});                                                                     ///console.log(nebulaAi);
+// initiateContract(function () {
+//     loadContract(function () { });
+//     prepareTaskContract();
+// });                                                                     ///console.log(nebulaAi);
 
 const scriptAddressDefault = "http://quantum.nebula-ai.network/script/Nebula_LSTM.py";
 const outputAddress = "http://quantum.nebula-ai.network/nebula/scripts/";

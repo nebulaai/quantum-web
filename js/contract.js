@@ -5,25 +5,26 @@ window.onload = function () {
 
     if (!browserChrome && !browserFirefox ){
         window.location.href = "./notice/notice_supported/index.html";
-    } 
-    
-    else if (typeof web3 !== 'undefined') {
-        //Currently only support Chrome with MetaMask plugin installed
-        //loginWallet using private key or JSON format
+    } else if (typeof web3 === 'undefined') {
+        window.location.href = "./notice/notice_install/index.html";
+        console.log('No web3? You should consider trying MetaMask!')
+    } else {
         web3 = new Web3(web3.currentProvider);
 
         if (web3.eth.defaultAccount === undefined) {
             window.location.href = "./notice/notice_locked/index.html"
             // alert("Please log into your MetaMask account using MetaMask Plugin");
-        }
-        callback();
-
-        } else {
-            window.location.href = "./notice/notice_install/index.html"
-            console.log('No web3? You should consider trying MetaMask!')
+            // Currently only support Chrome with MetaMask plugin installed
+            //loginWallet using private key or JSON format
+            //
             // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-            web3 = new Web3(new Web3.providers.HttpProvider("http://18.221.71.211:8545"));
+            // web3 = new Web3(new Web3.providers.HttpProvider("http://18.221.71.211:8545"));
+        }else {
+            //all good: start app
+            loadContract(function () {});
+            prepareTaskContract();
         }
+    }
 };
 
 const contractAddress = "0x45677a1af702817b00858d6a202136ac3cdc4dca"; //Helix v0.2
@@ -64,35 +65,35 @@ const prepareTaskContract = function(){
 const loadTaskContract = function(taskAddress){
     window.taskContractInstance = window.taskContract.at(taskAddress);
 };
-
+//
 // const initiateContract = function (callback) {
-
-//     window.addEventListener('load', function() {
-
+//
+//     window.addEventListener('load', function () {
+//
 //         // Checking if Web3 has been injected by the browser (Mist/MetaMask)
 //         if (typeof web3 !== 'undefined') {
 //             //Currently only support Chrome with MetaMask plugin installed
 //             //loginWallet using private key or JSON format
 //             web3 = new Web3(web3.currentProvider);
-
+//
 //             if (web3.eth.defaultAccount === undefined) {
 //                 window.location.href = "./notice/notice_locked/index.html"
 //                 // alert("Please log into your MetaMask account using MetaMask Plugin");
 //             }
 //             callback();
-
-//             } else {
-//                 window.location.href = "./notice/notice_install/index.html"
-//                 console.log('No web3? You should consider trying MetaMask!')
-//                 // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-//                 web3 = new Web3(new Web3.providers.HttpProvider("http://18.221.71.211:8545"));
-//             }
-
+//
+//         } else {
+//             window.location.href = "./notice/notice_install/index.html"
+//             console.log('No web3? You should consider trying MetaMask!')
+//             // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+//             web3 = new Web3(new Web3.providers.HttpProvider("http://18.221.71.211:8545"));
+//         }
+//
 //         // // Now you can start your app & access web3 freely:
 //         // startApp()
-
+//
 //     })
-
+// }
 //     // if (typeof web3 !== 'undefined') {
 //     //     web3 = new Web3(web3.currentProvider);
 //     //     //Currently only support Chrome with MetaMask plugin installed

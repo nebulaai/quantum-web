@@ -5,22 +5,18 @@ body, html {
     
 }
 
-body {
+.linehere {
+    display: none;        
+}
+
+#content {
+    text-align: center;
     background-image: url("background-01.jpg");
     height: 100%; 
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-.linehere {
-    display: none;        
-}
-
-.content {
-    text-align: center;
-
 }
 
 #contactUs {
@@ -96,6 +92,15 @@ img.logo {
     color: rgb(72, 74, 73);  
 }
 
+#reload {
+    margin-top: 0.4vw;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 100;
+    font-size: 0.7vw;   
+    color:#8B8C8E; 
+    cursor: hand;
+}
+
 @media only screen and (max-width: 768px) {
     #startDownload {
         display: none;
@@ -107,6 +112,10 @@ img.logo {
         display: none;        
     }
 
+    #reload {
+        display: none;
+    }
+
     .linehere {
         display:block;
     }
@@ -116,7 +125,7 @@ img.logo {
         font-size: 7.5vw;   
         color: rgb(95, 95, 95);
     }
-    .content {
+    #content {
         text-align: center;
         /* The image used */
         background-image: url("mobile.png");
@@ -181,7 +190,7 @@ img.logo {
         color: rgb(73, 73, 73);  
     }
 }
-@media only screen and (orientation: landscape) {
+@media only screen and (orientation: landscape) and (max-width: 768px) {
     img.logo {
         margin-top: 15vh;
         width: 4rem;
@@ -201,7 +210,7 @@ img.logo {
         font-size: 4.5vw;   
         color: rgb(95, 95, 95);
     }
-    .content {
+    #content {
         text-align: center;
         /* The image used */
         background-image: url("background-01.jpg");
@@ -254,4 +263,8 @@ img.logo {
         bottom: 0px;
         color: black;
     }
+}
+
+#loading {
+    margin-top: 40vh;
 }

@@ -38,9 +38,9 @@ const blocks = {
     complete: {}
 };
 
-// const useDefault = function () {
-//     $("#dataUri").val(scriptAddressDefault);
-// };
+const useDefault = function () {
+    $("#dataUri").val(scriptAddressDefault);
+};
 
 const toggleUploadPanel = function () {
     alert("The function isn't ready yet.\n Coming soon!!!");

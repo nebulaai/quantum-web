@@ -73,7 +73,9 @@ div.header {
   top: 10%;
   left: 10%;
   width: 80%;
-  height: 80%; }
+  height: 80%; 
+  text-align: center;
+}
 
 div.footer {
   font-size: 12px;
@@ -81,6 +83,12 @@ div.footer {
   text-align: center; }
   div.footer img {
     height: 58px; }
+
+#outerror {
+  margin-top: 4vh;
+  font-size: 4vh;
+  font-weight: 500;
+}
 
 @media (max-width: 991px) {
   .content .editor, .content .task_history {

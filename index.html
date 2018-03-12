@@ -63,7 +63,7 @@
                 <label for="dataUri">Training Script URL</label>
                 <div class="input-group-lg">
                     <input id="dataUri" name="dataUri" class="form-control" type="text" placeholder="python training script uri or upload to our server"
-                    />
+                    disabled/>
                 </div>
                 <div class="input-group-btn" style="width:100%; margin-top: 5px; text-align: center;" id="btn-group-1">
                     <button onclick="toggleUploadPanel()" class="btn btn-default" type="button">Upload</button>
@@ -110,7 +110,9 @@
         <div class="result col-xs-12 col-md-6">
             <!-- <div id="status"> -->
             <h2>Reports</h2>
-            <p>This calculation will last about 10 minutes, please do not close this window, the result will show below.</p>
+            <div class="pro">
+
+            </div>
             <div class="report-content">
                 <div id="transactionHash">
                     <h3>Transaction Details</h3>

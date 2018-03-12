@@ -30,10 +30,10 @@ class Status {
 
 class Nebula {
 
-    constructor(web3, admin_address, app_id) {
+    constructor(web3, admin_address, app_id = 0, name="", script="", data="", output="", params={}, fee= new BigNumber(0)) {
         this.admin_address = admin_address;
         this.web3 = web3;
-        this.task(app_id);
+        this.task(app_id, name, script, data, output, params, fee);
     }
 
     contracts() {
@@ -47,15 +47,15 @@ class Nebula {
         this.admin = {};
     }
 
-    task(app_id = 0) {
+    task(app_id, name, script, data, output, params, fee) {
         this.current_task = {
             app_id: app_id,
-            name: "",
-            script: "",
-            data: "",
-            output: "",
-            params: "",
-            fee: {},
+            name: name,
+            script: script,
+            data: data,
+            output: output,
+            params: params,
+            fee: fee,
             address: "",
             creation_hash: "",
             status: new Status(),
@@ -251,7 +251,10 @@ class Nebula {
                 task,
                 (error, result) => {
                     if (error) reject(error);
-                    else resolve(result);
+                    else {
+                        //todo add to current_task
+                        resolve(result);
+                    }
                 })
         });
     }
@@ -264,7 +267,10 @@ class Nebula {
                 app_id,
                 (error, result) => {
                     if (error) reject(error);
-                    else resolve(result);
+                    else {
+                        //todo add to current_task
+                        resolve(result);
+                    }
                 })
         });
     }
@@ -277,7 +283,10 @@ class Nebula {
                 app_id,
                 (error, result) => {
                     if (error) reject(error);
-                    else resolve(result);
+                    else {
+                        _this.active_tasks = result;
+                        resolve(result);
+                    }
                 })
         });
     }

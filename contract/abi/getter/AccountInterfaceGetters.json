@@ -1,89 +1,89 @@
 {
-  "abi": [
-    {
-      "constant": true,
-      "inputs": [
+    "abi": [
         {
-          "name": "_app_id",
-          "type": "uint256"
-        }
-      ],
-      "name": "active_tasks",
-      "outputs": [
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "_app_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "active_tasks",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address[]"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
         {
-          "name": "",
-          "type": "address[]"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "active_job",
-      "outputs": [
+            "constant": true,
+            "inputs": [],
+            "name": "active_job",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
         {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "job_history",
-      "outputs": [
+            "constant": true,
+            "inputs": [],
+            "name": "job_history",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address[]"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
         {
-          "name": "",
-          "type": "address[]"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "_app_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "task_history",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address[]"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
         {
-          "name": "_app_id",
-          "type": "uint256"
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "_worker",
+                    "type": "address"
+                }
+            ],
+            "name": "get_credits",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
         }
-      ],
-      "name": "task_history",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address[]"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "_worker",
-          "type": "address"
-        }
-      ],
-      "name": "get_credits",
-      "outputs": [
-        {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ]
+    ]
 }

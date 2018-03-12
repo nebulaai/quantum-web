@@ -420,6 +420,16 @@ class Nebula {
         })
     }
 
+    get_block(blockNumber){
+        let _this = this;
+        return new Promise((resolve, reject) => {
+            _this.web3.eth.getBlock(blockNumber, true, (error, result) => {
+                if(error) reject(error);
+                else resolve(result);
+            });
+        })
+    }
+
     get_transaction(txHash) {
         let _this = this;
         return new Promise((resolve, reject) => {
@@ -461,6 +471,15 @@ class Nebula {
                 }).catch(reject);
         });
     }
+    get_start_event(blockNumber){
+        let _this = this;
+        return new Promise((resolve, reject) => {
+            _this.distributor.instance.TaskStarted({}, {fromBlock:blockNumber, toBlock:blockNumber}).get((error,result)=>{
+                if (error) reject(error);
+                else resolve(result);
+            })
+        });
+    }
 
     wait_for_start(task = this.current_task["address"]) {
         let _this = this;
@@ -469,7 +488,16 @@ class Nebula {
                 .then(result => {
                     if (result["start_time"] !== 0) {
                         console.log("Task Started at block " + result["start_time"]);
-                        resolve(result);
+                        _this.get_block(result["start_time"]).then(result=>{
+                            console.log("Start tx");
+                            console.log(result);
+                            return _this.get_start_event(result["start_time"]);
+                        }).then(result=>{
+                            console.log("Start event: ");
+                            console.log(result);
+                            resolve(result);
+                        }).catch(reject);
+                        console.log();
                     } else {
                         if (result["error_time"] !== 0) {
                             console.log("error");
@@ -481,10 +509,10 @@ class Nebula {
                             _this.reassignable(task)
                                 .then(result => {
                                     if (result) {
+                                        //todo this will not and should not be automatically called
                                         console.log("Task has not been started on time, and it is now reassignable");
                                         console.log("this task is now paid by the miner's credit as its penalty");
                                         _this.reassign_task(task).then(resolve).catch(reject);
-                                        //todo this will not be automatically called
                                     } else setTimeout(() => _this.wait_for_start(task).then(resolve).catch(reject), 2000)
                                 }).catch(reject);
                         }
@@ -501,7 +529,10 @@ class Nebula {
                 .then(result => {
                     if (result["complete_time"] !== 0) {
                         console.log("Task Completed at block " + result["complete_time"]);
-                        resolve(result);
+                        _this.get_block(result["complete_time"]).then(result =>{
+                            console.log(result)
+                            resolve(result);
+                        });
                     } else {
                         if (result["error_time"] !== 0) {
                             console.log("error");

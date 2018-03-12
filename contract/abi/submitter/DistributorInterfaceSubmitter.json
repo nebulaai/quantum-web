@@ -99,6 +99,88 @@
             "payable": false,
             "stateMutability": "nonpayable",
             "type": "function"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "_client",
+                    "type": "address"
+                },
+                {
+                    "indexed": true,
+                    "name": "_task",
+                    "type": "address"
+                }
+            ],
+            "name": "TaskCreated",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "_client",
+                    "type": "address"
+                },
+                {
+                    "indexed": true,
+                    "name": "_task",
+                    "type": "address"
+                }
+            ],
+            "name": "TaskCancelled",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "_task",
+                    "type": "address"
+                }
+            ],
+            "name": "TaskStarted",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "_task",
+                    "type": "address"
+                }
+            ],
+            "name": "TaskCompleted",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "_task",
+                    "type": "address"
+                }
+            ],
+            "name": "ErrorReported",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "_task",
+                    "type": "address"
+                }
+            ],
+            "name": "TaskRejoinedQueue",
+            "type": "event"
         }
     ]
 }

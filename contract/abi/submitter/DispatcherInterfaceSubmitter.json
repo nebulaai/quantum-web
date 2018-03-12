@@ -1,51 +1,104 @@
 {
-  "abi": [
-    {
-      "constant": true,
-      "inputs": [
+    "abi": [
         {
-          "name": "_task",
-          "type": "address"
-        }
-      ],
-      "name": "task_position",
-      "outputs": [
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "_task",
+                    "type": "address"
+                }
+            ],
+            "name": "task_position",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
         {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "ai_queue_length",
-      "outputs": [
+            "constant": true,
+            "inputs": [],
+            "name": "ai_queue_length",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
         {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "task_queue_length",
-      "outputs": [
+            "constant": true,
+            "inputs": [],
+            "name": "task_queue_length",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
         {
-          "name": "",
-          "type": "uint256"
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "_task",
+                    "type": "address"
+                },
+                {
+                    "indexed": true,
+                    "name": "_worker",
+                    "type": "address"
+                }
+            ],
+            "name": "TaskDispatched",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "_task",
+                    "type": "address"
+                }
+            ],
+            "name": "TaskQueued",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "_miner",
+                    "type": "address"
+                }
+            ],
+            "name": "AiQueued",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "_worker",
+                    "type": "address"
+                }
+            ],
+            "name": "AiLeftQueue",
+            "type": "event"
         }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ]
+    ]
 }

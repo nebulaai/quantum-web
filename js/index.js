@@ -1,22 +1,98 @@
-// initiateContract(function () {
-//     loadContract(function () { });
-//     prepareTaskContract();
-// });                                                                     ///console.log(nebulaAi);
+window.onload = function () {
+    let browserChrome = !!window.chrome && !!window.chrome.webstore;
+    let browserFirefox = typeof InstallTrigger !== 'undefined';
+
+    if (!browserChrome && !browserFirefox ){
+        window.location.href = "./notice/notice_supported/index.html";
+    } else if (typeof web3 === 'undefined') {
+        window.location.href = "./notice/notice_install/index.html";
+    } else {
+        window.web3 = new Web3(web3.currentProvider);
+        if (web3.eth.defaultAccount === undefined)
+            window.location.href = "./notice/notice_locked/index.html";
+        else start_app();
+    }
+};
 
 const scriptAddressDefault = "http://quantum.nebula-ai.network/script/Nebula_LSTM.py";
 const outputAddress = "http://quantum.nebula-ai.network/nebula/scripts/";
-
 const minimalFee = 5;
+const admin_address = "0x2f1400233d6368fe3f38767a5c52775d423132fd";
 
-/**
- * Temporary solution, this must move to backend
- * @return {*|XML|string|void}
- */
-const uuidv4 = function () {
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-    ).replace(/-/g, "");
-};
+function start_app() {
+    window.nebula = new Nebula(web3, admin_address);
+
+    nebula.initialize()
+        .then(() => {
+            nebula.task_queue_size_updater(result => {
+                $("task_count").html(result);
+            });
+            nebula.ai_queue_size_updater(result => {
+                $("ai_count").html(result);
+            });
+            nebula.submissible_updater(result => {
+                $("is_submissible").html(result);
+            });
+            return nebula.submissible();
+        })
+        .then((is_submissible) => {
+            if (is_submissible) {
+                //load default app.
+                app_ready().then().catch();
+            } else {
+                //load current task. todo temp testing
+                resume_task().then().catch();
+            }
+        });
+}
+
+function app_ready(){
+    return new Promise((resolve, reject)=>{
+        resolve();
+    });
+}
+
+function resume_task(){
+    return new Promise((resolve, reject)=>{
+        nebula.get_active_task()
+            .then(result => {
+                result.forEach((item, index) => {
+                    nebula.current_task_position_updater(item, position => {
+                        $("position_table").html("<tr><td>"+ result[index] + ":</td><td>" + position+"</td></tr>");
+                    });
+                });
+                //load the last task if there are multiple tasks
+                if (result.length > 0) {
+                    let display_task = result[result.length - 1];
+                    nebula.current_task["address"] = display_task;
+                    return nebula.get_task_status(display_task)
+                        .then(status => {
+                            if (status["create_time"] === 0) {
+                                throw "Create time is empty, task address is incorrect";
+                            } else {
+                                console.log("waiting for dispatch");
+                                return nebula.wait_for_dispatch(display_task);
+                            }
+                        })
+                        .then(() => {
+                            console.log("waiting for start");
+                            return nebula.wait_for_start(display_task);
+                        })
+                        .then(() => {
+                            console.log("waiting for complete");
+                            return nebula.wait_for_complete(display_task);
+                        })
+                        .then(()=>{
+
+                        })
+                        .catch(reject);
+                } else {
+                    console.log("no active task")
+                }
+            })
+            .catch(reject);
+    });
+}
 
 /**
  * Order detail parameter
@@ -112,7 +188,7 @@ $(document).ready(function () {
         },
         success: function (element) {
             $(element).closest('.input-group-lg').removeClass("error");
-            var errorlabel = $(element)[0];                //console.log(errorlabel);
+            let errorlabel = $(element)[0];                //console.log(errorlabel);
             $(errorlabel).remove();
             // element.addClass('valid')
             //     .closest('.control-group').removeClass('error').addClass('success');
@@ -143,7 +219,7 @@ $(document).ready(function () {
         },
         success: function (element) {
             $(element).closest('.input-group-lg').removeClass("error");
-            var errorlabel = $(element)[0];                //console.log(errorlabel);
+            let errorlabel = $(element)[0];                //console.log(errorlabel);
             $(errorlabel).remove();
         },
         submitHandler: function (form) {
@@ -151,20 +227,6 @@ $(document).ready(function () {
             payToken();
         }
     });
-    ////////end changes
-    // $('.data-form').on('submit', function (e) {
-    //     e.preventDefault();
-    //     let epoch = $("#epoch").val();              
-    //     if (epoch && parseInt(epoch) == epoch && epoch <= 20 && epoch>0) {
-    //         submitOrder(function () {
-    //             $("#payment").show();
-    //             $("#create_task_btn").hide();
-    //         });
-    //     }else{
-    //         alert("Epoch must Integer number between 1-20 !!!");
-    //     }
-
-    // });
 });
 
 const payToken = function () {

@@ -26,9 +26,23 @@
             <img src="images/Nebula_Logo2.png" alt="Nebula Logo" />
         </div>
         <div class="action">
+            <table>
+                <tr>
+                    <td>Current Task Queue Size:</td><td id="task_count"></td>
+                    <td>Available Ai: </td><td id="ai_count"></td>
+                    <td>Submissible: </td><td id="is_submissible"></td>
+                </tr>
+            </table>
             <a type="button" class="btn btn-default" href="templates/history.html">
                 <span>View All Tasks</span>
             </a>
+            <table>
+                <thead>
+                    Task Positions:
+                </thead>
+                <tbody id="position_table">
+                </tbody>
+            </table>
             <!-- <button type="button" class="btn btn-primary" onclick="window.open('./templates/transaction.html', '_self')">
                 <span>View Wallet</span>
             </button> -->
@@ -235,10 +249,12 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/web3js_min.js"></script>
+    <script src="js/nebula.js"></script>
     <script src="js/contract.js"></script>
     <script src="js/bignumber.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/index.js"></script>
+
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.js"></script> -->
     <script>
         function getCoins() {

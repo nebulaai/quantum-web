@@ -25,13 +25,13 @@ function start_app() {
     nebula.initialize()
         .then(() => {
             nebula.task_queue_size_updater(result => {
-                $("task_count").html(result);
+                $("#task_count").html(result);
             });
             nebula.ai_queue_size_updater(result => {
-                $("ai_count").html(result);
+                $("#ai_count").html(result);
             });
             nebula.submissible_updater(result => {
-                $("is_submissible").html(result);
+                $("#is_submissible").html(result);
             });
             return nebula.submissible();
         })
@@ -58,7 +58,7 @@ function resume_task(){
             .then(result => {
                 result.forEach((item, index) => {
                     nebula.current_task_position_updater(item, position => {
-                        $("position_table").html("<tr><td>"+ result[index] + ":</td><td>" + position+"</td></tr>");
+                        $("#position_table").html("<tr><td>"+ result[index] + ":</td><td>" + position+"</td></tr>");
                     });
                 });
                 //load the last task if there are multiple tasks

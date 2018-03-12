@@ -1,11 +1,11 @@
-const admin_abi_json = "../contract/abi/getter/admin_interface.json";
-const client_abi_json = "../contract/abi/submitter/ClientInterfaceSubmitter.json";
-const dispatcher_abi_json = "../contract/abi/submitter/DispatcherInterfaceSubmitter.json";
-const distributor_abi_json = "../contract/abi/submitter/DistributorInterfaceSubmitter.json";
+const admin_abi_json = "./contract/abi/getter/admin_interface.json";
+const client_abi_json = "./contract/abi/submitter/ClientInterfaceSubmitter.json";
+const dispatcher_abi_json = "./contract/abi/submitter/DispatcherInterfaceSubmitter.json";
+const distributor_abi_json = "./contract/abi/submitter/DistributorInterfaceSubmitter.json";
 const queue_task_abi_json = "";
 const queue_ai_abi_json = "";
-const taskpool_abi_json = "../contract/abi/getter/TaskPoolInterfaceGetter.json";
-const account_abi_json = "../contract/abi/getter/AccountInterfaceGetters.json";
+const taskpool_abi_json = "./contract/abi/getter/TaskPoolInterfaceGetter.json";
+const account_abi_json = "./contract/abi/getter/AccountInterfaceGetters.json";
 
 
 class Status {

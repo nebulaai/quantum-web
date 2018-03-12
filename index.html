@@ -26,32 +26,32 @@
             <img src="images/Nebula_Logo2.png" alt="Nebula Logo" />
         </div>
         <div class="action">
-            <table>
-                <tr>
-                    <td>Current Task Queue Size:</td><td id="task_count"></td>
-                    <td>Available Ai: </td><td id="ai_count"></td>
-                    <td>Submissible: </td><td id="is_submissible"></td>
-                </tr>
-            </table>
             <a type="button" class="btn btn-default" href="templates/history.html">
                 <span>View All Tasks</span>
             </a>
-            <table>
-                <thead>
-                    Task Positions:
-                </thead>
-                <tbody id="position_table">
-                </tbody>
-            </table>
-            <!-- <button type="button" class="btn btn-primary" onclick="window.open('./templates/transaction.html', '_self')">
-                <span>View Wallet</span>
-            </button> -->
         </div>
     </div>
 
     <div class="content row">
-
         <div class="editor col-xs-12 col-md-6">
+            <table>
+                <tr>
+                    <td>Current Task Queue Size:</td><td id="task_count"></td>
+                </tr>
+                <tr>
+                    <td>Available Ai: </td><td id="ai_count"></td>
+                </tr>
+                <tr>
+                    <td>Submissible: </td><td id="is_submissible"></td>
+                </tr>
+            </table>
+            <table>
+                <thead>
+                Task Positions:
+                </thead>
+                <tbody id="position_table">
+                </tbody>
+            </table>
             <h2>Quant AI task</h2>
             <form class="data-form" id="taskForm" action="#">
 

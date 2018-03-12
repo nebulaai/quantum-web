@@ -1,0 +1,104 @@
+{
+    "abi": [
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_task",
+                    "type": "address"
+                }
+            ],
+            "name": "reassign_task_request",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_app_id",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_name",
+                    "type": "string"
+                },
+                {
+                    "name": "_data",
+                    "type": "string"
+                },
+                {
+                    "name": "_script",
+                    "type": "string"
+                },
+                {
+                    "name": "_output",
+                    "type": "string"
+                },
+                {
+                    "name": "_params",
+                    "type": "string"
+                }
+            ],
+            "name": "create_task",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "payable": true,
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_task",
+                    "type": "address"
+                }
+            ],
+            "name": "pay_completion_fee",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": true,
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_task",
+                    "type": "address"
+                },
+                {
+                    "name": "_app_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "cancel_task",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        }
+    ]
+}

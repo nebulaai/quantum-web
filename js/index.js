@@ -44,6 +44,7 @@ function start_app() {
                 $("#ai_count").html(result);
             });
             nebula.submissible_updater(result => {
+                console.log("is_submissible"+result)
                 $("#is_submissible").html(result);
             });
             //todo nebula.get_active_task().then().catch(error);
@@ -143,10 +144,24 @@ const payToken = function () {
             }
         })
         .then((result) => {
+            let current_task = nebula.current_task;
+            $("#sub_txhash").html(createLinkToExplorer(result.hash,"tx"));
+            $("#sub_block_number").html(result.blockNumber);
+            $("#sub_block_hash").html(createLinkToExplorer(result.blockHash,"block"));
+            $("#sub_gas_price").html(Number(result.gasPrice));
+            $("#sub_gas_spent").html(Number(result.gas));
+            $("#sub_to").html(createLinkToExplorer(result.to,"address"));
+            $("#sub_from").html(createLinkToExplorer(result.from,"address"));
             console.log("Current task address : ", result);
             return nebula.get_task_info();
         })
         .then(result => {
+            $("#app_id").html(Number(result[0]));
+            $("#task_name").html(result[1]);
+            $("#script_address").html(result[2]);
+            $("#data_address").html(result[3]);
+            $("#output_address").html(result[4]);
+            $("#epoch_data").html(Number(JSON.parse(result[5]).epoch));
             console.log("Task Info");
             console.log("App ID: ", Number(result[0]));
             console.log("Task Name:", result[1]);

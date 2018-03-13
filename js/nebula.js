@@ -396,7 +396,7 @@ class Nebula {
                                         else {
                                             let task_address = task_list[size - 1];
                                             _this.current_task["address"] = task_address;
-                                            resolve(task_address);
+                                            resolve(tx_details);
                                         }
                                     }).catch(reject);
                             })
